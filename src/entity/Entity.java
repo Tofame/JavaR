@@ -14,10 +14,12 @@ public class Entity {
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public String direction;
 
+    public int spriteCounter = 0;
+    public int spriteNum = 1;
+
     public void loadSpriteSheet(String fileName) {
         try {
-            String temp = "/characters/" + fileName;
-            spriteSheet = ImageIO.read(getClass().getResourceAsStream(temp));
+            spriteSheet = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/characters/" + fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,16 +34,16 @@ public class Entity {
         up1 = getSprite(0, 1);
         up2 = getSprite(0, 2);
     
-        downIdle = getSprite(1, 0);
-        down1 = getSprite(1, 1);
-        down2 = getSprite(1, 2);
+        downIdle = getSprite(2, 0);
+        down1 = getSprite(2, 1);
+        down2 = getSprite(2, 2);
     
-        leftIdle = getSprite(2, 0);
-        left1 = getSprite(2, 1);
-        left2 = getSprite(2, 2);
+        leftIdle = getSprite(3, 0);
+        left1 = getSprite(3, 1);
+        left2 = getSprite(3, 2);
     
-        rightIdle = getSprite(3, 0);
-        right1 = getSprite(3, 1);
-        right2 = getSprite(3, 2);
+        rightIdle = getSprite(1, 0);
+        right1 = getSprite(1, 1);
+        right2 = getSprite(1, 2);
     }
 }
