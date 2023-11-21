@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -12,16 +13,29 @@ public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
 
         setDefaultValues();
         setDefaultImages();
+
+        screenX = gp.screenWidth/2 - (gp.scale * singleFrameWidth/2);
+        screenY = gp.screenHeight/2 - (gp.scale * singleFrameHeight/2);
+
+        // Collision square for player
+        solidArea = new Rectangle();
+        solidArea.x = 10 * gp.scale; // 10 <- perfect value for 32x32
+        solidArea.y = 21 * gp.scale; // 21 <- perfect value for 32x32
+        solidArea.width = (int)(singleFrameWidth/3) * gp.scale; // 10 <- perfect value for 32x32
+        solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // 10 <- perfect value for 32x32
     }
     public void setDefaultValues() {
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY = gp.tileSize * 21;
         speed = 4;
         direction = "down";
     }
@@ -35,19 +49,37 @@ public class Player extends Entity {
         if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
             if(keyH.upPressed == true) {
                 direction = "up";
-                y -= speed;
             } 
             if(keyH.downPressed == true) {
                 direction = "down";
-                y += speed;
             }
             if(keyH.leftPressed == true) {
                 direction = "left";
-                x -= speed;
             }
             if(keyH.rightPressed == true) {
                 direction = "right";
-                x += speed;
+            }
+
+            // CHECK PLAYER COLLISION
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            // IF CONDITION IS FALSE, PLAYER CAN MOVE
+            if(collisionOn == false) {
+                switch(direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;  
+                }
             }
 
             spriteCounter++;
@@ -65,8 +97,9 @@ public class Player extends Entity {
         }
     }
     public void draw(Graphics2D g2) { // Draws player
-        //g2.setColor(Color.white);
-        //g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+        // If you want to draw the collision square
+        g2.setColor(Color.RED);
+        g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
 
         BufferedImage image = null;
 
@@ -105,6 +138,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, x, y, singleFrameWidth * gp.scale, singleFrameHeight * gp.scale, null);
+        g2.drawImage(image, screenX, screenY, singleFrameWidth * gp.scale, singleFrameHeight * gp.scale, null);
     }
 }
