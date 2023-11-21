@@ -6,8 +6,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Entity {
-    final int originalTileSize = 32; // size of character frame (should be same as tileSize from GamePanel hence this naming)
-
     public int x, y;
     public int speed;
 
@@ -17,16 +15,21 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
+    public int singleFrameWidth = 32; // size of character's sprite single frame
+    public int singleFrameHeight = 32; // size of character's sprite single frame
+
     public void loadSpriteSheet(String fileName) {
         try {
             spriteSheet = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/characters/" + fileName));
+            singleFrameWidth = spriteSheet.getWidth() / 4;
+            singleFrameHeight = spriteSheet.getHeight() / 3;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private BufferedImage getSprite(int col, int row) {
-        return spriteSheet.getSubimage(col * originalTileSize, row * originalTileSize, originalTileSize, originalTileSize);
+        return spriteSheet.getSubimage(col * singleFrameWidth, row * singleFrameHeight, singleFrameWidth, singleFrameHeight);
     }
 
     public void setFrameImages() {
