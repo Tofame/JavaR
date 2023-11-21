@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 import main.GamePanel;
 import main.KeyHandler;
@@ -15,12 +16,19 @@ public class Player extends Entity {
         this.keyH = keyH;
 
         setDefaultValues();
+        setDefaultImages();
     }
     public void setDefaultValues() {
         x = 100;
         y = 100;
         speed = 4;
     }
+
+    public void setDefaultImages() {
+        loadSpriteSheet("playerSprite.png");
+        setFrameImages();
+    }
+
     public void update() {
         if(keyH.upPressed == true) {
             y -= speed;
