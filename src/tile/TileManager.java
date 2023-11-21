@@ -31,10 +31,13 @@ public class TileManager {
             tile[0].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/grass.png"));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/wall.png"));
+            tile[1].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/sand.png"));
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/water.png"));
+
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/wall.png"));
         }catch(IOException e) {
             e.printStackTrace();
         }
