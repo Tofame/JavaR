@@ -15,7 +15,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
@@ -37,8 +37,8 @@ public class Player extends Entity {
         solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // ~10 <- perfect value for 32x32
     }
     public void setDefaultValues() {
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 23; // Starting X
+        worldY = gp.tileSize * 21; // Starting Y, start of the game
         speed = 4;
         direction = "down";
     }
@@ -110,16 +110,23 @@ public class Player extends Entity {
 
             switch(objectName) {
                 case "Key":
+                    gp.playSE(1);
                     hasKey++;
                     gp.obj[i] = null;
                     System.out.println("Key: " + hasKey);
                     break;
                 case "Door":
                     if(hasKey > 0) {
+                        gp.playSE(3);
                         gp.obj[i] = null;
                         hasKey--;
                     }
                     System.out.println("Key: " + hasKey);
+                    break;
+                case "Boots":
+                    gp.playSE(2);
+                    speed += 2;
+                    gp.obj[i] = null;
                     break;
             }
         }

@@ -27,21 +27,27 @@ public class GamePanel extends JPanel implements Runnable {
     // WORLD SETTINGS
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWith = tileSize * maxWorldCol;
-    public final int worldRow = tileSize * maxWorldRow;
+    public final int worldWith = tileSize * maxWorldCol; // not used anywhere
+    public final int worldRow = tileSize * maxWorldRow; // not used anywhere -> useless, but lets keep it
 
     // FPS
-    int FPS = 60;
-    int currentFPS = 0;
+    int FPS = 60; // limit of fps
+    int currentFPS = 0; // fps counted 1-max
+    public int shownFPS = FPS; // shown fps (just before reset)
 
     Font fpsFont = new Font("Arial", Font.PLAIN, 12);
 
+    // SYSTEM
     TileManager  tileM = new TileManager(this);
-
     KeyHandler keyH = new KeyHandler();
-    Thread gameThread;
+    Sound music = new Sound();
+    Sound se = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
+    Thread gameThread;
+
+    // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; // [10] means 10 object MAX at one time at screen
 
@@ -55,6 +61,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame() {
         aSetter.setObject();
+
+        playMusic(0);
     }
 
     public void startGameThread() {
@@ -85,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1000000000) {
                 //System.out.println("FPS: " + currentFPS);
+                //shownFPS = currentFPS; // if we want to show fps then also uncomment in UI.java
                 currentFPS = 0;
                 timer = 0;
             }
@@ -96,10 +105,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D)g;
-
-    // Drawing order
+      // Drawing order
         // TILE
         tileM.draw(g2);
         // OBJECT
@@ -110,12 +117,22 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //PLAYER
         player.draw(g2);
-
-        // Draw fps in left upper corner
-        //g2.setFont(fpsFont);
-        //g2.setColor(Color.white);
-        //g2.drawString("FPS: " + currentFPS, 10, 20);
+        //UI
+        ui.draw(g2);
 
         g2.dispose();
+    }
+
+    public void playMusic(int i) {
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+    public void stopMusic() {
+        music.stop();
+    }
+    public void playSE(int i) {
+        se.setFile(i);
+        se.play();
     }
 }
