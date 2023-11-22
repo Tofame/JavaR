@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 public class Entity {
     public int worldX, worldY;
     public int speed;
+    public String name = "Entity";
 
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public String direction;
