@@ -21,8 +21,8 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        setDefaultValues();
         setDefaultImages();
+        setDefaultValues();
 
         screenX = gp.screenWidth/2 - (gp.scale * singleFrameWidth/2);
         screenY = gp.screenHeight/2 - (gp.scale * singleFrameHeight/2);
@@ -39,7 +39,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.tileSize * 23; // Starting X
         worldY = gp.tileSize * 21; // Starting Y, start of the game
-        name = "Tofame";
+        setName("Tofame", true, true);
         speed = 4;
         direction = "down";
     }

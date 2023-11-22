@@ -39,7 +39,7 @@ public class UI {
         g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
 
         // Draw player name
-        drawBorderedText(g2, gp.player.name, gp.player.screenX - (gp.player.name.length() * 3 - 17), gp.player.screenY - 10, hexToColor("#00ef00"), hexToColor("#0d2e03"), martel_15, 1);
+        drawBorderedText(g2, gp.player.name, gp.player.screenX + gp.player.nameOffsetX, gp.player.screenY - 10, hexToColor("#00ef00"), hexToColor("#0d2e03"), verdana_bold_15, 1);
     }
 
     public static Color hexToColor(String hex) {
