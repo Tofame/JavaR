@@ -17,6 +17,7 @@ public class Entity {
     public int spriteNum = 1;
 
     public Rectangle solidArea;
+    public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 
     public int singleFrameWidth = 32; // size of character's sprite single frame
