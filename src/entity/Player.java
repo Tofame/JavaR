@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import main.GamePanel;
 import main.KeyHandler;
@@ -28,10 +27,10 @@ public class Player extends Entity {
 
         // Collision square for player
         solidArea = new Rectangle();
-        solidArea.x = 10 * gp.scale; // 10 <- perfect value for 32x32
-        solidArea.y = 21 * gp.scale; // 21 <- perfect value for 32x32
-        solidArea.width = (int)(singleFrameWidth/3) * gp.scale; // 10 <- perfect value for 32x32
-        solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // 10 <- perfect value for 32x32
+        solidArea.x = 10 * gp.scale; // 10 * <- perfect value for 32x32
+        solidArea.y = 21 * gp.scale; // 21 * <- perfect value for 32x32
+        solidArea.width = (int)(singleFrameWidth/3) * gp.scale; // ~10 <- perfect value for 32x32
+        solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // ~10 <- perfect value for 32x32
     }
     public void setDefaultValues() {
         worldX = gp.tileSize * 23;
@@ -105,36 +104,56 @@ public class Player extends Entity {
 
         switch(direction) {
             case "up":
-                if(spriteNum == 1)
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = upIdle;
+                    else if(spriteNum == 2)
+                        image = up1;
+                    else if(spriteNum == 3)
+                        image = up2;
+                } else {
                     image = upIdle;
-                else if(spriteNum == 2)
-                    image = up1;
-                else if(spriteNum == 3)
-                    image = up2;
+                }
                 break;
             case "down":
-                if(spriteNum == 1)
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = downIdle;
+                    else if(spriteNum == 2)
+                        image = down1;
+                    else if(spriteNum == 3)
+                        image = down2;
+                } else {
                     image = downIdle;
-                else if(spriteNum == 2)
-                    image = down1;
-                else if(spriteNum == 3)
-                    image = down2;
+                }
                 break;
             case "left":
-                if(spriteNum == 1)
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = leftIdle;
+                    else if(spriteNum == 2)
+                        image = left1;
+                    else if(spriteNum == 3)
+                        image = left2;
+                } else {
                     image = leftIdle;
-                else if(spriteNum == 2)
-                    image = left1;
-                else if(spriteNum == 3)
-                    image = left2;
+                }
                 break;
             case "right":
-                if(spriteNum == 1)
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = rightIdle;
+                    else if(spriteNum == 2)
+                        image = right1;
+                    else if(spriteNum == 3)
+                        image = right2;
+                } else {
                     image = rightIdle;
-                else if(spriteNum == 2)
-                    image = right1;
-                else if(spriteNum == 3)
-                    image = right2;
+                }
                 break;
         }
 
