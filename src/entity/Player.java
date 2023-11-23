@@ -24,6 +24,7 @@ public class Player extends Entity {
         setDefaultImages();
         setDefaultValues();
 
+        // Dont change, its like a camera position
         screenX = gp.screenWidth/2 - (gp.scale * singleFrameWidth/2);
         screenY = gp.screenHeight/2 - (gp.scale * singleFrameHeight/2);
 
@@ -37,9 +38,9 @@ public class Player extends Entity {
         solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // ~10 <- perfect value for 32x32
     }
     public void setDefaultValues() {
-        worldX = gp.tileSize * 23; // Starting X
-        worldY = gp.tileSize * 21; // Starting Y, start of the game
-        setName("Tofame", true, true);
+        worldX = 2240; // Starting X position
+        worldY = 2400; // Starting Y position
+        setName("Tofame");
         speed = 4;
         direction = "down";
     }
@@ -114,20 +115,28 @@ public class Player extends Entity {
                     gp.playSE(1);
                     hasKey++;
                     gp.obj[i] = null;
-                    System.out.println("Key: " + hasKey);
+                    gp.ui.showMessage("You got a key!");
                     break;
                 case "Door":
                     if(hasKey > 0) {
                         gp.playSE(3);
                         gp.obj[i] = null;
                         hasKey--;
+                        gp.ui.showMessage("You opened a door!");
+                    } else {
+                        gp.ui.showMessage("You need a key!");
                     }
-                    System.out.println("Key: " + hasKey);
                     break;
                 case "Boots":
                     gp.playSE(2);
-                    speed += 2;
+                    speed += 4;
                     gp.obj[i] = null;
+                    gp.ui.showMessage("You got boots!");
+                    break;
+                case "Chest":
+                    gp.ui.gameFinished = true;
+                    gp.stopMusic();
+                    gp.playSE(4);
                     break;
             }
         }
