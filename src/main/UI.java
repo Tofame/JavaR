@@ -21,6 +21,11 @@ public class UI {
 
     public boolean gameFinished = false;
 
+    // Settings for UI
+    boolean showFPS = true;
+    boolean showCoordinates = true;
+    boolean showPlayTime = true;
+
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
@@ -77,16 +82,21 @@ public class UI {
             g2.setColor(Color.white);
 
             //Draw Play Time
-            playTime += (double)1/60;
-            g2.drawString("Play time: " + dFormat.format(playTime), gp.screenWidth - 270, 200);
-            // Draw FPS if you want to draw FPS then also uncomment in GamePanel in the game loop
-            //g2.drawString("FPS: " + gp.shownFPS, 25, 50);
-            // Draw Key count
-            g2.drawImage(keyImage, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
-            g2.drawString("x " + gp.player.hasKey, 88, 80);
+            if(showPlayTime == true) {
+                playTime += (double)1/60;
+                g2.drawString("Play time: " + dFormat.format(playTime), gp.screenWidth - 270, 200);
+            }
+            // Draw FPS
+            if(showFPS == true)
+                g2.drawString("FPS: " + gp.shownFPS, 25, 50);
             // Draw Coordinates
-            g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);
-            g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
+            if(showCoordinates == true) {
+                g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);
+                g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
+            }
+            // Draw Key count
+            g2.drawImage(keyImage, 20, 75, null);
+            g2.drawString("x " + gp.player.hasKey, 88, 120);
             // Draw player name
             drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1, true);
             // Draw message

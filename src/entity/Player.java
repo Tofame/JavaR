@@ -144,8 +144,8 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) { // Draws player
         // If you want to draw the collision square
-        g2.setColor(Color.RED);
-        g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+        //g2.setColor(Color.RED);
+        //g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
 
         BufferedImage image = null;
 

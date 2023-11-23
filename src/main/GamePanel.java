@@ -93,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1000000000) {
                 //System.out.println("FPS: " + currentFPS);
-                //shownFPS = currentFPS; // if we want to show fps then also uncomment in UI.java
+                shownFPS = currentFPS;
                 currentFPS = 0;
                 timer = 0;
             }

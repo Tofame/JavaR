@@ -27,7 +27,7 @@ public class TileManager {
     }
 
     public void getTileImage() {
-        setupTile(0, "grid", false);
+        setupTile(0, "grass", false);
         setupTile(1, "wall", true);
         setupTile(2, "water", true);
         setupTile(3, "earth", false);
