@@ -6,7 +6,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+import main.UtilityTool;
+
 public class Entity {
+    GamePanel gp;
+
     public int worldX, worldY;
     public int speed;
 
@@ -34,17 +39,20 @@ public class Entity {
     public int singleFrameHeight = 32; // size of character's sprite single frame
 
     public void loadSpriteSheet(String fileName) {
+        UtilityTool uTool = new UtilityTool();
+
         try {
             spriteSheet = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/characters/" + fileName));
             singleFrameWidth = spriteSheet.getWidth() / 4;
             singleFrameHeight = spriteSheet.getHeight() / 3;
+            spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * gp.scale * 4, singleFrameHeight * gp.scale * 3);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private BufferedImage getSprite(int col, int row) {
-        return spriteSheet.getSubimage(col * singleFrameWidth, row * singleFrameHeight, singleFrameWidth, singleFrameHeight);
+        return spriteSheet.getSubimage(col * singleFrameWidth * gp.scale, row * singleFrameHeight * gp.scale, singleFrameWidth * gp.scale, singleFrameHeight * gp.scale);
     }
 
     public void setFrameImages() {

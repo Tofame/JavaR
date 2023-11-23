@@ -9,7 +9,6 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity {
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
@@ -204,6 +203,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, singleFrameWidth * gp.scale, singleFrameHeight * gp.scale, null);
+        g2.drawImage(image, screenX, screenY, null);
     }
 }
