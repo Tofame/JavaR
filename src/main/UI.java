@@ -88,7 +88,7 @@ public class UI {
             g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);
             g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
             // Draw player name
-            drawName(g2, gp.player.name, gp.screenWidth/2, gp.player.screenY - (gp.player.singleFrameHeight/2), 1, true);
+            drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1, true);
             // Draw message
             if(messageOn == true) {
                 g2.setFont(martel_30);

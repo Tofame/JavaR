@@ -20,21 +20,22 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
+        // Collision square for player
+        solidArea = new Rectangle();
+        solidArea.width = 16;
+        solidArea.height = 16;
+        solidArea.x = 0; // X offset of collision
+        solidArea.y = 0; // Y offset of collision
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
+
         setDefaultImages();
         setDefaultValues();
 
         // Dont change, its like a camera position
-        screenX = gp.screenWidth/2 - (gp.scale * singleFrameWidth/2);
-        screenY = gp.screenHeight/2 - (gp.scale * singleFrameHeight/2);
-
-        // Collision square for player
-        solidArea = new Rectangle();
-        solidArea.x = 10 * gp.scale; // 10 * <- perfect value for 32x32
-        solidArea.y = 21 * gp.scale; // 21 * <- perfect value for 32x32
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = (int)(singleFrameWidth/3) * gp.scale; // ~10 <- perfect value for 32x32
-        solidArea.height = (int)(singleFrameHeight/3) * gp.scale; // ~10 <- perfect value for 32x32
+        screenX = gp.screenWidth/2 - (singleFrameWidth/2);
+        screenY = gp.screenHeight/2 - (singleFrameHeight/2);
     }
     public void setDefaultValues() {
         worldX = 2240; // Starting X position
@@ -203,6 +204,6 @@ public class Player extends Entity {
                 break;
         }
 
-        g2.drawImage(image, screenX, screenY, null);
+        g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
     }
 }

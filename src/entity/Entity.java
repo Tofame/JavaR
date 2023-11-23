@@ -26,6 +26,7 @@ public class Entity {
     }
 
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
+    public int spriteOffsetX, spriteOffsetY = 0;
     public String direction;
 
     public int spriteCounter = 0;
@@ -43,16 +44,20 @@ public class Entity {
 
         try {
             spriteSheet = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/characters/" + fileName));
-            singleFrameWidth = spriteSheet.getWidth() / 4;
-            singleFrameHeight = spriteSheet.getHeight() / 3;
-            spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * gp.scale * 4, singleFrameHeight * gp.scale * 3);
+            int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
+            int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
+            singleFrameWidth = tempSingleFrameWidth * gp.scale;
+            singleFrameHeight = tempSingleFrameHeight * gp.scale;
+            spriteOffsetX = -singleFrameWidth/2 + solidArea.width/2;
+            spriteOffsetY = -singleFrameHeight + 18;
+            spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private BufferedImage getSprite(int col, int row) {
-        return spriteSheet.getSubimage(col * singleFrameWidth * gp.scale, row * singleFrameHeight * gp.scale, singleFrameWidth * gp.scale, singleFrameHeight * gp.scale);
+        return spriteSheet.getSubimage(col * singleFrameWidth, row * singleFrameHeight, singleFrameWidth, singleFrameHeight);
     }
 
     public void setFrameImages() {
