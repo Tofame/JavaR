@@ -38,8 +38,8 @@ public class Player extends Entity {
         screenY = gp.screenHeight/2 - (singleFrameHeight/2);
     }
     public void setDefaultValues() {
-        worldX = 2240; // Starting X position
-        worldY = 2400; // Starting Y position
+        worldX = 2240; //2240; // Starting X position, gp.tileSize * 23
+        worldY = 2400; //2400; // Starting Y position
         setName("Tofame");
         speed = 4;
         direction = "down";
