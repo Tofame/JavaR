@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import main.GamePanel;
@@ -94,6 +97,15 @@ public class TileManager {
                 worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
             {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, null);
+                // If you wanted to make sure what has collision and also draw it
+                /*
+                if(tile[tileNum].collision) {
+                    g2.setColor(Color.GRAY);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+                    g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+                }
+                */
             }
             worldCol++;
 
