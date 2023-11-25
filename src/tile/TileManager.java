@@ -36,6 +36,8 @@ public class TileManager {
         setupTile(3, "earth", false);
         setupTile(4, "tree", true);
         setupTile(5, "sand", false);
+        setupTile(6, "64", true);
+        setupTile(7, "hugeGatePortal", true);
     }
 
     public void setupTile(int index, String imagePath, boolean collision) {
@@ -44,7 +46,19 @@ public class TileManager {
         try {
             tile[index] = new Tile();
             tile[index].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/" + imagePath + ".png"));
-            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            int TileWidth = tile[index].image.getWidth() * gp.scale;
+            int TileHeight = tile[index].image.getHeight() * gp.scale;
+            if(TileWidth > gp.tileSize) {
+                tile[index].offsetX = TileWidth - gp.tileSize;
+            } else if (TileWidth < gp.tileSize) {
+                tile[index].offsetX = -TileWidth/2;
+            }
+            if(TileHeight > gp.tileSize) {
+                tile[index].offsetY = TileHeight - gp.tileSize;
+            } else if (TileHeight < gp.tileSize) {
+                tile[index].offsetY = -TileHeight/2;
+            }
+            tile[index].image = uTool.scaleImage(tile[index].image, TileWidth, TileHeight);
             tile[index].collision = collision;
         }catch(IOException e) {
             e.printStackTrace();
@@ -96,12 +110,12 @@ public class TileManager {
                 worldY + gp.player.singleFrameHeight > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
             {
-                g2.drawImage(tile[tileNum].image, screenX, screenY, null);
+                g2.drawImage(tile[tileNum].image, screenX - tile[tileNum].offsetX, screenY - tile[tileNum].offsetY, null);
                 // If you wanted to make sure what has collision and also draw it
                 /*
                 if(tile[tileNum].collision) {
-                    g2.setColor(Color.GRAY);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+                    g2.setColor(Color.RED);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
                     g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
                 }

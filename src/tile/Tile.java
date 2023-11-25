@@ -6,4 +6,6 @@ public class Tile {
     
     public BufferedImage image;
     public boolean collision = false;
+
+    int offsetX, offsetY = 0;
 }
