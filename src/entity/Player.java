@@ -15,7 +15,8 @@ public class Player extends Entity {
     public final int screenY;
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+        super(gp);
+
         this.keyH = keyH;
 
         // Collision square for player
@@ -28,7 +29,7 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
-        setDefaultImages();
+        setDefaultImages("playerSprite.png");
         setDefaultValues();
 
         // Dont change, its like a camera position
@@ -36,16 +37,11 @@ public class Player extends Entity {
         screenY = gp.screenHeight/2 - (singleFrameHeight/2);
     }
     public void setDefaultValues() {
-        worldX = 2240; //2240; // Starting X position, gp.tileSize * 23
-        worldY = 2400; //2400; // Starting Y position
+        worldX = gp.tileSize * 23; //2240; // Starting X position, gp.tileSize * 23
+        worldY = gp.tileSize *21; //2400; // Starting Y position
         setName("Tofame");
         speed = 4;
         direction = "down";
-    }
-
-    public void setDefaultImages() {
-        loadSpriteSheet("playerSprite.png");
-        setFrameImages();
     }
 
     public void update() {
