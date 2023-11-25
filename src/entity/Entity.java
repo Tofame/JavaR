@@ -19,7 +19,7 @@ public class Entity {
 
     public String name = "Entity";
     public String direction = "down";
-    public int speed = 2;
+    public int speed = 1;
 
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public int spriteOffsetX, spriteOffsetY = 0;
@@ -49,6 +49,8 @@ public class Entity {
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
+        gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkPlayer(this);
 
         // IF CONDITION IS FALSE THEN CAN MOVE
         if(collisionOn == false) {
