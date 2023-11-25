@@ -12,7 +12,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
 
-    Font arial_40, arial_80B, verdana_bold_15, martel_30;
+    public static Font arial_40, arial_80B, verdana_bold_15, martel_30;
 
     public boolean messageOn = false;
     public String message = "";
@@ -101,7 +101,7 @@ public class UI {
         return new Color(r, g, b);
     }
 
-    private void drawBorderedText(Graphics2D g2, String text, int x, int y, Color textColor, Color borderColor, Font font, int borderSize) {
+    public void drawBorderedText(Graphics2D g2, String text, int x, int y, Color textColor, Color borderColor, Font font, int borderSize) {
         // drawBorderedText(g2, gp.player.name, gp.player.screenX, gp.player.screenY - 10, hexToColor("#00ef00"), hexToColor("#0d2e03"), verdana_bold_15, 1);
         g2.setFont(font);
         g2.setColor(borderColor);
@@ -114,7 +114,7 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
-    private void drawName(Graphics2D g2, String text, int x, int y, int borderSize, boolean isPlayer) {
+    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize, boolean isPlayer) {
         g2.setFont(verdana_bold_15);
 
         if(isPlayer) {

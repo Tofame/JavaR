@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.UtilityTool;
+import main.UI;
 
 public class Entity {
     GamePanel gp;
@@ -17,8 +18,8 @@ public class Entity {
     public int worldX, worldY;
 
     public String name = "Entity";
-    public String direction;
-    public int speed;
+    public String direction = "down";
+    public int speed = 2;
 
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public int spriteOffsetX, spriteOffsetY = 0;
@@ -29,7 +30,7 @@ public class Entity {
     public int singleFrameWidth = 32; // size of character's sprite single frame
     public int singleFrameHeight = 32; // size of character's sprite single frame
 
-    public Rectangle solidArea = new Rectangle(0, 0, 64, 64);
+    public Rectangle solidArea = new Rectangle(0, 0, 16, 16);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
@@ -148,7 +149,9 @@ public class Entity {
                     break;
             }
 
-            g2.drawImage(image, screenX, screenY, null);
+            g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
+
+            drawName(g2, name, screenX, screenY - singleFrameHeight, 1, false);
         }
     }
 
@@ -204,4 +207,33 @@ public class Entity {
         this.name = name;
     }
 
+    public static Color hexToColor(String hex) {
+        // Remove '#' if present
+        hex = hex.replace("#", "");
+
+        // Convert hex to RGB
+        int r = Integer.parseInt(hex.substring(0, 2), 16);
+        int g = Integer.parseInt(hex.substring(2, 4), 16);
+        int b = Integer.parseInt(hex.substring(4, 6), 16);
+
+        // Create and return Color object
+        return new Color(r, g, b);
+    }
+
+    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize, boolean isPlayer) {
+        g2.setFont(UI.verdana_bold_15);
+        x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
+
+        if(isPlayer) {
+        }
+
+        g2.setColor(hexToColor("#1a2c06"));
+        g2.drawString(text, x + borderSize, y - borderSize);
+        g2.drawString(text, x + borderSize, y + borderSize);
+        g2.drawString(text, x - borderSize, y - borderSize);
+        g2.drawString(text, x - borderSize, y + borderSize);
+
+        g2.setColor(hexToColor("#5ac752"));
+        g2.drawString(text, x, y);
+    }
 }

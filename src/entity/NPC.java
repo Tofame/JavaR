@@ -9,8 +9,6 @@ public class NPC extends Entity {
     public NPC(GamePanel gp, String name, String spritesheetPath) {
         super(gp);
 
-        direction = "down";
-        speed = 4;
         this.name = name;
 
         setDefaultImages(spritesheetPath);
