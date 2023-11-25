@@ -14,7 +14,7 @@ public class FontLoader {
             Font tempFont = Font.createFont(Font.TRUETYPE_FONT, fontFileStream);
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-             ge.registerFont(tempFont);
+            ge.registerFont(tempFont);
             return tempFont.deriveFont(Font.PLAIN, fontSize);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();

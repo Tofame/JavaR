@@ -59,13 +59,13 @@ public class UI {
             text = "You found the treasure!";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 - (int)(gp.player.singleFrameHeight * 3);
+            y = gp.screenHeight/2 - (int)(gp.player.singleFrameHeight * 1.5);
             g2.drawString(text, x, y);
 
             text = "Your time is: " + dFormat.format(playTime) + "!";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 + (int)(gp.player.singleFrameHeight * 8);
+            y = gp.screenHeight/2 + (int)(gp.player.singleFrameHeight * 2);
             g2.drawString(text, x, y);
 
             g2.setFont(arial_80B);
@@ -73,7 +73,7 @@ public class UI {
             text = "Congratulations!";
             textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
             x = gp.screenWidth/2 - textLength/2;
-            y = gp.screenHeight/2 + (int)(gp.player.singleFrameHeight * 5);
+            y = gp.screenHeight/2 + (int)(gp.player.singleFrameHeight * 3.5);
             g2.drawString(text, x, y);
 
             gp.gameThread = null;
@@ -84,7 +84,7 @@ public class UI {
             //Draw Play Time
             if(showPlayTime == true) {
                 playTime += (double)1/60;
-                g2.drawString("Play time: " + dFormat.format(playTime), gp.screenWidth - 270, 200);
+                g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 30);
             }
             // Draw FPS
             if(showFPS == true)
@@ -97,11 +97,8 @@ public class UI {
             // Draw Key count
             g2.drawImage(keyImage, 20, 75, null);
             g2.drawString("x " + gp.player.hasKey, 88, 120);
-            // Draw player name
-            drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1, true);
             // Draw message
             if(messageOn == true) {
-                g2.setFont(martel_30);
                 g2.drawString(message, gp.tileSize/2, gp.tileSize*5);
 
                 messageCounter++;
@@ -111,6 +108,8 @@ public class UI {
                     messageOn = false;
                 }
             }
+            // Draw player name
+            drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1, true);
         }
     }
 
