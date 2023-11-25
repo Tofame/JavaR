@@ -21,6 +21,13 @@ public class Entity {
     public String direction = "down";
     public int speed = 1;
 
+    public enum CreatureType {
+        MONSTER,
+        PLAYER,
+        NPC
+    };
+    CreatureType creatureType;
+
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public int spriteOffsetX, spriteOffsetY = 0;
 
@@ -30,8 +37,9 @@ public class Entity {
     public int singleFrameWidth = 32; // size of character's sprite single frame
     public int singleFrameHeight = 32; // size of character's sprite single frame
 
-    public Rectangle solidArea = new Rectangle(0, 0, 16, 16);
-    public int solidAreaDefaultX, solidAreaDefaultY;
+    public Rectangle solidArea = new Rectangle(0, 0, 0, 0);
+    public int solidAreaDefaultX = 0;
+    public int solidAreaDefaultY = 0;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
 
@@ -90,9 +98,9 @@ public class Entity {
             worldY + gp.player.singleFrameHeight > gp.player.worldY - gp.player.screenY &&
             worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
         {
-            // If you want to draw the collision square NPC
+            // If you want to draw the collision square NPC/Monster
             g2.setColor(Color.RED);
-            g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+            g2.fillRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
 
             BufferedImage image = null;
 
@@ -153,7 +161,7 @@ public class Entity {
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
 
-            drawName(g2, name, screenX, screenY - singleFrameHeight, 1, false);
+            drawName(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
         }
     }
 
@@ -222,12 +230,12 @@ public class Entity {
         return new Color(r, g, b);
     }
 
-    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize, boolean isPlayer) {
+    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize) {
         g2.setFont(UI.verdana_bold_15);
         x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
 
-        if(isPlayer) {
-        }
+        //if(creatureType == 0) {
+        //}
 
         g2.setColor(hexToColor("#1a2c06"));
         g2.drawString(text, x + borderSize, y - borderSize);

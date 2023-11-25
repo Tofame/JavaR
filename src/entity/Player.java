@@ -19,12 +19,13 @@ public class Player extends Entity {
 
         this.keyH = keyH;
 
+        this.creatureType = CreatureType.PLAYER;
         // Collision square for player
         solidArea = new Rectangle();
-        solidArea.width = 16;
-        solidArea.height = 16;
-        solidArea.x = 0; // X offset of collision
-        solidArea.y = 0; // Y offset of collision
+        solidArea.width = 26;
+        solidArea.height = 32;
+        solidArea.x = -2; // X offset of collision
+        solidArea.y = -24; // Y offset of collision
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
@@ -33,8 +34,8 @@ public class Player extends Entity {
         setDefaultValues();
 
         // Dont change, its like a camera position
-        screenX = gp.screenWidth/2 - (singleFrameWidth/2);
-        screenY = gp.screenHeight/2 - (singleFrameHeight/2);
+        screenX = gp.screenWidth/2;
+        screenY = gp.screenHeight/2;
     }
     public void setDefaultValues() {
         worldX = gp.tileSize * 23; //2240; // Starting X position, gp.tileSize * 23
@@ -118,8 +119,8 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) { // Draws player
         // If you want to draw the collision square
-        //g2.setColor(Color.RED);
-        //g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+        g2.setColor(Color.ORANGE);
+        g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
 
         BufferedImage image = null;
 

@@ -67,8 +67,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setNPC();
+        aSetter.setupObjects();
+        aSetter.setupNPCs();
         playMusic(0);
         stopMusic();
         gameState = playState;
@@ -142,14 +142,14 @@ public class GamePanel extends JPanel implements Runnable {
                 obj[i].draw(g2, this);
             }
         }
+        //PLAYER
+        player.draw(g2);
         // NPC
         for(int i = 0; i < npc.length; i++) {
             if(npc[i] != null) {
                 npc[i].draw(g2);
             }
         }
-        //PLAYER
-        player.draw(g2);
         //UI
         ui.draw(g2);
 

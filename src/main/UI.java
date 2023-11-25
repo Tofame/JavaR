@@ -6,8 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
-import object.OBJ_Key;
-
 public class UI {
     GamePanel gp;
     Graphics2D g2;
@@ -57,6 +55,8 @@ public class UI {
     }
 
     public void drawPlayScreen() {
+        // Draw center of the screen
+        // g2.fillRect(gp.screenWidth/2 - 10, gp.screenHeight/2 - 10, 20, 20);
         //Draw Play Time
         if(showPlayTime == true) {
             playTime += (double)1/60;

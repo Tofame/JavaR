@@ -10,6 +10,7 @@ public class NPC extends Entity {
         super(gp);
 
         this.name = name;
+        this.creatureType = CreatureType.NPC;
 
         setDefaultImages(spritesheetPath);
     }
