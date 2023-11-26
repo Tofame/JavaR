@@ -43,15 +43,19 @@ public class Entity {
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
 
+    public String dialogues[] = new String[20];
+    public int dialogueIndex;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
 
     // Methods of Entity
-    public void setAction() {
+    public void setAction() {}
 
-    }
+    public void speak() {}
+
     public void update() {
         setAction();
 
@@ -217,19 +221,6 @@ public class Entity {
         this.name = name;
     }
 
-    public static Color hexToColor(String hex) {
-        // Remove '#' if present
-        hex = hex.replace("#", "");
-
-        // Convert hex to RGB
-        int r = Integer.parseInt(hex.substring(0, 2), 16);
-        int g = Integer.parseInt(hex.substring(2, 4), 16);
-        int b = Integer.parseInt(hex.substring(4, 6), 16);
-
-        // Create and return Color object
-        return new Color(r, g, b);
-    }
-
     public void drawName(Graphics2D g2, String text, int x, int y, int borderSize) {
         g2.setFont(UI.verdana_bold_15);
         x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
@@ -250,13 +241,13 @@ public class Entity {
                 break;
         }
 
-        g2.setColor(hexToColor("#1a2c06"));
+        g2.setColor(UI.hexToColor("#1a2c06", 255));
         g2.drawString(text, x + borderSize, y - borderSize);
         g2.drawString(text, x + borderSize, y + borderSize);
         g2.drawString(text, x - borderSize, y - borderSize);
         g2.drawString(text, x - borderSize, y + borderSize);
 
-        g2.setColor(hexToColor(nameColorHex));
+        g2.setColor(UI.hexToColor(nameColorHex, 255));
         g2.drawString(text, x, y);
     }
 }

@@ -15,6 +15,8 @@ public class AssetSetter {
 
     public void setupNPCs() {
         configureNPC("hugeBandit.png", 0, "Old man", 21, 21, 46, 30, 0, 0);
+        String[] tempDialogues = { "Hi, they call me a bike stealer, but call me an Old man.", "Im a tibia pro.", "Cwiras, cwiras, cwiras." };
+        configureNPCDialogues(0, tempDialogues);
     }
 
     // Methods for simplyfying the processs
@@ -39,6 +41,12 @@ public class AssetSetter {
         if(collisionOffsetY != 0) {
             gp.npc[index].solidArea.y = collisionOffsetY;
             gp.npc[index].solidAreaDefaultY = collisionOffsetY;
+        }
+    }
+
+    public void configureNPCDialogues(int npcIndex, String[] dialogues) {
+        for(int i = 0; i < dialogues.length; i++) {
+            gp.npc[npcIndex].dialogues[i] = dialogues[i];
         }
     }
 

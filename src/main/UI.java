@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ public class UI {
     int messageCounter = 0;
 
     public boolean gameFinished = false;
+    public String currentDialogue = "";
 
     // Settings for UI
     boolean showFPS = true;
@@ -51,7 +53,7 @@ public class UI {
         } else if(gp.gameState == gp.pauseState) {
             drawPauseScreen();
         } else if(gp.gameState == gp.dialogueState) {
-            // drawDialogueScreen();
+            drawDialogueScreen();
         }
     }
 
@@ -81,13 +83,40 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
+    public void drawDialogueScreen() {
+        // WINDOW
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize/2;
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 4;
+
+        drawSubWindow(x, y, width, height);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26));
+        x += gp.tileSize;
+        y += gp.tileSize;
+        for(String line : currentDialogue.split("\n")) {
+            g2.drawString(line, x, y);
+            y += 40;
+        }
+    }
+
+    public void drawSubWindow(int x, int y, int width, int height) {
+        g2.setColor(hexToColor("#000000", 140));
+        g2.fillRoundRect(x, y, width, height, 35, 35);
+
+        g2.setColor(hexToColor("#ffffff", 255));
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+    }
+
     public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
         return x;
-    } 
+    }
 
-    public static Color hexToColor(String hex) {
+    public static Color hexToColor(String hex, int transparency) {
         // Remove '#' if present
         hex = hex.replace("#", "");
 
@@ -97,11 +126,11 @@ public class UI {
         int b = Integer.parseInt(hex.substring(4, 6), 16);
 
         // Create and return Color object
-        return new Color(r, g, b);
+        return new Color(r, g, b, transparency);
     }
 
     public void drawBorderedText(Graphics2D g2, String text, int x, int y, Color textColor, Color borderColor, Font font, int borderSize) {
-        // drawBorderedText(g2, gp.player.name, gp.player.screenX, gp.player.screenY - 10, hexToColor("#00ef00"), hexToColor("#0d2e03"), verdana_bold_15, 1);
+        // drawBorderedText(g2, gp.player.name, gp.player.screenX, gp.player.screenY - 10, hexToColor("#00ef00", 255), hexToColor("#0d2e03", 255), verdana_bold_15, 1);
         g2.setFont(font);
         g2.setColor(borderColor);
         g2.drawString(text, x + borderSize, y - borderSize);
