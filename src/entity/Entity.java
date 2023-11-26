@@ -234,8 +234,21 @@ public class Entity {
         g2.setFont(UI.verdana_bold_15);
         x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
 
-        //if(creatureType == 0) {
-        //}
+        String nameColorHex;
+        switch(creatureType) {
+            case PLAYER:
+                nameColorHex = "#5ac752";
+                break;
+            case MONSTER:
+                nameColorHex = "#6b001d";
+                break;
+            case NPC:
+                nameColorHex = "#286eb8";
+                break;
+            default:
+                nameColorHex = "#5ac752";
+                break;
+        }
 
         g2.setColor(hexToColor("#1a2c06"));
         g2.drawString(text, x + borderSize, y - borderSize);
@@ -243,7 +256,7 @@ public class Entity {
         g2.drawString(text, x - borderSize, y - borderSize);
         g2.drawString(text, x - borderSize, y + borderSize);
 
-        g2.setColor(hexToColor("#5ac752"));
+        g2.setColor(hexToColor(nameColorHex));
         g2.drawString(text, x, y);
     }
 }
