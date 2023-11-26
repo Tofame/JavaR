@@ -180,5 +180,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
+
+        drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1);
     }
 }

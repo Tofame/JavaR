@@ -48,9 +48,10 @@ public class UI {
 
         if(gp.gameState == gp.playState) {
             drawPlayScreen();
-        }
-        if(gp.gameState == gp.pauseState) {
+        } else if(gp.gameState == gp.pauseState) {
             drawPauseScreen();
+        } else if(gp.gameState == gp.dialogueState) {
+            // drawDialogueScreen();
         }
     }
 
@@ -70,8 +71,6 @@ public class UI {
             g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);
             g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
         }
-        // Draw player name
-        drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1, true);
     }
 
     public void drawPauseScreen() {
@@ -111,23 +110,6 @@ public class UI {
         g2.drawString(text, x - borderSize, y + borderSize);
 
         g2.setColor(textColor);
-        g2.drawString(text, x, y);
-    }
-
-    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize, boolean isPlayer) {
-        g2.setFont(verdana_bold_15);
-
-        if(isPlayer) {
-            x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
-        }
-
-        g2.setColor(hexToColor("#1a2c06"));
-        g2.drawString(text, x + borderSize, y - borderSize);
-        g2.drawString(text, x + borderSize, y + borderSize);
-        g2.drawString(text, x - borderSize, y - borderSize);
-        g2.drawString(text, x - borderSize, y + borderSize);
-
-        g2.setColor(hexToColor("#5ac752"));
         g2.drawString(text, x, y);
     }
 }
