@@ -38,6 +38,8 @@ public class UI {
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    UtilityTool uTool = new UtilityTool();
+
     public UI(GamePanel gp) {
         this.gp = gp;
 
@@ -52,7 +54,6 @@ public class UI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        UtilityTool uTool = new UtilityTool();
         titleScreenImage = uTool.scaleImage(titleScreenImage, gp.screenWidth, gp.screenHeight);
     }
 
