@@ -5,13 +5,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
+import main.UtilityTool;
 
 public class UI {
     GamePanel gp;
     Graphics2D g2;
 
-    public static Font arial_40, arial_80B, verdana_bold_15, martel_30;
+    public static Font arial_40, arial_80B, verdana_bold_15, verdana_bold_35, martel_60;
 
     public boolean messageOn = false;
     public String message = "";
@@ -19,6 +24,11 @@ public class UI {
 
     public boolean gameFinished = false;
     public String currentDialogue = "";
+
+    public int commandNum = 0;
+
+    // Title Screen Settings
+    BufferedImage titleScreenImage;
 
     // Settings for UI
     boolean showFPS = true;
@@ -34,7 +44,16 @@ public class UI {
         arial_40 = new Font("Arial", Font.PLAIN, 40);
         arial_80B = new Font("Arial", Font.BOLD, 80);
         verdana_bold_15 = new Font("Verdana Bold", Font.PLAIN, 15);
-        martel_30 = FontLoader.loadFont("martel.ttf", 30);
+        verdana_bold_35 = new Font("Verdana Bold", Font.PLAIN, 35);
+        martel_60 = FontLoader.loadFont("martel.ttf", 60);
+
+        try {
+            titleScreenImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/title/titleScreen.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        UtilityTool uTool = new UtilityTool();
+        titleScreenImage = uTool.scaleImage(titleScreenImage, gp.screenWidth, gp.screenHeight);
     }
 
     public void showMessage(String text) {
@@ -48,12 +67,58 @@ public class UI {
         g2.setFont(arial_40);
         g2.setColor(Color.white);
 
-        if(gp.gameState == gp.playState) {
+        if(gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        } else if(gp.gameState == gp.playState) {
             drawPlayScreen();
         } else if(gp.gameState == gp.pauseState) {
             drawPauseScreen();
         } else if(gp.gameState == gp.dialogueState) {
             drawDialogueScreen();
+        }
+    }
+
+    public void drawTitleScreen() {
+        // DRAW BACKGROUND
+        g2.drawImage(titleScreenImage, 0, 0, null);
+
+        // TITLE NAME
+        g2.setFont(martel_60);
+        String text = "Tibia TMS JAVA";
+        int x = getXforCenteredText(text);
+        int y = gp.tileSize * 3;
+        // SHADOW
+        g2.setColor(Color.black);
+        g2.drawString(text, x+5, y+5);
+        // MAIN COLOR
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
+
+        // MENU
+        g2.setFont(verdana_bold_35);
+
+        text = "ENTER NEW GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize * 8;
+        g2.drawString(text, x, y);
+        if(commandNum == 0) {
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "LOAD GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if(commandNum == 1) {
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "EXIT GAME";
+        x = getXforCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y);
+        if(commandNum == 2) {
+            g2.drawString(">", x-gp.tileSize, y);
         }
     }
 
