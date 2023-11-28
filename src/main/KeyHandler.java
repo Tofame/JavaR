@@ -56,7 +56,7 @@ public class KeyHandler implements KeyListener {
                 }
                 if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                     gp.ui.commandNum++;
-                    if(gp.ui.commandNum > gp.charCreator.amountOfBodyParts + 1 /* body parts + confirm <- amount of options */) {
+                    if(gp.ui.commandNum > gp.charCreator.amountOfBodyParts + 2 /* body parts + confirm <- amount of options */) {
                         gp.ui.commandNum = 0;
                     }
                 }
@@ -134,8 +134,12 @@ public class KeyHandler implements KeyListener {
                 }
                 if (code == KeyEvent.VK_ENTER) {
                     if(gp.ui.commandNum == gp.charCreator.amountOfBodyParts + 1) {
-                        // its confirm
+                        // its confirm -> going to class selection
                         gp.ui.titleScreenState = 2;
+                        gp.ui.commandNum = 0;
+                    } else if(gp.ui.commandNum == gp.charCreator.amountOfBodyParts + 2) {
+                        // its back to title screen
+                        gp.ui.titleScreenState = 0;
                         gp.ui.commandNum = 0;
                     }
                 }
@@ -169,7 +173,7 @@ public class KeyHandler implements KeyListener {
                         gp.gameState = gp.playState;
                         gp.playMusic(0);
                     } else if(gp.ui.commandNum == 3) {
-                        gp.ui.titleScreenState = 0;
+                        gp.ui.titleScreenState = 1;
                         gp.ui.commandNum = 0;
                     }
                 }

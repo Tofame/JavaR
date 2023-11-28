@@ -80,9 +80,9 @@ public class UI {
         if(titleScreenState == 0) {
             drawGameTitleScreen(gp.tileSize*3, gp.tileSize*11);
         } else if(titleScreenState == 1) {
-            drawCharacterCreationScreen(gp.tileSize*3, gp.tileSize*4, gp.tileSize*2);
+            drawCharacterCreationScreen(gp.tileSize*2, gp.tileSize*3, gp.tileSize*2);
         } else if(titleScreenState == 2) {
-            drawClassSelectionScreen(gp.tileSize*3, gp.tileSize*3);
+            drawClassSelectionScreen(gp.tileSize*3, gp.tileSize*6);
         }
     }
 
@@ -245,15 +245,22 @@ public class UI {
 
         int rectHeight = 70;
         int rectWidth = 170;
-        if(commandNum > gp.charCreator.amountOfBodyParts) {
+        if(commandNum == gp.charCreator.amountOfBodyParts + 1) { // Confirm
             // "Confirm" is selected
-            drawRoundBorderedRect("#797a7a", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.6), rectWidth, rectHeight);
+            drawRoundBorderedRect("#797a7a", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*3), rectWidth, rectHeight);
         } else { // Confirm is not selected
-            drawRoundBorderedRect("#000000", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.6), rectWidth, rectHeight);
+            drawRoundBorderedRect("#000000", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*3), rectWidth, rectHeight);
+        }
+        if(commandNum == gp.charCreator.amountOfBodyParts + 2) { // Back
+            // "Back" is selected
+            drawRoundBorderedRect("#797a7a", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.9), rectWidth, rectHeight);
+        } else { // Back is not selected
+            drawRoundBorderedRect("#000000", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.9), rectWidth, rectHeight);
         }
 
-        // Confirm "Button"
-        g2.drawString("Confirm", getXforCenteredText("Confirm"), gp.screenHeight - gp.tileSize);
+        // Confirm && Back "Buttons"
+        g2.drawString("Confirm", getXforCenteredText("Confirm"), gp.screenHeight - (int)(gp.tileSize*2.6));
+        g2.drawString("Back", getXforCenteredText("Back"), gp.screenHeight - (int)(gp.tileSize*1.3));
 
         // Setup of outfits etc.
         g2.setFont(g2.getFont().deriveFont(32F));
@@ -277,8 +284,7 @@ public class UI {
         OptionsY += constDistanceBodyParts;
         g2.drawString(text, x, OptionsY);
 
-        gp.charCreator.drawCurrentOutfitElements(g2);
-
+        gp.charCreator.drawCurrentOutfitElements(g2, -gp.tileSize*1);
         g2.drawImage(gp.charCreator.playerSpritesheetSingleFrame, gp.screenWidth-gp.tileSize*6, gp.tileSize * 7, null);
     }
 

@@ -148,11 +148,11 @@ public class CharacterCreation {
         gp.player.spriteSheet = combinedImage;
     }
 
-    public void drawCurrentOutfitElements(Graphics2D g2) {
-        g2.drawImage(singleFrameBody, gp.ui.getXforCenteredImage(singleFrameBody), gp.tileSize*4, null);
-        g2.drawImage(singleFrameHair, gp.ui.getXforCenteredImage(singleFrameHair), gp.tileSize*6 + 25 /* offset for hair display */, null);
-        g2.drawImage(singleFrameCloth, gp.ui.getXforCenteredImage(singleFrameCloth), gp.tileSize*8, null);
-        g2.drawImage(singleFrameLegs, gp.ui.getXforCenteredImage(singleFrameLegs), gp.tileSize*10, null);
+    public void drawCurrentOutfitElements(Graphics2D g2, int offsetY) {
+        g2.drawImage(singleFrameBody, gp.ui.getXforCenteredImage(singleFrameBody), gp.tileSize*4 + offsetY, null);
+        g2.drawImage(singleFrameHair, gp.ui.getXforCenteredImage(singleFrameHair), gp.tileSize*6 + offsetY + 25 /* offset for hair display */, null);
+        g2.drawImage(singleFrameCloth, gp.ui.getXforCenteredImage(singleFrameCloth), gp.tileSize*8 + offsetY, null);
+        g2.drawImage(singleFrameLegs, gp.ui.getXforCenteredImage(singleFrameLegs), gp.tileSize*10 + offsetY, null);
     }
 
     public void countBodyParts(String folderPath, String[] keywords) {
