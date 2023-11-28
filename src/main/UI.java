@@ -82,84 +82,11 @@ public class UI {
 
     public void drawTitleScreen() {
         if(titleScreenState == 0) {
-            drawFirstTitleScreen(gp.tileSize*3, gp.tileSize*11);
+            drawGameTitleScreen(gp.tileSize*3, gp.tileSize*11);
         } else if(titleScreenState == 1) {
-            // CHARACTER CREATION SCREEN
-            g2.setColor(Color.white);
-            g2.setFont(g2.getFont().deriveFont(42F));
-
-            String text = "Create your character";
-            int x = getXforCenteredText(text);
-            int y = gp.tileSize * 3;
-            g2.drawString(text, x, y);
-
-            // Setup of outfits etc.
-            g2.setFont(g2.getFont().deriveFont(32F));
-
-            text = "Body";
-            x = getXforCenteredText(text);
-            y = gp.tileSize * 4;
-            g2.drawString(text, x, y);
-
-            text = "Hair";
-            x = getXforCenteredText(text);
-            y += gp.tileSize * 2;
-            g2.drawString(text, x, y);
-
-            text = "Cloth";
-            x = getXforCenteredText(text);
-            y += gp.tileSize * 2;
-            g2.drawString(text, x, y);
-
-            text = "Legs";
-            x = getXforCenteredText(text);
-            y += gp.tileSize * 2;
-            g2.drawString(text, x, y);
-
-            gp.charCreator.drawCurrentOutfitElements(g2);
-
-            g2.drawImage(gp.charCreator.playerSpritesheetSingleFrame, gp.screenWidth-gp.tileSize*6, gp.tileSize * 7, null);
+            drawCharacterCreationScreen(gp.tileSize*3, gp.tileSize*4, gp.tileSize*2);
         } else if(titleScreenState == 2) {
-            // CLASS SELECTION SCREEN
-            g2.setColor(Color.white);
-            g2.setFont(g2.getFont().deriveFont(42F));
-
-            String text = "Select your class";
-            int x = getXforCenteredText(text);
-            int y = gp.tileSize * 3;
-            g2.drawString(text, x, y);
-
-            text = "Warrior";
-            x = getXforCenteredText(text);
-            y += gp.tileSize * 3;
-            g2.drawString(text, x, y);
-            if(commandNum == 0) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "Rogue";
-            x = getXforCenteredText(text);
-            y += gp.tileSize;
-            g2.drawString(text, x, y);
-            if(commandNum == 1) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "Sorcerer";
-            x = getXforCenteredText(text);
-            y += gp.tileSize;
-            g2.drawString(text, x, y);
-            if(commandNum == 2) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "Back";
-            x = getXforCenteredText(text);
-            y += gp.tileSize;
-            g2.drawString(text, x, y);
-            if(commandNum == 3) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
+            drawClassSelectionScreen(gp.tileSize*3, gp.tileSize*3);
         }
     }
 
@@ -196,7 +123,7 @@ public class UI {
         int width = gp.screenWidth - (gp.tileSize * 4);
         int height = gp.tileSize * 4;
 
-        drawSubWindow(x, y, width, height);
+        drawSubWindow("#000000", "#ffffff", x, y, width, height);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26));
         x += gp.tileSize;
@@ -207,11 +134,20 @@ public class UI {
         }
     }
 
-    public void drawSubWindow(int x, int y, int width, int height) {
-        g2.setColor(hexToColor("#000000", 140));
+    public void drawSubWindow(String fillColor, String borderColor,int x, int y, int width, int height) {
+        g2.setColor(hexToColor(fillColor, 140));
         g2.fillRoundRect(x, y, width, height, 35, 35);
 
-        g2.setColor(hexToColor("#ffffff", 255));
+        g2.setColor(hexToColor(borderColor, 255));
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+    }
+
+    public void drawRoundBorderedRect(String fillColor, String borderColor, int x, int y, int width, int height) {
+        g2.setColor(hexToColor(fillColor, 140));
+        g2.fillRoundRect(x, y, width, height, 35, 35);
+
+        g2.setColor(hexToColor(borderColor, 255));
         g2.setStroke(new BasicStroke(5));
         g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
     }
@@ -254,7 +190,7 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
-    public void drawFirstTitleScreen(int titleY, int titleOptionsY) {
+    public void drawGameTitleScreen(int titleY, int titleOptionsY) {
         // DRAW BACKGROUND
         g2.drawImage(titleScreenImage, 0, 0, null);
 
@@ -293,6 +229,101 @@ public class UI {
         g2.drawString(text, x, titleOptionsY);
         if(commandNum == 2) {
             g2.drawString(">", x-gp.tileSize, titleOptionsY);
+        }
+    }
+
+    public void drawCharacterCreationScreen(int titleY, int OptionsY, int constDistanceBodyParts) {
+        // CHARACTER CREATION SCREEN
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(42F));
+
+        String text = "Customize your character";
+        int x = getXforCenteredText(text);
+        g2.drawString(text, x, titleY);
+
+        // DRAW THE FOCUS ON ELEMENT - e.g. currently body is changed
+        if(commandNum <= gp.charCreator.amountOfBodyParts) {
+            drawRoundBorderedRect("#000000", "#ffffff", gp.screenWidth/2 - 40, OptionsY + commandNum * constDistanceBodyParts, 76, 100);
+            g2.drawString("<           >", gp.screenWidth/2 - 90, 60 + OptionsY + commandNum * constDistanceBodyParts);
+        }
+
+        int rectHeight = 70;
+        int rectWidth = 170;
+        if(commandNum > gp.charCreator.amountOfBodyParts) {
+            // "Confirm" is selected
+            drawRoundBorderedRect("#797a7a", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.6), rectWidth, rectHeight);
+        } else { // Confirm is not selected
+            drawRoundBorderedRect("#000000", "#ffffff", gp.screenWidth/2 - rectWidth/2, gp.screenHeight - (int)(rectHeight*1.6), rectWidth, rectHeight);
+        }
+
+        // Confirm "Button"
+        g2.drawString("Confirm", getXforCenteredText("Confirm"), gp.screenHeight - gp.tileSize);
+
+        // Setup of outfits etc.
+        g2.setFont(g2.getFont().deriveFont(32F));
+
+        text = "Body";
+        x = getXforCenteredText(text);
+        g2.drawString(text, x, OptionsY);
+
+        text = "Hair";
+        x = getXforCenteredText(text);
+        OptionsY += constDistanceBodyParts;
+        g2.drawString(text, x, OptionsY);
+
+        text = "Cloth";
+        x = getXforCenteredText(text);
+        OptionsY += constDistanceBodyParts;
+        g2.drawString(text, x, OptionsY);
+
+        text = "Legs";
+        x = getXforCenteredText(text);
+        OptionsY += constDistanceBodyParts;
+        g2.drawString(text, x, OptionsY);
+
+        gp.charCreator.drawCurrentOutfitElements(g2);
+
+        g2.drawImage(gp.charCreator.playerSpritesheetSingleFrame, gp.screenWidth-gp.tileSize*6, gp.tileSize * 7, null);
+    }
+
+    public void drawClassSelectionScreen(int titleY, int OptionsY) {
+        // CLASS SELECTION SCREEN
+        g2.setColor(Color.white);
+        g2.setFont(g2.getFont().deriveFont(42F));
+
+        String text = "Select your class";
+        int x = getXforCenteredText(text);
+        g2.drawString(text, x, titleY);
+
+        text = "Warrior";
+        x = getXforCenteredText(text);
+        g2.drawString(text, x, OptionsY);
+        if(commandNum == 0) {
+            g2.drawString(">", x-gp.tileSize, OptionsY);
+        }
+
+        text = "Rogue";
+        x = getXforCenteredText(text);
+        OptionsY += gp.tileSize;
+        g2.drawString(text, x, OptionsY);
+        if(commandNum == 1) {
+            g2.drawString(">", x-gp.tileSize, OptionsY);
+        }
+
+        text = "Sorcerer";
+        x = getXforCenteredText(text);
+        OptionsY += gp.tileSize;
+        g2.drawString(text, x, OptionsY);
+        if(commandNum == 2) {
+            g2.drawString(">", x-gp.tileSize, OptionsY);
+        }
+
+        text = "Back";
+        x = getXforCenteredText(text);
+        OptionsY += gp.tileSize;
+        g2.drawString(text, x, OptionsY);
+        if(commandNum == 3) {
+            g2.drawString(">", x-gp.tileSize, OptionsY);
         }
     }
 }
