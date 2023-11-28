@@ -8,10 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-import javax.imageio.ImageIO;
-
-import main.UtilityTool;
-
 public class UI {
     GamePanel gp;
     Graphics2D g2;

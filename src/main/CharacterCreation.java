@@ -13,8 +13,6 @@ public class CharacterCreation {
     // Character Images variables
     BufferedImage playerSpritesheetSingleFrame;
 
-    BufferedImage combinedImageOrigin; // combined image in outfit creator will take its base image from here
-
     BufferedImage emptyBodyPart; // when cloth,hair or legs werent selected yet
     BufferedImage bodyImage;
     BufferedImage hairImage;
@@ -35,8 +33,6 @@ public class CharacterCreation {
         this.gp = gp;
 
         try {
-            combinedImageOrigin = uTool.loadImage("res/characterCreator/body00.png");
-
             this.bodyImage = uTool.loadImage("res/characterCreator/body00.png");
             emptyBodyPart = uTool.loadImage("res/characterCreator/A_empty.png");
             emptyBodyPart = uTool.scaleImage(emptyBodyPart, gp.player.singleFrameWidth, gp.player.singleFrameHeight);
