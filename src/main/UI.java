@@ -133,38 +133,32 @@ public class UI {
             int y = gp.tileSize * 3;
             g2.drawString(text, x, y);
 
-            // Body Selection
+            // Setup of outfits etc.
+            g2.setFont(g2.getFont().deriveFont(32F));
+
             text = "Body";
-            x = getXforCenteredText(text) - 100;
-            y += gp.tileSize * 3;
-            g2.drawString(text, x, y);
-            if(commandNum == 0) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "Rogue";
             x = getXforCenteredText(text);
-            y += gp.tileSize;
+            y = gp.tileSize * 4;
             g2.drawString(text, x, y);
-            if(commandNum == 1) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
 
-            text = "Sorcerer";
+            text = "Hair";
             x = getXforCenteredText(text);
-            y += gp.tileSize;
+            y += gp.tileSize * 2;
             g2.drawString(text, x, y);
-            if(commandNum == 2) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
 
-            text = "Back";
+            text = "Cloth";
             x = getXforCenteredText(text);
-            y += gp.tileSize;
+            y += gp.tileSize * 2;
             g2.drawString(text, x, y);
-            if(commandNum == 3) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
+
+            text = "Legs";
+            x = getXforCenteredText(text);
+            y += gp.tileSize * 2;
+            g2.drawString(text, x, y);
+
+            gp.charCreator.drawCurrentOutfitElements(g2);
+
+            g2.drawImage(gp.charCreator.playerSpritesheetSingleFrame, gp.screenWidth-gp.tileSize*6, gp.tileSize * 7, null);
         } else if(titleScreenState == 2) {
             // CLASS SELECTION SCREEN
             g2.setColor(Color.white);
@@ -270,7 +264,7 @@ public class UI {
 
     public int getXforCenteredImage(BufferedImage image) {
         int length = image.getWidth();
-        int x = gp.screenWidth/2 - length;
+        int x = gp.screenWidth/2 - length/2;
         return x;
     }
 

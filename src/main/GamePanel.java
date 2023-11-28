@@ -41,7 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
     // SYSTEM
     TileManager  tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
-    CharacterCreation charC = new CharacterCreation(this);
     Sound music = new Sound();
     Sound se = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -53,6 +52,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10]; // [10] means 10 object MAX at one time at screen
     public Entity npc[] = new Entity[10]; // [10] means 10 NPC MAX at one time at screen
+
+    // SYSTEM: Character creator (must be initialized after Player is already existing btw)
+    CharacterCreation charCreator = new CharacterCreation(this);
 
     // GAME STATE
     public int gameState;
