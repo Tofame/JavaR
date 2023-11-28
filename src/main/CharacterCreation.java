@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class CharacterCreation {
@@ -9,6 +10,12 @@ public class CharacterCreation {
     UtilityTool uTool = new UtilityTool();
 
     public final int amountOfBodyParts = 3; // 3: 0-body, 1-hair, 2-cloth, 3-legs
+    // Count amount of each body part files, so we can see the max in e.g. keyHandler
+    String[] bodyKeywords = {"body", "legs", "cloth", "hair"};
+    int bodyParts = 0;
+    int legsParts = 0;
+    int clothParts = 0;
+    int hairParts = 0;
 
     // Character Images variables
     BufferedImage playerSpritesheetSingleFrame;
@@ -31,6 +38,8 @@ public class CharacterCreation {
 
     public CharacterCreation(GamePanel gp) {
         this.gp = gp;
+
+        countBodyParts("src/res/characterCreator", bodyKeywords);
 
         try {
             this.bodyImage = uTool.loadImage("res/characterCreator/body00.png");
@@ -134,8 +143,9 @@ public class CharacterCreation {
         } else if(currentlyLoadedLegsIndex != 0) {
             combinedImage = uTool.combineImages(combinedImage, legsImage);
         }
-        gp.player.spriteSheet = combinedImage;
+
         playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", combinedImage, 5);
+        gp.player.spriteSheet = combinedImage;
     }
 
     public void drawCurrentOutfitElements(Graphics2D g2) {
@@ -143,5 +153,38 @@ public class CharacterCreation {
         g2.drawImage(singleFrameHair, gp.ui.getXforCenteredImage(singleFrameHair), gp.tileSize*6 + 25 /* offset for hair display */, null);
         g2.drawImage(singleFrameCloth, gp.ui.getXforCenteredImage(singleFrameCloth), gp.tileSize*8, null);
         g2.drawImage(singleFrameLegs, gp.ui.getXforCenteredImage(singleFrameLegs), gp.tileSize*10, null);
+    }
+
+    public void countBodyParts(String folderPath, String[] keywords) {
+        File folder = new File(folderPath);
+        // Get the list of files in the directory
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) { // if is a file - not a folder
+                    // Check if the file name contains any of the specified keywords
+                    for (String keyword : keywords) {
+                        if (file.getName().startsWith(keyword)) {
+                            switch (keyword) {
+                                case "body":
+                                    bodyParts++;
+                                    break;
+                                case "legs":
+                                    legsParts++;
+                                    break;
+                                case "cloth":
+                                    clothParts++;
+                                    break;
+                                case "hair":
+                                    hairParts++;
+                                    break;
+                            }
+                            break; // optimization
+                        }
+                    }
+                }
+            }
+        }
     }
 }

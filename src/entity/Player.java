@@ -30,7 +30,7 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
-        setDefaultImages("playerSprite.png");
+        setDefaultImages("playerSprite.png", false);
         setDefaultValues();
 
         // Dont change, its like a camera position

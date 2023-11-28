@@ -52,11 +52,11 @@ public class KeyHandler implements KeyListener {
                     gp.ui.commandNum--;
                     if(gp.ui.commandNum < 0) {
                         gp.ui.commandNum = 3;
-                    } 
+                    }
                 }
                 if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
                     gp.ui.commandNum++;
-                    if(gp.ui.commandNum > 3) {
+                    if(gp.ui.commandNum > gp.charCreator.amountOfBodyParts + 1 /* body parts + confirm <- amount of options */) {
                         gp.ui.commandNum = 0;
                     }
                 }
@@ -65,50 +65,79 @@ public class KeyHandler implements KeyListener {
                         case 0:
                             if(gp.charCreator.chosenBodyIndex > 0) {
                                 gp.charCreator.chosenBodyIndex--;
-                                gp.charCreator.setupCharacterOutfit(false);
+                            } else { // if its 0 and we are still going <
+                                gp.charCreator.chosenBodyIndex = gp.charCreator.bodyParts - 1; // we go to the last body, btw -1 because we have body00. Other body parts wont have -1.
                             }
+                            gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 1:
                             if(gp.charCreator.chosenHairIndex > 0) {
                                 gp.charCreator.chosenHairIndex--;
-                                gp.charCreator.setupCharacterOutfit(false);
+                            } else { // if its 0 and we are still going <
+                                gp.charCreator.chosenHairIndex = gp.charCreator.hairParts; // we go to the last hair
                             }
+                            gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 2:
                             if(gp.charCreator.chosenClothIndex > 0) {
                                 gp.charCreator.chosenClothIndex--;
-                                gp.charCreator.setupCharacterOutfit(false);
+                            } else { // if its 0 and we are still going <
+                                gp.charCreator.chosenClothIndex = gp.charCreator.clothParts; // we go to the last cloth
                             }
+                            gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 3:
                             if(gp.charCreator.chosenLegsIndex > 0) {
                                 gp.charCreator.chosenLegsIndex--;
-                                gp.charCreator.setupCharacterOutfit(false);
+                            } else { // if its 0 and we are still going <
+                                gp.charCreator.chosenLegsIndex = gp.charCreator.legsParts; // we go to the last legs
                             }
+                            gp.charCreator.setupCharacterOutfit(false);
                             break;
                     }
                 }
                 if (gp.ui.commandNum <= gp.charCreator.amountOfBodyParts && (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT)) {
                     switch(gp.ui.commandNum) {
                         case 0:
-                            gp.charCreator.chosenBodyIndex++;
+                            if(gp.charCreator.chosenBodyIndex < gp.charCreator.bodyParts - 1 /* same reason for -1 as earlier, we start with body00 */)
+                                gp.charCreator.chosenBodyIndex++;
+                            else {
+                                gp.charCreator.chosenBodyIndex = 0;
+                            }
                             gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 1:
-                            gp.charCreator.chosenHairIndex++;
+                            if(gp.charCreator.chosenHairIndex < gp.charCreator.hairParts)
+                                gp.charCreator.chosenHairIndex++;
+                            else {
+                                gp.charCreator.chosenHairIndex = 0;
+                            }
                             gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 2:
-                            gp.charCreator.chosenClothIndex++;
+                            if(gp.charCreator.chosenClothIndex < gp.charCreator.clothParts)
+                                gp.charCreator.chosenClothIndex++;
+                            else {
+                                gp.charCreator.chosenClothIndex = 0;
+                            }
                             gp.charCreator.setupCharacterOutfit(false);
                             break;
                         case 3:
-                            gp.charCreator.chosenLegsIndex++;
+                            if(gp.charCreator.chosenLegsIndex < gp.charCreator.legsParts)
+                                gp.charCreator.chosenLegsIndex++;
+                            else {
+                                gp.charCreator.chosenLegsIndex = 0;
+                            }
                             gp.charCreator.setupCharacterOutfit(false);
                             break;
                     }
                 }
                 if (code == KeyEvent.VK_ENTER) {
+                    if(gp.ui.commandNum == gp.charCreator.amountOfBodyParts + 1) {
+                        // its confirm
+                        gp.ui.titleScreenState = 2;
+                        gp.ui.commandNum = 0;
+                    }
                 }
             } else if(gp.ui.titleScreenState == 2) { // CLASS SELECTION
                 if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -126,14 +155,17 @@ public class KeyHandler implements KeyListener {
                 if (code == KeyEvent.VK_ENTER) {
                     if(gp.ui.commandNum == 0) {
                         System.out.println("Warrior");
+                        gp.player.setDefaultImages("", true);
                         gp.gameState = gp.playState;
                         gp.playMusic(0);
                     } else if(gp.ui.commandNum == 1) {
                         System.out.println("Rogue");
+                        gp.player.setDefaultImages("", true);
                         gp.gameState = gp.playState;
                         gp.playMusic(0);
                     } else if(gp.ui.commandNum == 2) {
                         System.out.println("Sorcerer");
+                        gp.player.setDefaultImages("", true);
                         gp.gameState = gp.playState;
                         gp.playMusic(0);
                     } else if(gp.ui.commandNum == 3) {

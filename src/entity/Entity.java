@@ -13,6 +13,7 @@ import main.UI;
 
 public class Entity {
     GamePanel gp;
+    UtilityTool uTool = new UtilityTool();
 
     public int worldX, worldY;
 
@@ -168,16 +169,26 @@ public class Entity {
         }
     }
 
-    public void setDefaultImages(String fileName) {
-        loadSpriteSheet(fileName);
+    public void setDefaultImages(String fileName, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
+        loadSpriteSheet(fileName, spriteSheetExists);
         setFrameImages();
     }
 
-    public void loadSpriteSheet(String fileName) {
-        UtilityTool uTool = new UtilityTool();
-
-        try {
-            spriteSheet = uTool.loadImage("res/characters/" + fileName);
+    public void loadSpriteSheet(String fileName, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
+        if(!spriteSheetExists) {
+            try {
+                spriteSheet = uTool.loadImage("res/characters/" + fileName);
+                int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
+                int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
+                singleFrameWidth = tempSingleFrameWidth * gp.scale;
+                singleFrameHeight = tempSingleFrameHeight * gp.scale;
+                spriteOffsetX = -singleFrameWidth/2 + solidArea.width/2;
+                spriteOffsetY = -singleFrameHeight + 18;
+                spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
             int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
             singleFrameWidth = tempSingleFrameWidth * gp.scale;
@@ -185,8 +196,6 @@ public class Entity {
             spriteOffsetX = -singleFrameWidth/2 + solidArea.width/2;
             spriteOffsetY = -singleFrameHeight + 18;
             spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

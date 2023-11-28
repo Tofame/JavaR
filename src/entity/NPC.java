@@ -12,7 +12,7 @@ public class NPC extends Entity {
         this.name = name;
         this.creatureType = CreatureType.NPC;
 
-        setDefaultImages(spritesheetPath);
+        setDefaultImages(spritesheetPath, false);
     }
 
     public void setAction() {
