@@ -82,47 +82,7 @@ public class UI {
 
     public void drawTitleScreen() {
         if(titleScreenState == 0) {
-            // DRAW BACKGROUND
-            g2.drawImage(titleScreenImage, 0, 0, null);
-
-            // TITLE NAME
-            g2.setFont(martel_60);
-            String text = "Tibia TMS JAVA";
-            int x = getXforCenteredText(text);
-            int y = gp.tileSize * 3;
-            // SHADOW
-            g2.setColor(Color.black);
-            g2.drawString(text, x+5, y+5);
-            // MAIN COLOR
-            g2.setColor(Color.white);
-            g2.drawString(text, x, y);
-
-            // MENU
-            g2.setFont(verdana_bold_35);
-
-            text = "ENTER NEW GAME";
-            x = getXforCenteredText(text);
-            y += gp.tileSize * 8;
-            g2.drawString(text, x, y);
-            if(commandNum == 0) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "LOAD GAME";
-            x = getXforCenteredText(text);
-            y += gp.tileSize;
-            g2.drawString(text, x, y);
-            if(commandNum == 1) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
-
-            text = "EXIT GAME";
-            x = getXforCenteredText(text);
-            y += gp.tileSize;
-            g2.drawString(text, x, y);
-            if(commandNum == 2) {
-                g2.drawString(">", x-gp.tileSize, y);
-            }
+            drawFirstTitleScreen(gp.tileSize*3, gp.tileSize*11);
         } else if(titleScreenState == 1) {
             // CHARACTER CREATION SCREEN
             g2.setColor(Color.white);
@@ -292,5 +252,47 @@ public class UI {
 
         g2.setColor(textColor);
         g2.drawString(text, x, y);
+    }
+
+    public void drawFirstTitleScreen(int titleY, int titleOptionsY) {
+        // DRAW BACKGROUND
+        g2.drawImage(titleScreenImage, 0, 0, null);
+
+        // TITLE NAME
+        g2.setFont(martel_60);
+        String text = "Tibia TMS JAVA";
+        int x = getXforCenteredText(text);
+        // SHADOW
+        g2.setColor(Color.black);
+        g2.drawString(text, x+5, titleY+5);
+        // MAIN COLOR
+        g2.setColor(Color.white);
+        g2.drawString(text, x, titleY);
+
+        // MENU
+        g2.setFont(verdana_bold_35);
+
+        text = "ENTER NEW GAME";
+        x = getXforCenteredText(text);
+        g2.drawString(text, x, titleOptionsY);
+        if(commandNum == 0) {
+            g2.drawString(">", x-gp.tileSize, titleOptionsY);
+        }
+
+        text = "LOAD GAME";
+        x = getXforCenteredText(text);
+        titleOptionsY += gp.tileSize;
+        g2.drawString(text, x, titleOptionsY);
+        if(commandNum == 1) {
+            g2.drawString(">", x-gp.tileSize, titleOptionsY);
+        }
+
+        text = "EXIT GAME";
+        x = getXforCenteredText(text);
+        titleOptionsY += gp.tileSize;
+        g2.drawString(text, x, titleOptionsY);
+        if(commandNum == 2) {
+            g2.drawString(">", x-gp.tileSize, titleOptionsY);
+        }
     }
 }

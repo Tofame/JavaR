@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 public class CharacterCreation {
     GamePanel gp;
     UtilityTool uTool = new UtilityTool();
@@ -90,9 +88,9 @@ public class CharacterCreation {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            gp.player.spriteSheet = combinedImage;
-            playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", combinedImage, 5);
+            combinedImage = uTool.combineImages(combinedImage, clothImage);
+            singleFrameCloth = uTool.getIdleFrameOfSpritesheet("down", this.clothImage, 3);
+            currentlyLoadedClothIndex = chosenClothIndex;
         }
         if(chosenLegsIndex != currentlyLoadedLegsIndex || initialization) {
             try {
@@ -108,13 +106,13 @@ public class CharacterCreation {
                 e.printStackTrace();
             }
         }
-        
-
+        gp.player.spriteSheet = combinedImage;
+        playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", combinedImage, 5);
     }
 
     public void drawCurrentOutfitElements(Graphics2D g2) {
         g2.drawImage(singleFrameBody, gp.ui.getXforCenteredImage(singleFrameBody), gp.tileSize*4, null);
-        g2.drawImage(singleFrameHair, gp.ui.getXforCenteredImage(singleFrameHair), gp.tileSize*6, null);
+        g2.drawImage(singleFrameHair, gp.ui.getXforCenteredImage(singleFrameHair), gp.tileSize*6 + 25 /* offset for hair display */, null);
         g2.drawImage(singleFrameCloth, gp.ui.getXforCenteredImage(singleFrameCloth), gp.tileSize*8, null);
         g2.drawImage(singleFrameLegs, gp.ui.getXforCenteredImage(singleFrameLegs), gp.tileSize*10, null);
     }
