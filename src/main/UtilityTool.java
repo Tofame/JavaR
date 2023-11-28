@@ -1,7 +1,11 @@
 package main;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class UtilityTool {
     public BufferedImage scaleImage(BufferedImage original, int width, int height) {
@@ -27,5 +31,10 @@ public class UtilityTool {
 
         g2.dispose();
         return combinedImage;
+    }
+
+    public BufferedImage loadImage(String path) throws IOException {
+        BufferedImage image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
+        return image;
     }
 }

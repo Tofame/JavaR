@@ -37,10 +37,14 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     public Sound() {
-        soundURL[0] = getClass().getClassLoader().getResource("res/sound/BlueBoyAdventure.wav");
-        soundURL[1] = getClass().getClassLoader().getResource("res/sound/coin.wav");
-        soundURL[2] = getClass().getClassLoader().getResource("res/sound/powerup.wav");
-        soundURL[3] = getClass().getClassLoader().getResource("res/sound/unlock.wav");
+        loadSound(0, "res/sound/BlueBoyAdventure.wav");
+        loadSound(1, "res/sound/coin.wav");
+        loadSound(2, "res/sound/powerup.wav");
+        loadSound(3, "res/sound/unlock.wav");
+    }
+
+    public void loadSound(int index, String path) {
+        soundURL[index] = getClass().getClassLoader().getResource(path);
     }
 
     public void setFile(int i) {

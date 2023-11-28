@@ -82,7 +82,7 @@ public class TileManager {
 
         try {
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/tiles/" + imagePath + ".png"));
+            tile[index].image = uTool.loadImage("res/tiles/" + imagePath + ".png");
             int TileWidth = tile[index].image.getWidth() * gp.scale;
             int TileHeight = tile[index].image.getHeight() * gp.scale;
             if(TileWidth > gp.tileSize) {

@@ -51,7 +51,7 @@ public class UI {
         martel_60 = FontLoader.loadFont("martel.ttf", 60);
 
         try {
-            titleScreenImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/title/titleScreen.png"));
+            titleScreenImage = uTool.loadImage("res/title/titleScreen.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,6 +121,48 @@ public class UI {
             y += gp.tileSize;
             g2.drawString(text, x, y);
             if(commandNum == 2) {
+                g2.drawString(">", x-gp.tileSize, y);
+            }
+        } else if(titleScreenState == 1) {
+            // CHARACTER CREATION SCREEN
+            g2.setColor(Color.white);
+            g2.setFont(g2.getFont().deriveFont(42F));
+
+            String text = "Create your character";
+            int x = getXforCenteredText(text);
+            int y = gp.tileSize * 3;
+            g2.drawString(text, x, y);
+
+            // Body Selection
+            text = "Body";
+            x = getXforCenteredText(text) - 100;
+            y += gp.tileSize * 3;
+            g2.drawString(text, x, y);
+            if(commandNum == 0) {
+                g2.drawString(">", x-gp.tileSize, y);
+            }
+
+            text = "Rogue";
+            x = getXforCenteredText(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if(commandNum == 1) {
+                g2.drawString(">", x-gp.tileSize, y);
+            }
+
+            text = "Sorcerer";
+            x = getXforCenteredText(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if(commandNum == 2) {
+                g2.drawString(">", x-gp.tileSize, y);
+            }
+
+            text = "Back";
+            x = getXforCenteredText(text);
+            y += gp.tileSize;
+            g2.drawString(text, x, y);
+            if(commandNum == 3) {
                 g2.drawString(">", x-gp.tileSize, y);
             }
         } else if(titleScreenState == 2) {
@@ -223,6 +265,12 @@ public class UI {
     public int getXforCenteredText(String text) {
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidth/2 - length/2;
+        return x;
+    }
+
+    public int getXforCenteredImage(BufferedImage image) {
+        int length = image.getWidth();
+        int x = gp.screenWidth/2 - length;
         return x;
     }
 

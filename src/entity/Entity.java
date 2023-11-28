@@ -178,7 +178,7 @@ public class Entity {
         UtilityTool uTool = new UtilityTool();
 
         try {
-            spriteSheet = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/characters/" + fileName));
+            spriteSheet = uTool.loadImage("res/characters/" + fileName);
             int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
             singleFrameWidth = tempSingleFrameWidth * gp.scale;
