@@ -20,6 +20,11 @@ public class Entity {
     public String name = "Entity";
     public String direction = "down";
     public int speed = 1;
+    // CHARACTER STATS
+    String healthBarColor = "#00b800";
+    public int maxHealth = 100;
+    public int health = 100;
+    public float healthPercent = (float)health/maxHealth;
 
     public enum CreatureType {
         MONSTER,
@@ -165,7 +170,7 @@ public class Entity {
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
 
-            drawName(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
+            drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
         }
     }
 
@@ -182,7 +187,7 @@ public class Entity {
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
                 singleFrameWidth = tempSingleFrameWidth * gp.scale;
                 singleFrameHeight = tempSingleFrameHeight * gp.scale;
-                spriteOffsetX = -singleFrameWidth/2 + solidArea.width/2;
+                spriteOffsetX = -singleFrameWidth/2;
                 spriteOffsetY = -singleFrameHeight + 18;
                 spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
             } catch (IOException e) {
@@ -193,7 +198,7 @@ public class Entity {
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
             singleFrameWidth = tempSingleFrameWidth * gp.scale;
             singleFrameHeight = tempSingleFrameHeight * gp.scale;
-            spriteOffsetX = -singleFrameWidth/2 + solidArea.width/2;
+            spriteOffsetX = -singleFrameWidth/2;
             spriteOffsetY = -singleFrameHeight + 18;
             spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
         }
@@ -229,7 +234,28 @@ public class Entity {
         this.name = name;
     }
 
-    public void drawName(Graphics2D g2, String text, int x, int y, int borderSize) {
+    public void drawNameAndHealth(Graphics2D g2, String text, int x, int y, int borderSize) {
+        // Draw Health here
+        //g2.drawRect(x, y + 15, 100, 10);
+        if(healthPercent == 1) { // light green hp
+            healthBarColor = "#00b800";
+        } else if(healthPercent > 0.6) { // green hp
+            healthBarColor = "#4e9e4e";
+        } else if(healthPercent > 0.3) { // yellow hp
+            healthBarColor = "#9e9e00";
+        } else if(healthPercent > 0.01) { // red hp
+            healthBarColor = "#8e0f0f";
+        } else { // dark red hp
+            healthBarColor = "#2b0f0f";
+        }
+        // Outline
+        g2.setColor(Color.BLACK);
+        g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 8 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
+
+        g2.setColor(UI.hexToColor(healthBarColor, 255));
+        g2.fillRect(x - gp.healthBarWidth/2, y + 8, (int)(healthPercent * gp.healthBarWidth), gp.healthBarHeight);
+        //g2.drawRect(x - gp.healthBarWidth/2, y + 5, gp.healthBarWidth + 4, gp.healthBarHeight + 4);
+
         g2.setFont(UI.verdana_bold_15);
         x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
 

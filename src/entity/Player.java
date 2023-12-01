@@ -24,8 +24,8 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.width = 26;
         solidArea.height = 32;
-        solidArea.x = -2; // X offset of collision
-        solidArea.y = -24; // Y offset of collision
+        solidArea.x = -solidArea.width/2; // X offset of collision
+        solidArea.y = -18; // Y offset of collision
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
@@ -43,6 +43,11 @@ public class Player extends Entity {
         setName("Tofame");
         speed = 4;
         direction = "down";
+
+        // PLAYER STATS
+        maxHealth = 100;
+        health = 55;
+        healthPercent = (float)health/maxHealth;
     }
 
     public void update() {
@@ -185,6 +190,6 @@ public class Player extends Entity {
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
 
-        drawName(g2, gp.player.name, gp.player.screenX + 7, gp.player.screenY - gp.player.singleFrameHeight - 5, 1);
+        drawNameAndHealth(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
     }
 }

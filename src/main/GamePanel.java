@@ -31,6 +31,10 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldWith = tileSize * maxWorldCol; // not used anywhere
     public final int worldRow = tileSize * maxWorldRow; // not used anywhere -> useless, but lets keep it
 
+    // HEALTH BAR SETTINGS
+    public final int healthBarWidth = 30;
+    public final int healthBarHeight = 3;
+
     // FPS
     int FPS = 60; // limit of fps
     int currentFPS = 0; // fps counted 1-max
@@ -74,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         aSetter.setupObjects();
         aSetter.setupNPCs();
-        //playMusic(0);
         gameState = titleState;
     }
 
