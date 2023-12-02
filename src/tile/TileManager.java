@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import main.GamePanel;
@@ -148,9 +148,7 @@ public class TileManager {
                 /*
                 if(tile[tileNum].collision) {
                     g2.setColor(Color.RED);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-                    g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+                    g2.drawRect(screenX - 1, screenY - 1, gp.tileSize, gp.tileSize);
                 }
                 */
             }
