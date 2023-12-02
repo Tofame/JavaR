@@ -1,6 +1,6 @@
 # JavaR: Simple RPG Engine
 
-JavaR is a free and open-source RPG engine written in Java. This project is developed from scratch, following the tutorial series by [RyiSnow](https://www.youtube.com/@RyiSnow/featured). 
+JavaR is a free and open-source RPG engine written in Java (Anything from /res folder is NOT open source. Only the code is). This project is developed from scratch, following the tutorial series by [RyiSnow](https://www.youtube.com/@RyiSnow/featured). 
 It provides a foundation for creating your own RPG or you can further develop this one.
 
 ### Support
