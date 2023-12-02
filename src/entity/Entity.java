@@ -57,6 +57,11 @@ public class Entity {
 
 
     // Methods of Entity
+    public void changeHealth(int healthAmount) {
+        health = health + healthAmount;
+        healthPercent = (float)health/maxHealth;
+    }
+
     public void setAction() {}
 
     public void speak() {}
@@ -107,10 +112,6 @@ public class Entity {
             worldY + gp.player.singleFrameHeight > gp.player.worldY - gp.player.screenY &&
             worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
         {
-            // If you want to draw the collision square NPC/Monster
-            g2.setColor(Color.RED);
-            g2.fillRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
-
             BufferedImage image = null;
 
             switch(direction) {
@@ -169,8 +170,10 @@ public class Entity {
             }
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-
             drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
+            // If you want to draw the collision square NPC/Monster
+            g2.setColor(Color.RED);
+            g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
         }
     }
 

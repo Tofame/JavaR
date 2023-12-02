@@ -77,6 +77,11 @@ public class Player extends Entity {
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            // CHECK EVENT COLLISION
+            gp.eHandler.checkEvent();
+
+            gp.keyH.enterPressed = false;
+
             // IF CONDITION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false) {
                 switch(direction) {
@@ -123,14 +128,9 @@ public class Player extends Entity {
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
     }
 
     public void draw(Graphics2D g2) { // Draws player
-        // If you want to draw the collision square
-        g2.setColor(Color.ORANGE);
-        g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
-
         BufferedImage image = null;
 
         switch(direction) {
@@ -189,7 +189,10 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-
         drawNameAndHealth(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
+
+        // If you want to draw the collision square
+        g2.setColor(Color.ORANGE);
+        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
     }
 }
