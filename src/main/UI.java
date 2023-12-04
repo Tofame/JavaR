@@ -28,7 +28,6 @@ public class UI {
     public int titleScreenState = 0; // 0: the new/load game screen, 1: character creation screen, 2: character class choose screen
 
     // Settings for UI
-    boolean showFPS = true;
     boolean showCoordinates = true;
     boolean showPlayTime = true;
 
@@ -94,9 +93,6 @@ public class UI {
             playTime += (double)1/60;
             g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 30);
         }
-        // Draw FPS
-        if(showFPS == true)
-            g2.drawString("FPS: " + gp.shownFPS, 25, 50);
         // Draw Coordinates
         if(showCoordinates == true) {
             g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);

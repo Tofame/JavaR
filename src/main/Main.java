@@ -9,15 +9,23 @@ public class Main {
         window.setResizable(false);
         window.setTitle("TMS_Java");
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        GamePanel gp = new GamePanel();
+        window.add(gp);
 
+        //window.pack();
+
+        //window.setLocationRelativeTo(null);
+        //window.setVisible(true);
+
+        gp.setupGame();
+        gp.startGameThread();
+
+        DrawLogic drawLogic = new DrawLogic(gp);
+        drawLogic.startDrawThread();
+        window.add(drawLogic);
         window.pack();
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
-        gamePanel.setupGame();
-        gamePanel.startGameThread();
     }
 }

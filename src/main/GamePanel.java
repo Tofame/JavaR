@@ -35,12 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int healthBarWidth = 30;
     public final int healthBarHeight = 3;
 
-    // FPS
-    int FPS = 60; // limit of fps
-    int currentFPS = 0; // fps counted 1-max
-    public int shownFPS = FPS; // shown fps (just before reset)
-
-    Font fpsFont = new Font("Arial", Font.PLAIN, 12);
+    // REFRESH RATE (akin to FPS)
+    private static final int maxFPS = 60;
 
     // SYSTEM
     TileManager  tileM = new TileManager(this);
@@ -69,8 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -89,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        double drawInterval = 1000000000 / FPS; // ≈ 0.0167 seconds
+        double drawInterval = 1000000000 / maxFPS; // ≈ 0.0167 seconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -103,15 +97,10 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= 1) {
                 update();
-                repaint();
                 delta--;
-                currentFPS++;
             }
 
             if (timer >= 1000000000) {
-                //System.out.println("FPS: " + currentFPS);
-                shownFPS = currentFPS;
-                currentFPS = 0;
                 timer = 0;
             }
         }
@@ -130,54 +119,6 @@ public class GamePanel extends JPanel implements Runnable {
         if(gameState == pauseState) {
             // nothing
         }
-    }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-        // DEBUG
-        long drawStart = 0;
-        if(keyH.checkDrawTime == true)
-        {
-            drawStart = System.nanoTime();
-        }
-
-        // TITLE SCREEN
-        if(gameState == titleState) {
-            ui.draw(g2);
-        }
-        // OTHERS
-        else {
-          // This includes drawing order
-            // TILE
-            tileM.draw(g2);
-            // OBJECT
-            for(int i = 0; i < obj.length; i++) {
-                if(obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-            //PLAYER
-            player.draw(g2);
-            // NPC
-            for(int i = 0; i < npc.length; i++) {
-                if(npc[i] != null) {
-                    npc[i].draw(g2);
-                }
-            }
-            //UI
-            ui.draw(g2);
-        }
-
-        //DEBUG END
-        if(keyH.checkDrawTime == true) {
-            long drawEnd = System.nanoTime();
-            long passed = drawEnd - drawStart;
-            g2.setColor(Color.white);
-            g2.drawString("Draw time: " + passed, 10, 500);
-            System.out.println("Draw time: " + passed);
-        }
-
-        g2.dispose();
     }
 
     public void playMusic(int i) {
