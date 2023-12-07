@@ -75,4 +75,20 @@ public class UtilityTool {
         }
         return resultImage;
     }
+
+    public BufferedImage combineTileImages(BufferedImage groundImage, BufferedImage wallImage, int combineOffsetX, int combineOffsetY) {
+        // Determine the dimensions of the combined image
+        int combinedWidth = Math.max(groundImage.getWidth(), wallImage.getWidth());
+        int combinedHeight = Math.max(groundImage.getHeight(), wallImage.getHeight());
+
+        BufferedImage combinedImage = new BufferedImage(combinedWidth, combinedHeight, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2 = combinedImage.createGraphics();
+
+        g2.drawImage(groundImage, combineOffsetX, combineOffsetY, null);
+        g2.drawImage(wallImage, 0, 0, null);
+
+        g2.dispose();
+        return combinedImage;
+    }
 }

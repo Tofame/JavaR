@@ -71,6 +71,7 @@ public class TileManager {
         setupTile(39, "earth", false);
         setupTile(40, "wall", true);
         setupTile(41, "tree", true);
+        setupTile(42, "hugeGatePortal", true);
     }
 
     public void setupTile(int index, String imagePath, boolean collision) {
@@ -81,18 +82,28 @@ public class TileManager {
             tile[index].image = uTool.loadImage("res/tiles/" + imagePath + ".png");
             int TileWidth = tile[index].image.getWidth() * gp.scale;
             int TileHeight = tile[index].image.getHeight() * gp.scale;
+
+            int combineTileOffsetX = 0;
+            int combineTileOffsetY = 0;
             if(TileWidth > gp.tileSize) {
                 tile[index].offsetX = TileWidth - gp.tileSize;
+                combineTileOffsetX = TileWidth - gp.tileSize;
             } else if (TileWidth < gp.tileSize) {
-                tile[index].offsetX = -TileWidth/2;
+                //tile[index].offsetX = -TileWidth/2;
             }
             if(TileHeight > gp.tileSize) {
                 tile[index].offsetY = TileHeight - gp.tileSize;
+                combineTileOffsetY = TileHeight - gp.tileSize;
             } else if (TileHeight < gp.tileSize) {
-                tile[index].offsetY = -TileHeight/2;
+                //tile[index].offsetY = -TileHeight/2;
             }
             tile[index].image = uTool.scaleImage(tile[index].image, TileWidth, TileHeight);
             tile[index].collision = collision;
+
+            // Test
+            if(index == 42 || index == 40) {
+                tile[index].image = uTool.combineTileImages(tile[10].image, tile[index].image, combineTileOffsetX, combineTileOffsetY);
+            }
         }catch(IOException e) {
             e.printStackTrace();
         }
