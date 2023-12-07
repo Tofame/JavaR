@@ -71,7 +71,7 @@ public class Player extends Entity {
 
             // CHECK OBJECT COLLISION
             int objIndex = gp.cChecker.checkObject(this, true);
-            pickUpObject(objIndex);
+            interactObject(objIndex);
 
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -115,7 +115,7 @@ public class Player extends Entity {
         }
     }
 
-    public void pickUpObject(int i) {
+    public void interactObject(int i) {
         if(i != 999) {
 
         }

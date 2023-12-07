@@ -1,6 +1,8 @@
 package main;
 
 import entity.NPC;
+import object.OBJ_Door;
+import object.SuperObject;
 
 public class AssetSetter {
     GamePanel gp;
@@ -10,7 +12,7 @@ public class AssetSetter {
     }
 
     public void setupObjects() {
-
+        loadObject(0, 26, 21, "door", "Door", true);
     }
 
     public void setupNPCs() {
@@ -50,4 +52,10 @@ public class AssetSetter {
         }
     }
 
+    public void loadObject(int index, int x, int y, String spriteName, String name, boolean hasCollision) {
+        gp.obj[0] = new SuperObject(gp, spriteName, name);
+        gp.obj[0].worldX = gp.tileSize * x;
+        gp.obj[0].worldY = gp.tileSize * y;
+        gp.obj[0].collision = true;
+    }
 }
