@@ -171,9 +171,11 @@ public class Entity {
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
             drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
-            // If you want to draw the collision square NPC/Monster
-            g2.setColor(Color.RED);
-            g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+
+            if(GamePanel.drawCollisions) {
+                g2.setColor(Color.RED);
+                g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+            }
         }
     }
 

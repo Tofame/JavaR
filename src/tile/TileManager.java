@@ -144,13 +144,12 @@ public class TileManager {
                 worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
             {
                 g2.drawImage(tile[tileNum].image, screenX - tile[tileNum].offsetX, screenY - tile[tileNum].offsetY, null);
-                // If you wanted to make sure what has collision and also draw it
-                /*
-                if(tile[tileNum].collision) {
-                    g2.setColor(Color.RED);
-                    g2.drawRect(screenX - 1, screenY - 1, gp.tileSize, gp.tileSize);
+                if(GamePanel.drawTileCollisions) {
+                    if(tile[tileNum].collision) {
+                        g2.setColor(Color.RED);
+                        g2.drawRect(screenX - 1, screenY - 1, gp.tileSize, gp.tileSize);
+                    }
                 }
-                */
             }
             worldCol++;
 

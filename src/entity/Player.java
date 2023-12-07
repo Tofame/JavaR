@@ -191,8 +191,9 @@ public class Player extends Entity {
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
         drawNameAndHealth(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
 
-        // If you want to draw the collision square
-        g2.setColor(Color.ORANGE);
-        g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+        if(GamePanel.drawCollisions) {
+            g2.setColor(Color.ORANGE);
+            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+        }
     }
 }

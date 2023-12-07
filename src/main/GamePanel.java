@@ -32,6 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     // REFRESH RATE (akin to FPS)
     private static final int maxFPS = 60;
 
+    // OTHER SETTINGS
+    public static final boolean drawCollisions = true; // entities, objects
+    public static final boolean drawTileCollisions = false; // tiles
+
     // SYSTEM
     TileManager  tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);

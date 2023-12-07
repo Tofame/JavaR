@@ -39,9 +39,10 @@ public class SuperObject {
             worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
         {
             g2.drawImage(image, screenX, screenY, null);
-            // If you want to draw the collision square on Object
-            g2.setColor(Color.ORANGE);
-            g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+            if(GamePanel.drawCollisions) {
+                g2.setColor(Color.ORANGE);
+                g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+            }
         }
     }
 }
