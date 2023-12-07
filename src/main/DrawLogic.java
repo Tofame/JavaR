@@ -13,7 +13,7 @@ public class DrawLogic extends JPanel implements Runnable {
 
     // SETTINGS
         // FPS
-    static final int maxDrawFPS = 25; // the higher it is, the more frequent the drawing is
+    static final int maxDrawFPS = 60; // the higher it is, the more frequent the drawing is
 
     public DrawLogic(GamePanel gp) {
         this.gp = gp;
