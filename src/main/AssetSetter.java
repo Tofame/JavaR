@@ -1,18 +1,26 @@
 package main;
 
+import java.io.IOException;
+
+import entity.Entity;
 import entity.NPC;
 import object.SuperObject;
 
 public class AssetSetter {
     GamePanel gp;
+    UtilityTool uTool = new UtilityTool();
 
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
     }
 
     public void setupObjects() {
-        loadObject(0, 26, 21, "door", "Door", true);
-        loadObject(0, 26, 21, "hugeGatePortal", "Portal", true);
+        loadObject(0, 26, 18, "door", "Door", true, true);
+
+        loadObject(1, 24, 21, "hugeGatePortal", "Portal", true, false);
+
+        loadObject(2, 24, 18, "door", "Door", true, false);
+        setObjectOffset(2, true, false, 16, 16);
     }
 
     public void setupNPCs() {
@@ -52,10 +60,39 @@ public class AssetSetter {
         }
     }
 
-    public void loadObject(int index, int x, int y, String spriteName, String name, boolean hasCollision) {
-        gp.obj[0] = new SuperObject(gp, spriteName, name);
-        gp.obj[0].worldX = gp.tileSize * x;
-        gp.obj[0].worldY = gp.tileSize * y;
-        gp.obj[0].collision = hasCollision;
+    public void loadObject(int index, int x, int y, String spriteName, String name, boolean hasCollision, boolean forceTileSize) {
+        gp.obj[index] = new SuperObject(gp, name);
+        gp.obj[index].worldX = gp.tileSize * x;
+        gp.obj[index].worldY = gp.tileSize * y;
+        gp.obj[index].collision = hasCollision;
+
+        try {
+            gp.obj[index].downIdle = uTool.loadImage("res/objects/" + spriteName + ".png");
+            int downIdleWidth = gp.obj[index].downIdle.getWidth() * gp.scale;
+            int downIdleHeight = gp.obj[index].downIdle.getHeight() * gp.scale;
+            if(forceTileSize) {
+                gp.obj[index].downIdle = uTool.scaleImage(gp.obj[index].downIdle, gp.tileSize, gp.tileSize);
+            } else {
+                gp.obj[index].downIdle = uTool.scaleImage(gp.obj[index].downIdle, downIdleWidth, downIdleHeight);
+            }
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setObjectOffset(int index, boolean centerObject, boolean offsetInTiles, int offsetX, int offsetY) {
+        Entity tempObj = gp.obj[index];
+        if(centerObject) {
+            tempObj.spriteOffsetX = tempObj.downIdle.getWidth()/2;
+            tempObj.spriteOffsetY = tempObj.downIdle.getHeight()/2;
+        } else { // if we are not centering, then we use offset
+            if(offsetInTiles) {
+                tempObj.spriteOffsetX = gp.tileSize * offsetX;
+                tempObj.spriteOffsetY = gp.tileSize * offsetY;
+            } else {
+                tempObj.spriteOffsetX = offsetX;
+                tempObj.spriteOffsetY = offsetY;
+            }
+        }
     }
 }

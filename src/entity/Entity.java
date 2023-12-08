@@ -33,7 +33,7 @@ public class Entity {
         NPC,
         OBJECT
     };
-    CreatureType creatureType;
+    protected CreatureType creatureType;
 
     public BufferedImage spriteSheet, upIdle, up1, up2, downIdle, down1, down2, leftIdle, left1, left2, rightIdle, right1, right2;
     public int spriteOffsetX, spriteOffsetY = 0;
