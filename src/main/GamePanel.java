@@ -1,10 +1,11 @@
 package main;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -49,8 +50,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public SuperObject obj[] = new SuperObject[10]; // [10] means 10 object MAX at one time at screen
+    public Entity obj[] = new Entity[10]; // [10] means 10 object MAX at one time at screen
     public Entity npc[] = new Entity[10]; // [10] means 10 NPC MAX at one time at screen
+    ArrayList<Entity> entityList = new ArrayList<>();
 
     // SYSTEM: Character creator (must be initialized after Player is already existing btw)
     CharacterCreation charCreator = new CharacterCreation(this);

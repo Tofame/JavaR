@@ -24,12 +24,14 @@ public class Entity {
     String healthBarColor = "#00b800";
     public int maxHealth = 100;
     public int health = 100;
+    public boolean hideHealth = false;
     public float healthPercent = (float)health/maxHealth;
 
     public enum CreatureType {
         MONSTER,
         PLAYER,
-        NPC
+        NPC,
+        OBJECT
     };
     CreatureType creatureType;
 
@@ -50,6 +52,10 @@ public class Entity {
 
     public String dialogues[] = new String[20];
     public int dialogueIndex;
+
+    // SuperObject
+    public BufferedImage image;
+    public boolean collision = false;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -170,7 +176,9 @@ public class Entity {
             }
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-            drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
+
+            if(!hideHealth)
+                drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
 
             if(GamePanel.drawCollisions) {
                 g2.setColor(Color.RED);

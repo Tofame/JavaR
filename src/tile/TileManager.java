@@ -71,7 +71,7 @@ public class TileManager {
         setupTile(39, "earth", false);
         setupTile(40, "wall", true);
         setupTile(41, "tree", true);
-        setupTile(42, "hugeGatePortal", true);
+        setupTile(42, "tree", true); // test
     }
 
     public void setupTile(int index, String imagePath, boolean collision) {

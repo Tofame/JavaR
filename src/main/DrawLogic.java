@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
+
+import entity.Entity;
 
 public class DrawLogic extends JPanel implements Runnable {
     Thread drawThread;
@@ -71,20 +75,36 @@ public class DrawLogic extends JPanel implements Runnable {
           // This includes drawing order
             // TILE
             gp.tileM.draw(g2);
-            // OBJECT
-            for(int i = 0; i < gp.obj.length; i++) {
-                if(gp.obj[i] != null) {
-                    gp.obj[i].draw(g2, gp);
-                }
-            }
-            //PLAYER
-            gp.player.draw(g2);
-            // NPC
+            
+            // ADD ENTITIES TO THE LIST
+            gp.entityList.add(gp.player);
             for(int i = 0; i < gp.npc.length; i++) {
                 if(gp.npc[i] != null) {
-                    gp.npc[i].draw(g2);
+                    gp.entityList.add(gp.npc[i]);
                 }
             }
+            for(int i = 0; i < gp.obj.length; i++) {
+                if(gp.obj[i] != null) {
+                    gp.entityList.add(gp.obj[i]);
+                }
+            }
+            // SORT
+            Collections.sort(gp.entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return result;
+                }
+            });
+
+            // DRAW ENTITIES
+            for(int i = 0; i < gp.entityList.size(); i++) {
+                gp.entityList.get(i).draw(g2);
+            }
+
+            // EMPTY ENTITY LIST
+            gp.entityList.clear();
+
             //UI
             gp.ui.draw(g2);
         }
