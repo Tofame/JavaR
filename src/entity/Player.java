@@ -41,7 +41,7 @@ public class Player extends Entity {
         worldX = gp.tileSize * 23; //2240; // Starting X position, gp.tileSize * 23
         worldY = gp.tileSize *21; //2400; // Starting Y position
         setName("Tofame");
-        speed = 4;
+        speed = 8;
         direction = "down";
 
         // PLAYER STATS

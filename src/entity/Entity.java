@@ -55,7 +55,7 @@ public class Entity {
 
     // SuperObject
     public BufferedImage image;
-    public boolean collision = false;
+    public boolean hasCollision = false;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -182,7 +182,7 @@ public class Entity {
 
             if(GamePanel.drawCollisions) {
                 g2.setColor(Color.RED);
-                g2.drawRect(screenX - solidArea.x/2, screenY - solidArea.y/2, (int) solidArea.getWidth(), (int) solidArea.getHeight());
+                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
             }
         }
     }

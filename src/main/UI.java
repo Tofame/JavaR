@@ -97,6 +97,8 @@ public class UI {
         if(showCoordinates == true) {
             g2.drawString("X: " + gp.player.worldX, gp.screenWidth - 150, 50);
             g2.drawString("Y: " + gp.player.worldY, gp.screenWidth - 150, 100);
+            g2.drawString("ScrX: " + gp.player.screenX, gp.screenWidth - 190, 150);
+            g2.drawString("ScrY: " + gp.player.screenY, gp.screenWidth - 190, 200);
         }
     }
 

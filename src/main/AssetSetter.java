@@ -21,6 +21,10 @@ public class AssetSetter {
 
         loadObject(2, 24, 18, "door", "Door", true, false);
         setObjectOffset(2, true, false, 16, 16);
+        setObjectCollision(2, true, false, 0, 0, 0, 0);
+
+        loadObject(3, 22, 18, "door", "Door", true, true);
+        setObjectCollision(3, false, false, 64, 32, 0, 32);
     }
 
     public void setupNPCs() {
@@ -64,7 +68,7 @@ public class AssetSetter {
         gp.obj[index] = new SuperObject(gp, name);
         gp.obj[index].worldX = gp.tileSize * x;
         gp.obj[index].worldY = gp.tileSize * y;
-        gp.obj[index].collision = hasCollision;
+        gp.obj[index].hasCollision = hasCollision;
 
         try {
             gp.obj[index].downIdle = uTool.loadImage("res/objects/" + spriteName + ".png");
@@ -92,6 +96,34 @@ public class AssetSetter {
             } else {
                 tempObj.spriteOffsetX = offsetX;
                 tempObj.spriteOffsetY = offsetY;
+            }
+        }
+    }
+
+    public void setObjectCollision(int index, boolean automaticCollision, boolean valuesInTiles, int collisionWidth, int collisionHeight, int collisionOffsetX, int collisionOffsetY) {
+        Entity tempObj = gp.obj[index];
+        if(automaticCollision) {
+            tempObj.solidArea.width = tempObj.downIdle.getWidth();
+            tempObj.solidArea.height = tempObj.downIdle.getHeight();
+            tempObj.solidArea.x = tempObj.spriteOffsetX;
+            tempObj.solidArea.y = tempObj.spriteOffsetY;
+            tempObj.solidAreaDefaultX = tempObj.solidArea.x;
+                tempObj.solidAreaDefaultY = tempObj.solidArea.y;
+        } else { // if we are using hand-written values
+            if(valuesInTiles) {
+                tempObj.solidArea.width = gp.tileSize * collisionWidth;
+                tempObj.solidArea.height = gp.tileSize * collisionHeight;
+                tempObj.solidArea.x = gp.tileSize * collisionOffsetX;
+                tempObj.solidArea.y = gp.tileSize * collisionOffsetY;
+                tempObj.solidAreaDefaultX = tempObj.solidArea.x;
+                tempObj.solidAreaDefaultY = tempObj.solidArea.y;
+            } else {
+                tempObj.solidArea.width = collisionWidth;
+                tempObj.solidArea.height = collisionHeight;
+                tempObj.solidArea.x = collisionOffsetX;
+                tempObj.solidArea.y = collisionOffsetY;
+                tempObj.solidAreaDefaultX = tempObj.solidArea.x;
+                tempObj.solidAreaDefaultY = tempObj.solidArea.y;
             }
         }
     }

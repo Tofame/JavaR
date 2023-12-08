@@ -158,7 +158,7 @@ public class TileManager {
                 if(GamePanel.drawTileCollisions) {
                     if(tile[tileNum].collision) {
                         g2.setColor(Color.RED);
-                        g2.drawRect(screenX - 1, screenY - 1, gp.tileSize, gp.tileSize);
+                        g2.drawRect(screenX - tile[tileNum].offsetX - 1, screenY - tile[tileNum].offsetY - 1, gp.tileSize, gp.tileSize);
                     }
                 }
             }
