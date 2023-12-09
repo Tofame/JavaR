@@ -18,6 +18,10 @@ public class DrawLogic extends JPanel implements Runnable {
     // SETTINGS
         // FPS
     static final int maxDrawFPS = 60; // the higher it is, the more frequent the drawing is
+        // Calculating average draw time
+    static final int resetDrawsAt = 10000;
+    static int amountOfDraws = 0;
+    static double sumDrawsTotal = 0;
 
     public DrawLogic(GamePanel gp) {
         this.gp = gp;
@@ -115,7 +119,15 @@ public class DrawLogic extends JPanel implements Runnable {
             long passed = drawEnd - drawStart;
             g2.setColor(Color.white);
             g2.drawString("Draw time: " + passed, 10, 500);
-            System.out.println("Draw time: " + passed);
+            // Average draw time implementation
+            g2.drawString("Average draw time: " + (sumDrawsTotal/amountOfDraws), 10, 600);
+            if(amountOfDraws >= resetDrawsAt) {
+                amountOfDraws = 0;
+                sumDrawsTotal = 0;
+            } else {
+                amountOfDraws++;
+                sumDrawsTotal = (double)sumDrawsTotal + passed;
+            }
         }
 
         g2.dispose();
