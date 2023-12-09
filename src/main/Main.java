@@ -12,11 +12,6 @@ public class Main {
         GamePanel gp = new GamePanel();
         window.add(gp);
 
-        //window.pack();
-
-        //window.setLocationRelativeTo(null);
-        //window.setVisible(true);
-
         gp.setupGame();
         gp.startGameThread();
 

@@ -92,7 +92,7 @@ public class DrawLogic extends JPanel implements Runnable {
             Collections.sort(gp.entityList, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity e1, Entity e2) {
-                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    int result = Integer.compare(e1.worldY + e1.solidAreaDefaultY, e2.worldY + e2.solidAreaDefaultY);
                     return result;
                 }
             });

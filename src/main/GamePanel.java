@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static final int maxFPS = 60;
 
     // OTHER SETTINGS
+    public static final boolean skipTitleScreen = true; // new game = going right into the game
     public static final boolean drawCollisions = true; // entities, objects
     public static final boolean drawTileCollisions = false; // tiles
 
