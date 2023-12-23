@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import java.io.IOException;
 
+import conditions.Condition;
 import main.GamePanel;
 import main.UtilityTool;
 import main.UI;
@@ -20,12 +21,15 @@ public class Entity {
     public String name = "Entity";
     public String direction = "down";
     public int speed = 1;
-    // CHARACTER STATS
+    // CREATURE STATISTICS
     String healthBarColor = "#00b800";
     public int maxHealth = 100;
     public int health = 100;
     public boolean hideHealth = false;
     public float healthPercent = (float)health/maxHealth;
+
+    public Condition[] conditions = new Condition[10]; // Player has more
+    public int amountOfConditions = 0;
 
     public enum CreatureType {
         MONSTER,

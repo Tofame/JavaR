@@ -31,7 +31,7 @@ public class UI {
     boolean showCoordinates = true;
     boolean showPlayTime = true;
 
-    double playTime;
+    public double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     UtilityTool uTool = new UtilityTool();
@@ -91,7 +91,7 @@ public class UI {
         //Draw Play Time
         if(showPlayTime == true) {
             playTime += (double)1/60;
-            g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 30);
+            g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 130);
         }
         // Draw Coordinates
         if(showCoordinates == true) {

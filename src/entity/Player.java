@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import conditions.Condition;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -48,6 +49,8 @@ public class Player extends Entity {
         maxHealth = 150;
         health = 150;
         healthPercent = (float)health/maxHealth;
+
+        conditions = new Condition[20];
     }
 
     public void update() {

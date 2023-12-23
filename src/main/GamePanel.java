@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import conditions.ConditionsHandler;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    public ConditionsHandler conditions = new ConditionsHandler(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT
