@@ -84,6 +84,28 @@ public class ConditionsHandler {
         }
     }
 
+    public boolean hasCondition(Entity entity, ConditionType type, int subId) {
+        if(entity.amountOfConditions < 1) {
+            return false;
+        }
+
+        if(subId == -1) { // subId doesnt matter
+            for(int i = 0; i < entity.amountOfConditions; i++) {
+                if(entity.conditions[i].type == type) {
+                    return true;
+                }
+            }
+        } else {
+            for(int i = 0; i < entity.amountOfConditions; i++) {
+                if(entity.conditions[i].type == type && entity.conditions[i].subId == subId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private String convertTypeToString(ConditionType type) {
         switch(type) {
             case CONDITION_REGENHEALTH:
