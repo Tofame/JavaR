@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public Entity obj[] = new Entity[10]; // [10] means 10 object MAX at one time at screen
     public Entity npc[] = new Entity[10]; // [10] means 10 NPC MAX at one time at screen
+    public Entity monster[] = new Entity[20];
     ArrayList<Entity> entityList = new ArrayList<>();
 
     // SYSTEM: Character creator (must be initialized after Player is already existing btw)
@@ -74,6 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         aSetter.setupObjects();
         aSetter.setupNPCs();
+        aSetter.setupMonsters();
         gameState = titleState;
     }
 
@@ -114,6 +116,12 @@ public class GamePanel extends JPanel implements Runnable {
             for(int i = 0; i < npc.length; i++) {
                 if(npc[i] != null) {
                     npc[i].update();
+                }
+            }
+            // Monster UPDATE
+            for(int i = 0; i < monster.length; i++) {
+                if(monster[i] != null) {
+                    monster[i].update();
                 }
             }
         }

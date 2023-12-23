@@ -72,12 +72,14 @@ public class Entity {
 
     public void speak() {}
 
-    public void update() {
+    public void update() { // Player has his own update method. This one is for monsters and entities
         setAction();
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
+        gp.cChecker.checkEntity(this, gp.npc);
+        gp.cChecker.checkEntity(this, gp.monster);
         gp.cChecker.checkPlayer(this);
 
         // IF CONDITION IS FALSE THEN CAN MOVE
@@ -187,15 +189,15 @@ public class Entity {
         }
     }
 
-    public void setDefaultImages(String fileName, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
-        loadSpriteSheet(fileName, spriteSheetExists);
+    public void setDefaultImages(String fileName, String folderType, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
+        loadSpriteSheet(fileName, folderType, spriteSheetExists);
         setFrameImages();
     }
 
-    public void loadSpriteSheet(String fileName, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
+    public void loadSpriteSheet(String fileName, String folderType, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
         if(!spriteSheetExists) {
             try {
-                spriteSheet = uTool.loadImage("res/characters/" + fileName);
+                spriteSheet = uTool.loadImage("res/" + folderType + "/" + fileName);
                 int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
                 singleFrameWidth = tempSingleFrameWidth * gp.scale;
@@ -240,7 +242,7 @@ public class Entity {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

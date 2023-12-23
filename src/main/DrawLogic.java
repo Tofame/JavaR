@@ -92,6 +92,11 @@ public class DrawLogic extends JPanel implements Runnable {
                     gp.entityList.add(gp.obj[i]);
                 }
             }
+            for(int i = 0; i < gp.monster.length; i++) {
+                if(gp.monster[i] != null) {
+                    gp.entityList.add(gp.monster[i]);
+                }
+            }
             // SORT
             Collections.sort(gp.entityList, new Comparator<Entity>() {
                 @Override

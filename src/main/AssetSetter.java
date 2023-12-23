@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 
 import entity.Entity;
+import entity.Monster;
 import entity.NPC;
 import object.SuperObject;
 
@@ -33,7 +34,35 @@ public class AssetSetter {
         configureNPCDialogues(0, tempDialogues);
     }
 
+    public void setupMonsters() {
+        configureMonster("slime.png", 0, "Slime", 26, 21, 12, 12, 0, 0);
+    }
+// ==========================================================
+// ========================================================== 
     // Methods for simplyfying the processs
+    public void configureMonster(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int collisionOffsetX, int collisionOffsetY) {
+        gp.monster[index] = new Monster(gp, name, spritesheetPath);
+        gp.monster[index].worldX = gp.tileSize * x;
+        gp.monster[index].worldY = gp.tileSize * y;
+        if(collisionWidth == 0) {
+            collisionWidth = 16;
+        }
+        gp.monster[index].solidArea.width = collisionWidth;
+        gp.monster[index].spriteOffsetX = gp.monster[index].spriteOffsetX + collisionWidth/2;
+        if(collisionHeight == 0) {
+            collisionHeight = 16;
+        }
+        gp.monster[index].solidArea.height = collisionHeight;
+        if(collisionOffsetX != 0) {
+            gp.monster[index].solidArea.x = collisionOffsetX;
+            gp.monster[index].solidAreaDefaultX = collisionOffsetX;
+        }
+        if(collisionOffsetY != 0) {
+            gp.monster[index].solidArea.y = collisionOffsetY;
+            gp.monster[index].solidAreaDefaultY = collisionOffsetY;
+        }
+    }
+
     public void configureNPC(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int collisionOffsetX, int collisionOffsetY) {
         gp.npc[index] = new NPC(gp, name, spritesheetPath);
         gp.npc[index].worldX = gp.tileSize * x;

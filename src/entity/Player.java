@@ -30,7 +30,7 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
-        setDefaultImages("playerSprite.png", false);
+        setDefaultImages("playerSprite.png", "characters", false);
         setDefaultValues();
 
         // Dont change, its like a camera position
@@ -45,8 +45,8 @@ public class Player extends Entity {
         direction = "down";
 
         // PLAYER STATS
-        maxHealth = 100;
-        health = 55;
+        maxHealth = 150;
+        health = 150;
         healthPercent = (float)health/maxHealth;
     }
 
@@ -76,6 +76,10 @@ public class Player extends Entity {
             // CHECK NPC COLLISION
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+
+            // CHECK MONSTER COLLISION
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+            contactMonster(monsterIndex);
 
             // CHECK EVENT COLLISION
             gp.eHandler.checkEvent();
@@ -127,6 +131,12 @@ public class Player extends Entity {
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
             }
+        }
+    }
+
+    public void contactMonster(int i) {
+        if(i != 999) {
+            this.changeHealth(-1);
         }
     }
 
