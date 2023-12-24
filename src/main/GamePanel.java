@@ -48,7 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
-    public ConditionsHandler conditions = new ConditionsHandler(this);
+    public ConditionsHandler conditionHandler = new ConditionsHandler(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT
@@ -114,16 +114,19 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if(gameState == playState) {
             player.update();
+            player.updateConditions();
             // NPC UPDATE
             for(int i = 0; i < npc.length; i++) {
                 if(npc[i] != null) {
                     npc[i].update();
+                    npc[i].updateConditions();
                 }
             }
             // Monster UPDATE
             for(int i = 0; i < monster.length; i++) {
                 if(monster[i] != null) {
                     monster[i].update();
+                    monster[i].updateConditions();
                 }
             }
         }

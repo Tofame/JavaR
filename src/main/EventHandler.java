@@ -83,6 +83,7 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.changeHealth(-2);
+        gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicPoison, 12);
         canTouchEvent = false;
     }
 

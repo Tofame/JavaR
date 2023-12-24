@@ -1,12 +1,15 @@
 package conditions;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import entity.Entity;
 import main.GamePanel;
 
 public class ConditionsHandler {
     GamePanel gp;
+
+    public static Random rand = new Random();
 
     public ConditionsHandler(GamePanel gp) {
         this.gp = gp;
@@ -31,7 +34,7 @@ public class ConditionsHandler {
     };
 // ===============================================
 // Ready to use conditions
-    Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -10, -15, 3, 0, 0, 1, null);
+    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, -10, 3, 0, 0, 1, null);
 // ===============================================s
 // Methods now
 
@@ -55,6 +58,7 @@ public class ConditionsHandler {
             condition.lastTick = gp.ui.playTime - (condition.ticks + 1/60); // so on condition apply the value runs (e.g. damage is dealt)
             entity.conditions[entity.amountOfConditions] = condition;
             entity.amountOfConditions++;
+            conditionOnAdd(entity, condition);
         } else {
             // we check if there is already a condition with same subid and if there is we will substitute it
             int indexFoundCondition = entity.amountOfConditions;
@@ -72,10 +76,11 @@ public class ConditionsHandler {
             try {
                 if(indexFoundCondition == entity.amountOfConditions) // check if it wasnt substitution <= true => we increase count var
                 {
-                    condition.lastTick = gp.ui.playTime - (condition.ticks + 1/60); // so on condition apply the value runs (e.g. damage is dealt)
+                    condition.lastTick = gp.ui.playTime;
                     entity.amountOfConditions++;
                 }
                 entity.conditions[indexFoundCondition] = condition;
+                conditionOnAdd(entity, condition);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("addCondition index out of bounds.");
                 System.out.println("Max size of conditions for entity has been breached.");
@@ -162,6 +167,94 @@ public class ConditionsHandler {
                 entity.conditions[entity.amountOfConditions - 1] = null;
             }
             entity.amountOfConditions--;
+        }
+    }
+
+    public void conditionCheckup(Entity entity, int index) {
+        Condition condition = entity.conditions[index];
+
+        if(condition.ticks != -1 && gp.ui.playTime - condition.lastTick > condition.ticks) {
+            // Handle the condition type&&value e.g. adding health
+            conditionOnTick(entity, condition);
+        }
+
+        if(condition.timeOfEnd != -1 && gp.ui.playTime > condition.timeOfEnd) {
+            // Remove condition that isnt infinite and ended
+            System.out.println("Remove condition.");
+            conditionOnRemove(entity, condition);
+            removeConditionByIndex(entity, index);
+        }
+    }
+
+    public void conditionOnTick(Entity entity, Condition condition) {
+        switch(condition.type) {
+            case CONDITION_REGENHEALTH:
+                entity.changeHealth(condition.value);
+                break;
+            case CONDITION_REGENPERCENTHEALTH:
+                entity.changeHealtPercent(condition.value);
+                break;
+            case CONDITION_REGENMANA:
+                break;
+            case CONDITION_REGENPERCENTMANA:
+                break;
+            case CONDITION_INCREASEHEALTH:
+                break;
+            case CONDITION_INCREASEMAXHEALTH:
+                break;
+            case CONDITION_INCREASEMANA:
+                break;
+            case CONDITION_INCREASEMAXMANA:
+                break;
+            case CONDITION_POISON:
+                entity.changeHealth(condition.value);
+                break;
+            case CONDITION_BLEEDING:
+                entity.changeHealth(condition.value);
+                break;
+            case CONDITION_ENERGY:
+                entity.changeHealth(condition.value);
+                break;
+            case CONDITION_FIRE:
+                entity.changeHealth(condition.value);
+                break;
+            case CONDITION_CURSED:
+                break;
+            default:
+                System.out.println("Unhandled condition in conditionOnTick: " + convertTypeToString(condition.type));
+        }
+        System.out.println("Tick done");
+        condition.lastTick = gp.ui.playTime;
+    }
+
+    public void conditionOnAdd(Entity entity, Condition condition) {
+        if(condition.ticks != -1) {
+            conditionOnTick(entity, condition);
+        } else {
+            switch(condition.type) {
+                case CONDITION_HASTE:
+                    entity.changeSpeed(condition.value);
+                    break;
+                case CONDITION_PARALYZE:
+                    entity.changeSpeed(-condition.value);
+                    break;
+                default:
+                    System.out.println("Unhandled condition in conditionOnAdd: " + convertTypeToString(condition.type));
+            }
+        }
+    }
+
+    public void conditionOnRemove(Entity entity, Condition condition) {
+        // will e.g. revert speed from haste condition
+        switch(condition.type) {
+            case CONDITION_HASTE:
+                entity.changeSpeed(-condition.value);
+                break;
+            case CONDITION_PARALYZE:
+                entity.changeSpeed(condition.value);
+                break;
+            default:
+                System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
         }
     }
 

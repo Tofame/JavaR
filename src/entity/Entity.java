@@ -67,9 +67,35 @@ public class Entity {
 
 
     // Methods of Entity
-    public void changeHealth(int healthAmount) {
-        health = health + healthAmount;
-        healthPercent = (float)health/maxHealth;
+    public void changeHealth(int value) {
+        health = health + value;
+        if(health > maxHealth)
+            health = maxHealth;
+        
+        if(health < 0) {
+            // handle death here
+            healthPercent = 0;
+        } else {
+            healthPercent = (float)health/maxHealth;
+        }
+    }
+
+    public void changeHealtPercent(int value) {
+        int healthToAdd = (int)(value/100 * maxHealth);
+        health = health + healthToAdd;
+        if(health > maxHealth)
+            health = maxHealth;
+        
+        if(health < 0) {
+            // handle death here
+            healthPercent = 0;
+        } else {
+            healthPercent = (float)health/maxHealth;
+        }
+    }
+
+    public void changeSpeed(int value) {
+        speed += value;
     }
 
     public void setAction() {}
@@ -112,6 +138,12 @@ public class Entity {
             else
                 spriteNum = 2;
             spriteCounter = 0;
+        }
+    }
+
+    public void updateConditions() {
+        for(int i = 0; i < amountOfConditions; i++) {
+            gp.conditionHandler.conditionCheckup(this, i);
         }
     }
 
