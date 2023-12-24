@@ -1,7 +1,5 @@
 package conditions;
 
-import java.awt.image.BufferedImage;
-
 import conditions.ConditionsHandler.ConditionType;
 
 public class Condition {
@@ -18,9 +16,9 @@ public class Condition {
     // ticks == -1 means that its e.g. haste, meaning that we handle the values onAdd and its not e.g. increasing speed every 3s, but just on adding.
     public double lastTick;
 
-    public BufferedImage effect;
+    public int effectId; // 0 = no effect
 
-    public Condition(ConditionType type, int value, int ticks, double timeOfEnd, int subId, BufferedImage effect) {
+    public Condition(ConditionType type, int value, int ticks, double timeOfEnd, int subId, int effectId) {
         this.type = type;
         this.value = value;
         this.valueType = 0;
@@ -31,10 +29,10 @@ public class Condition {
 
         this.subId = subId;
 
-        this.effect = effect;
+        this.effectId = effectId;
     }
 
-    public Condition(ConditionType type, int valueA, int valueB, int ticks, double timeOfEnd, int subId, int valueType, BufferedImage effect) {
+    public Condition(ConditionType type, int valueA, int valueB, int ticks, double timeOfEnd, int subId, int valueType, int effectId) {
         this.type = type;
         this.value = ConditionsHandler.rand.nextInt(valueA, valueB + 1); // +1 because its exclusive
         this.valueType = valueType;
@@ -45,6 +43,6 @@ public class Condition {
 
         this.subId = subId;
 
-        this.effect = effect;
+        this.effectId = effectId;
     }
 }

@@ -1,6 +1,5 @@
 package conditions;
 
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import entity.Entity;
@@ -34,8 +33,8 @@ public class ConditionsHandler {
     };
 // ===============================================
 // Ready to use conditions
-    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, -10, 3, 0, 0, 1, null);
-    public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, -10, 1, 0, 0, 1, null);
+    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, -10, 3, 0, 0, 1, 0);
+    public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, -10, 1, 0, 0, 1, 0);
 // ===============================================s
 // Methods now
 
@@ -44,13 +43,13 @@ public class ConditionsHandler {
         addConditionLogic(entity, condition);
     }
 
-    public void addCondition(Entity entity, ConditionType type, int value, int ticks, double duration, int subId, BufferedImage effect) {
-        Condition condition = new Condition(type, value, ticks, gp.ui.playTime + duration, subId, effect); // Uses 1st constructor
+    public void addCondition(Entity entity, ConditionType type, int value, int ticks, double duration, int subId, int effectId) {
+        Condition condition = new Condition(type, value, ticks, gp.ui.playTime + duration, subId, effectId); // Uses 1st constructor
         addConditionLogic(entity, condition);
     }
 
-    public void addCondition(Entity entity, ConditionType type, int valueA, int valueB, int ticks, double duration, int subId, int valueType, BufferedImage effect) {
-        Condition condition = new Condition(type, valueA, valueB, ticks, gp.ui.playTime + duration, subId, valueType, effect); // Uses 2nd constructor
+    public void addCondition(Entity entity, ConditionType type, int valueA, int valueB, int ticks, double duration, int subId, int valueType, int effectId) {
+        Condition condition = new Condition(type, valueA, valueB, ticks, gp.ui.playTime + duration, subId, valueType, effectId); // Uses 2nd constructor
         addConditionLogic(entity, condition);
     }
 
