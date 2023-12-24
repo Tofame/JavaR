@@ -40,22 +40,15 @@ public class DrawLogic extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-        long timer = 0;
 
         while (drawThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
-            timer += currentTime - lastTime;
             lastTime = currentTime;
 
             if (delta >= 1) {
                 repaint();
                 delta--;
-            }
-
-            if (timer >= 1000000000) {
-                //System.out.println("FPS: " + maxDrawFPS);
-                timer = 0;
             }
         }
     }

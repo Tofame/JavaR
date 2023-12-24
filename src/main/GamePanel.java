@@ -106,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) {
+                //System.out.println(ui.playTime); // runs every second
                 timer = 0;
             }
         }
@@ -119,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
             for(int i = 0; i < npc.length; i++) {
                 if(npc[i] != null) {
                     npc[i].update();
-                    npc[i].updateConditions();
+                    // NPC wont (?) have conditions npc[i].updateConditions();
                 }
             }
             // Monster UPDATE

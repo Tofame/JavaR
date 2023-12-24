@@ -35,6 +35,7 @@ public class ConditionsHandler {
 // ===============================================
 // Ready to use conditions
     public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, -10, 3, 0, 0, 1, null);
+    public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, -10, 1, 0, 0, 1, null);
 // ===============================================s
 // Methods now
 
@@ -149,6 +150,7 @@ public class ConditionsHandler {
 
     public void removeAllConditions(Entity entity) {
         for(int i = 0; i < entity.amountOfConditions; i++) {
+            conditionOnRemove(entity, entity.conditions[i]);
             entity.conditions[i] = null;
         }
         entity.amountOfConditions = 0;
@@ -156,18 +158,17 @@ public class ConditionsHandler {
 
     public void removeConditionByIndex(Entity entity, int index) {
         // Condition has ended so we are removing it.
-        for(int i = index; i < entity.amountOfConditions; i++) {
-            if(i + 1 == entity.amountOfConditions) {
-                entity.conditions[i] = null;
-            } else { // is not the last condition so we need to move conditions AFTER to the index before
-            // otherwise it would be: { condition, condition, null, condition} for example
-                for(int j = i + 1; j < entity.amountOfConditions; j++) {
-                    entity.conditions[j - 1] = entity.conditions[j];
-                }
-                entity.conditions[entity.amountOfConditions - 1] = null;
+        if(index + 1 == entity.amountOfConditions) {
+            conditionOnRemove(entity, entity.conditions[index]);
+            entity.conditions[index] = null;
+        } else { // is not the last condition so we need to move conditions AFTER to the index before
+        // otherwise it would be: { condition, condition, null, condition} for example
+            for(int j = index + 1; j < entity.amountOfConditions; j++) {
+                entity.conditions[j - 1] = entity.conditions[j];
             }
-            entity.amountOfConditions--;
+            entity.conditions[entity.amountOfConditions - 1] = null;
         }
+        entity.amountOfConditions--;
     }
 
     public void conditionCheckup(Entity entity, int index) {
@@ -180,8 +181,6 @@ public class ConditionsHandler {
 
         if(condition.timeOfEnd != -1 && gp.ui.playTime > condition.timeOfEnd) {
             // Remove condition that isnt infinite and ended
-            System.out.println("Remove condition.");
-            conditionOnRemove(entity, condition);
             removeConditionByIndex(entity, index);
         }
     }
@@ -254,6 +253,7 @@ public class ConditionsHandler {
                 entity.changeSpeed(condition.value);
                 break;
             default:
+                // do nothing
                 System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
         }
     }
