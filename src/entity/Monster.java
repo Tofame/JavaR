@@ -11,6 +11,7 @@ public class Monster extends Entity {
 
         this.name = name;
         this.creatureType = CreatureType.MONSTER;
+        this.hideMana = true;
 
         setDefaultImages(spritesheetPath, "monsters", false);
     }

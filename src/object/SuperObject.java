@@ -12,6 +12,9 @@ public class SuperObject extends Entity {
 
         this.creatureType = CreatureType.OBJECT;
         this.hideHealth = true;
+        this.hideMana = true;
+        this.hideName = true;
+
         this.solidArea = new Rectangle(0, 0, 64, 64);
         this.name = name;
     }

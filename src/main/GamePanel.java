@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int worldWith = tileSize * maxWorldCol; // not used anywhere
     public final int worldRow = tileSize * maxWorldRow; // not used anywhere -> useless, but lets keep it
 
-    // HEALTH BAR SETTINGS
+    // HEALTH (AND MANA TOO) BAR SETTINGS
     public final int healthBarWidth = 30;
     public final int healthBarHeight = 3;
 

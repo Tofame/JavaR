@@ -42,13 +42,17 @@ public class Player extends Entity {
         worldX = gp.tileSize * 23; //2240; // Starting X position, gp.tileSize * 23
         worldY = gp.tileSize *21; //2400; // Starting Y position
         setName("Tofame");
-        speed = 8;
+        speed = 4;
         direction = "down";
 
         // PLAYER STATS
         maxHealth = 150;
         health = 150;
         healthPercent = (float)health/maxHealth;
+
+        maxMana = 150;
+        mana = 150;
+        manaPercent = (float)mana/maxMana;
 
         conditions = new Condition[20];
     }
@@ -203,7 +207,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-        drawNameAndHealth(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
+        drawNameAndBars(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
 
         if(GamePanel.drawCollisions) {
             g2.setColor(Color.ORANGE);

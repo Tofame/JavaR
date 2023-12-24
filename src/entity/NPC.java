@@ -11,6 +11,7 @@ public class NPC extends Entity {
 
         this.name = name;
         this.creatureType = CreatureType.NPC;
+        this.hideMana = true;
 
         setDefaultImages(spritesheetPath, "characters", false);
     }

@@ -55,7 +55,7 @@ public class ConditionsHandler {
 
     private void addConditionLogic(Entity entity, Condition condition) {
         if(entity.amountOfConditions == 0) {
-            condition.lastTick = gp.ui.playTime - (condition.ticks + 1/60); // so on condition apply the value runs (e.g. damage is dealt)
+            condition.lastTick = gp.ui.playTime; // so on condition apply the value runs (e.g. damage is dealt)
             entity.conditions[entity.amountOfConditions] = condition;
             entity.amountOfConditions++;
             conditionOnAdd(entity, condition);
@@ -221,7 +221,6 @@ public class ConditionsHandler {
             default:
                 System.out.println("Unhandled condition in conditionOnTick: " + convertTypeToString(condition.type));
         }
-        System.out.println("Tick done");
         condition.lastTick = gp.ui.playTime;
     }
 
@@ -253,7 +252,7 @@ public class ConditionsHandler {
                 break;
             default:
                 // do nothing
-                System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
+                //System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
         }
     }
 

@@ -25,8 +25,16 @@ public class Entity {
     String healthBarColor = "#00b800";
     public int maxHealth = 100;
     public int health = 100;
-    public boolean hideHealth = false;
     public float healthPercent = (float)health/maxHealth;
+
+    String manaBarColor = "#4361EE";
+    public int maxMana;
+    public int mana;
+    public float manaPercent;
+
+    public boolean hideHealth = false;
+    public boolean hideMana = false;
+    public boolean hideName = false;
 
     public Condition[] conditions = new Condition[10]; // Player has more
     public int amountOfConditions = 0;
@@ -214,9 +222,7 @@ public class Entity {
             }
 
             g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-
-            if(!hideHealth)
-                drawNameAndHealth(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
+            drawNameAndBars(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
 
             if(GamePanel.drawCollisions) {
                 g2.setColor(Color.RED);
@@ -285,54 +291,65 @@ public class Entity {
         this.name = name;
     }
 
-    public void drawNameAndHealth(Graphics2D g2, String text, int x, int y, int borderSize) {
+    public void drawNameAndBars(Graphics2D g2, String text, int x, int y, int borderSize) {
         // Draw Health here
-        //g2.drawRect(x, y + 15, 100, 10);
-        if(healthPercent == 1) { // light green hp
-            healthBarColor = "#00b800";
-        } else if(healthPercent > 0.6) { // green hp
-            healthBarColor = "#4e9e4e";
-        } else if(healthPercent > 0.3) { // yellow hp
-            healthBarColor = "#9e9e00";
-        } else if(healthPercent > 0.01) { // red hp
-            healthBarColor = "#8e0f0f";
-        } else { // dark red hp
-            healthBarColor = "#2b0f0f";
+        if(!hideHealth) {
+            if(healthPercent == 1) { // light green hp
+                healthBarColor = "#00b800";
+            } else if(healthPercent > 0.6) { // green hp
+                healthBarColor = "#4e9e4e";
+            } else if(healthPercent > 0.3) { // yellow hp
+                healthBarColor = "#9e9e00";
+            } else if(healthPercent > 0.01) { // red hp
+                healthBarColor = "#8e0f0f";
+            } else { // dark red hp
+                healthBarColor = "#2b0f0f";
+            }
+            // Outline
+            g2.setColor(Color.BLACK);
+            g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 8 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
+
+            g2.setColor(UI.hexToColor(healthBarColor, 255));
+            g2.fillRect(x - gp.healthBarWidth/2, y + 8, (int)(healthPercent * gp.healthBarWidth), gp.healthBarHeight);
         }
-        // Outline
-        g2.setColor(Color.BLACK);
-        g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 8 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
+    
+        if(!hideMana) {
+            // Outline
+            g2.setColor(Color.BLACK);
+            g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 12 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
 
-        g2.setColor(UI.hexToColor(healthBarColor, 255));
-        g2.fillRect(x - gp.healthBarWidth/2, y + 8, (int)(healthPercent * gp.healthBarWidth), gp.healthBarHeight);
-        //g2.drawRect(x - gp.healthBarWidth/2, y + 5, gp.healthBarWidth + 4, gp.healthBarHeight + 4);
-
-        g2.setFont(UI.verdana_bold_15);
-        x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
-
-        String nameColorHex;
-        switch(creatureType) {
-            case PLAYER:
-                nameColorHex = "#5ac752";
-                break;
-            case MONSTER:
-                nameColorHex = "#6b001d";
-                break;
-            case NPC:
-                nameColorHex = "#286eb8";
-                break;
-            default:
-                nameColorHex = "#5ac752";
-                break;
+            g2.setColor(UI.hexToColor(manaBarColor, 255));
+            g2.fillRect(x - gp.healthBarWidth/2, y + 12, (int)(manaPercent * gp.healthBarWidth), gp.healthBarHeight);
         }
 
-        g2.setColor(UI.hexToColor("#1a2c06", 255));
-        g2.drawString(text, x + borderSize, y - borderSize);
-        g2.drawString(text, x + borderSize, y + borderSize);
-        g2.drawString(text, x - borderSize, y - borderSize);
-        g2.drawString(text, x - borderSize, y + borderSize);
+        if(!hideName) {
+            g2.setFont(UI.verdana_bold_15);
+            x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
 
-        g2.setColor(UI.hexToColor(nameColorHex, 255));
-        g2.drawString(text, x, y);
+            String nameColorHex;
+            switch(creatureType) {
+                case PLAYER:
+                    nameColorHex = "#5ac752";
+                    break;
+                case MONSTER:
+                    nameColorHex = "#6b001d";
+                    break;
+                case NPC:
+                    nameColorHex = "#286eb8";
+                    break;
+                default:
+                    nameColorHex = "#5ac752";
+                    break;
+            }
+
+            g2.setColor(UI.hexToColor("#1a2c06", 255));
+            g2.drawString(text, x + borderSize, y - borderSize);
+            g2.drawString(text, x + borderSize, y + borderSize);
+            g2.drawString(text, x - borderSize, y - borderSize);
+            g2.drawString(text, x - borderSize, y + borderSize);
+
+            g2.setColor(UI.hexToColor(nameColorHex, 255));
+            g2.drawString(text, x, y);
+        }
     }
 }
