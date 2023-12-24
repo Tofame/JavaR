@@ -6,9 +6,10 @@ import conditions.ConditionsHandler.ConditionType;
 
 public class Condition {
     public double timeOfEnd = 0; // os.time would be used IF it was multiplayer. For singleplayer we will use playtime.
+    // timeOfEnd == -1 means that condition is infinite
 
     public ConditionType type;
-    public int subId = 0; // 0 -> default, 1 -> not removable, > 1 -> usual sub id
+    public int subId = 0; // 0 -> default, > 0 -> sub id
 
     public int valueA;
     public int valueB;

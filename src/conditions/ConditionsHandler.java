@@ -106,6 +106,65 @@ public class ConditionsHandler {
         return false;
     }
 
+    public void removeCondition(Entity entity, ConditionType type, int subId) {
+        if(entity.amountOfConditions > 0) {
+            if(subId == -1) { // subId doesnt matter
+                for(int i = 0; i < entity.amountOfConditions; i++) {
+                    if(entity.conditions[i].type == type) {
+                        if(i + 1 == entity.amountOfConditions) {
+                            entity.conditions[i] = null;
+                        } else { // is not the last condition so we need to move conditions AFTER to the index before
+                        // otherwise it would be: { condition, condition, null, condition} for example
+                            for(int j = i + 1; j < entity.amountOfConditions; j++) {
+                                entity.conditions[j - 1] = entity.conditions[j];
+                            }
+                            entity.conditions[entity.amountOfConditions - 1] = null;
+                        }
+                        entity.amountOfConditions--;
+                    }
+                }
+            } else {
+                for(int i = 0; i < entity.amountOfConditions; i++) {
+                    if(entity.conditions[i].type == type && entity.conditions[i].subId == subId) {
+                        if(i + 1 == entity.amountOfConditions) {
+                            entity.conditions[i] = null;
+                        } else { // is not the last condition so we need to move conditions AFTER to the index before
+                        // otherwise it would be: { condition, condition, null, condition} for example
+                            for(int j = i + 1; j < entity.amountOfConditions; j++) {
+                                entity.conditions[j - 1] = entity.conditions[j];
+                            }
+                            entity.conditions[entity.amountOfConditions - 1] = null;
+                        }
+                        entity.amountOfConditions--;
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeAllConditions(Entity entity) {
+        for(int i = 0; i < entity.amountOfConditions; i++) {
+            entity.conditions[i] = null;
+        }
+        entity.amountOfConditions = 0;
+    }
+
+    public void removeConditionByIndex(Entity entity, int index) {
+        // Condition has ended so we are removing it.
+        for(int i = index; i < entity.amountOfConditions; i++) {
+            if(i + 1 == entity.amountOfConditions) {
+                entity.conditions[i] = null;
+            } else { // is not the last condition so we need to move conditions AFTER to the index before
+            // otherwise it would be: { condition, condition, null, condition} for example
+                for(int j = i + 1; j < entity.amountOfConditions; j++) {
+                    entity.conditions[j - 1] = entity.conditions[j];
+                }
+                entity.conditions[entity.amountOfConditions - 1] = null;
+            }
+            entity.amountOfConditions--;
+        }
+    }
+
     private String convertTypeToString(ConditionType type) {
         switch(type) {
             case CONDITION_REGENHEALTH:
