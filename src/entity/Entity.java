@@ -88,8 +88,13 @@ public class Entity {
         }
     }
 
-    public void changeHealtPercent(int value) {
-        int healthToAdd = (int)(value/100 * maxHealth);
+    public void changeHealthByPercent(int value, boolean basedOnActualHealth) {
+        int healthToAdd = 0;
+        if(basedOnActualHealth)
+            healthToAdd = (int)(value/100 * health);
+        else
+            healthToAdd = (int)(value/100 * maxHealth);
+    
         health = health + healthToAdd;
         if(health > maxHealth)
             health = maxHealth;
@@ -100,6 +105,52 @@ public class Entity {
         } else {
             healthPercent = (float)health/maxHealth;
         }
+    }
+
+    public void changeMana(int value) {
+        mana = mana + value;
+        if(mana > maxMana)
+            mana = maxMana;
+        
+        if(mana < 0) {
+            // handle death here
+            manaPercent = 0;
+        } else {
+            manaPercent = (float)mana/maxMana;
+        }
+    }
+
+    public void changeManaByPercent(int value, boolean basedOnActualMana) {
+         int manaToAdd = 0;
+        if(basedOnActualMana)
+            manaToAdd = (int)(value/100 * mana);
+        else
+            manaToAdd = (int)(value/100 * maxMana);
+    
+        mana = mana + manaToAdd;
+        if(mana > maxMana)
+            mana = maxMana;
+        
+        if(mana < 0) {
+            // handle death here
+            manaPercent = 0;
+        } else {
+            manaPercent = (float)mana/maxMana;
+        }
+    }
+
+    public void increaseMaxHealth(int value) {
+        maxHealth += value;
+        if(maxHealth < health) // in case the max health was decreased
+            health = maxHealth;
+        healthPercent = (float)health/maxHealth;
+    }
+
+    public void increaseMaxMana(int value) {
+        maxMana += value;
+        if(maxMana < mana) // in case the max mana was decreased
+            mana = maxMana;
+        manaPercent = (float)mana/maxMana;
     }
 
     public void changeSpeed(int value) {

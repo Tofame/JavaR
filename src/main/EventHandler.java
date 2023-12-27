@@ -84,7 +84,6 @@ public class EventHandler {
         gp.ui.currentDialogue = "You fall into a pit!";
         gp.player.changeHealth(-2);
         gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicPoison, 9);
-        gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicBleeding, 6);
         canTouchEvent = false;
     }
 
@@ -94,6 +93,7 @@ public class EventHandler {
             gp.ui.currentDialogue = "You drank Wisla's muddy water.\nYour life has been recovered.";
             gp.player.changeHealth(20);
             eventRect[col][row].eventDone = true; // will make it 1 time event
+            gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicIncreaseMaxHealth, 9);
         }
     }
 }

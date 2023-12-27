@@ -19,9 +19,7 @@ public class ConditionsHandler {
         CONDITION_REGENPERCENTHEALTH,
         CONDITION_REGENMANA,
         CONDITION_REGENPERCENTMANA,
-        CONDITION_INCREASEHEALTH,
         CONDITION_INCREASEMAXHEALTH,
-        CONDITION_INCREASEMANA,
         CONDITION_INCREASEMAXMANA,
         CONDITION_POISON,
         CONDITION_BLEEDING,
@@ -33,8 +31,20 @@ public class ConditionsHandler {
     };
 // ===============================================
 // Ready to use conditions
-    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, -10, 3, 0, 0, 1, 0);
-    public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, -10, 1, 0, 0, 1, 0);
+    public Condition basicRegenHealth = new Condition(ConditionType.CONDITION_REGENHEALTH, 15, 3, 0, 1, 0);
+    public Condition basicRegenHealthPercent = new Condition(ConditionType.CONDITION_REGENPERCENTHEALTH, 5, 8, 3, 0, 1, 0);
+    public Condition basicRegenMana = new Condition(ConditionType.CONDITION_REGENMANA, 15, 3, 0, 1, 0);
+    public Condition basicRegenManaPercent = new Condition(ConditionType.CONDITION_REGENPERCENTMANA, 5, 8, 3, 0, 1, 0);
+
+    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, 3, 0, 1, 0);
+    public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, 3, 0, 1, 0);
+    public Condition basicEnergy = new Condition(ConditionType.CONDITION_ENERGY, -15, 3, 0, 1, 0);
+    public Condition basicFire = new Condition(ConditionType.CONDITION_FIRE, -15, 3, 0, 1, 0);
+
+    // No plans for usage of cursed condition at the moment.
+
+    public Condition basicIncreaseMaxHealth = new Condition(ConditionType.CONDITION_INCREASEMAXHEALTH, 150, -1, 0, 0, 0);
+    public Condition basicIncreaseMaxMana = new Condition(ConditionType.CONDITION_INCREASEMAXMANA, 150, -1, 0, 0, 0);
 // ===============================================s
 // Methods now
 
@@ -48,14 +58,14 @@ public class ConditionsHandler {
         addConditionLogic(entity, condition);
     }
 
-    public void addCondition(Entity entity, ConditionType type, int valueA, int valueB, int ticks, double duration, int subId, int valueType, int effectId) {
-        Condition condition = new Condition(type, valueA, valueB, ticks, gp.ui.playTime + duration, subId, valueType, effectId); // Uses 2nd constructor
+    public void addCondition(Entity entity, ConditionType type, int valueA, int valueB, int ticks, double duration, int subId, int effectId) {
+        Condition condition = new Condition(type, valueA, valueB, ticks, gp.ui.playTime + duration, subId, effectId); // Uses 2nd constructor
         addConditionLogic(entity, condition);
     }
 
     private void addConditionLogic(Entity entity, Condition condition) {
         if(entity.amountOfConditions == 0) {
-            condition.lastTick = gp.ui.playTime; // so on condition apply the value runs (e.g. damage is dealt)
+            condition.lastTick = gp.ui.playTime;
             entity.conditions[entity.amountOfConditions] = condition;
             entity.amountOfConditions++;
             conditionOnAdd(entity, condition);
@@ -68,6 +78,7 @@ public class ConditionsHandler {
                 if(foundCondition.subId == condition.subId && foundCondition.type == condition.type) {
                     condition.lastTick = foundCondition.lastTick;
                     indexFoundCondition = i;
+                    conditionOnRemove(entity, entity.conditions[i]);
                     break;
                 }
             }
@@ -116,6 +127,7 @@ public class ConditionsHandler {
             if(subId == -1) { // subId doesnt matter
                 for(int i = 0; i < entity.amountOfConditions; i++) {
                     if(entity.conditions[i].type == type) {
+                        conditionOnRemove(entity, entity.conditions[i]);
                         if(i + 1 == entity.amountOfConditions) {
                             entity.conditions[i] = null;
                         } else { // is not the last condition so we need to move conditions AFTER to the index before
@@ -131,6 +143,7 @@ public class ConditionsHandler {
             } else {
                 for(int i = 0; i < entity.amountOfConditions; i++) {
                     if(entity.conditions[i].type == type && entity.conditions[i].subId == subId) {
+                        conditionOnRemove(entity, entity.conditions[i]);
                         if(i + 1 == entity.amountOfConditions) {
                             entity.conditions[i] = null;
                         } else { // is not the last condition so we need to move conditions AFTER to the index before
@@ -156,9 +169,9 @@ public class ConditionsHandler {
     }
 
     public void removeConditionByIndex(Entity entity, int index) {
+        conditionOnRemove(entity, entity.conditions[index]);
         // Condition has ended so we are removing it.
         if(index + 1 == entity.amountOfConditions) {
-            conditionOnRemove(entity, entity.conditions[index]);
             entity.conditions[index] = null;
         } else { // is not the last condition so we need to move conditions AFTER to the index before
         // otherwise it would be: { condition, condition, null, condition} for example
@@ -190,19 +203,13 @@ public class ConditionsHandler {
                 entity.changeHealth(condition.value);
                 break;
             case CONDITION_REGENPERCENTHEALTH:
-                entity.changeHealtPercent(condition.value);
+                entity.changeHealthByPercent(condition.value, false);
                 break;
             case CONDITION_REGENMANA:
+                entity.changeMana(condition.value);
                 break;
             case CONDITION_REGENPERCENTMANA:
-                break;
-            case CONDITION_INCREASEHEALTH:
-                break;
-            case CONDITION_INCREASEMAXHEALTH:
-                break;
-            case CONDITION_INCREASEMANA:
-                break;
-            case CONDITION_INCREASEMAXMANA:
+                entity.changeManaByPercent(condition.value, false);
                 break;
             case CONDITION_POISON:
                 entity.changeHealth(condition.value);
@@ -235,8 +242,14 @@ public class ConditionsHandler {
                 case CONDITION_PARALYZE:
                     entity.changeSpeed(-condition.value);
                     break;
+                case CONDITION_INCREASEMAXHEALTH:
+                    entity.increaseMaxHealth(condition.value);
+                    break;
+                case CONDITION_INCREASEMAXMANA:
+                    entity.increaseMaxMana(condition.value);
+                    break;
                 default:
-                    System.out.println("Unhandled condition in conditionOnAdd: " + convertTypeToString(condition.type));
+                    // Do nothing
             }
         }
     }
@@ -250,9 +263,14 @@ public class ConditionsHandler {
             case CONDITION_PARALYZE:
                 entity.changeSpeed(condition.value);
                 break;
+            case CONDITION_INCREASEMAXHEALTH:
+                entity.increaseMaxHealth(-condition.value);
+                break;
+            case CONDITION_INCREASEMAXMANA:
+                entity.increaseMaxMana(-condition.value);
+                break;
             default:
-                // do nothing
-                //System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
+                System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
         }
     }
 
@@ -266,12 +284,8 @@ public class ConditionsHandler {
                 return "CONDITION_REGENMANA";
             case CONDITION_REGENPERCENTMANA:
                 return "CONDITION_REGENPERCENTMANA";
-            case CONDITION_INCREASEHEALTH:
-                return "CONDITION_INCREASEHEALTH";
             case CONDITION_INCREASEMAXHEALTH:
                 return "CONDITION_INCREASEMAXHEALTH";
-            case CONDITION_INCREASEMANA:
-                return "CONDITION_INCREASEMANA";
             case CONDITION_INCREASEMAXMANA:
                 return "CONDITION_INCREASEMAXMANA";
             case CONDITION_POISON:

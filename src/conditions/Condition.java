@@ -10,7 +10,7 @@ public class Condition {
     public int subId = 0; // 0 -> default, > 0 -> sub id
 
     public int value;
-    public int valueType = 0; // 0 - only valueA, 1 - random between valueA&&valueB, 2 - only valueA in %, 3 - random between valueA&&B in %
+    public int value2;
 
     public int ticks; // e.g. add *value* health every *ticks* seconds
     // ticks == -1 means that its e.g. haste, meaning that we handle the values onAdd and its not e.g. increasing speed every 3s, but just on adding.
@@ -21,7 +21,6 @@ public class Condition {
     public Condition(ConditionType type, int value, int ticks, double timeOfEnd, int subId, int effectId) {
         this.type = type;
         this.value = value;
-        this.valueType = 0;
 
         this.ticks = ticks;
 
@@ -32,10 +31,10 @@ public class Condition {
         this.effectId = effectId;
     }
 
-    public Condition(ConditionType type, int valueA, int valueB, int ticks, double timeOfEnd, int subId, int valueType, int effectId) {
+    public Condition(ConditionType type, int value, int value2, int ticks, double timeOfEnd, int subId, int effectId) {
         this.type = type;
-        this.value = ConditionsHandler.rand.nextInt(valueA, valueB + 1); // +1 because its exclusive
-        this.valueType = valueType;
+        this.value = value;
+        this.value2 = value2;
 
         this.ticks = ticks;
 
