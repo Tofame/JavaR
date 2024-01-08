@@ -44,4 +44,16 @@ public class Condition {
 
         this.effectId = effectId;
     }
+
+    public Condition(ConditionType type, int ticks, double timeOfEnd, int subId, int effectId) {
+        this.type = type;
+
+        this.ticks = ticks;
+
+        this.timeOfEnd = timeOfEnd;
+
+        this.subId = subId;
+
+        this.effectId = effectId;
+    }
 }

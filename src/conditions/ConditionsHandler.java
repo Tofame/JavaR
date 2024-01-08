@@ -27,24 +27,26 @@ public class ConditionsHandler {
         CONDITION_FIRE,
         CONDITION_CURSED,
         CONDITION_HASTE,
-        CONDITION_PARALYZE
+        CONDITION_PARALYZE,
+        CONDITION_NOMOVE,
+        CONDITION_STUN
     };
 // ===============================================
 // Ready to use conditions
-    public Condition basicRegenHealth = new Condition(ConditionType.CONDITION_REGENHEALTH, 15, 3, 0, 1, 0);
-    public Condition basicRegenHealthPercent = new Condition(ConditionType.CONDITION_REGENPERCENTHEALTH, 5, 8, 3, 0, 1, 0);
-    public Condition basicRegenMana = new Condition(ConditionType.CONDITION_REGENMANA, 15, 3, 0, 1, 0);
-    public Condition basicRegenManaPercent = new Condition(ConditionType.CONDITION_REGENPERCENTMANA, 5, 8, 3, 0, 1, 0);
-
-    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, 3, 0, 1, 0);
+    public Condition basicRegenHealth = new Condition(ConditionType.CONDITION_REGENHEALTH, 15, 3, 0, 0, 0);
+    public Condition basicRegenHealthPercent = new Condition(ConditionType.CONDITION_REGENPERCENTHEALTH, 5, 8, 3, 0, 0, 0);
+    public Condition basicRegenMana = new Condition(ConditionType.CONDITION_REGENMANA, 15, 3, 0, 0, 0);
+    public Condition basicRegenManaPercent = new Condition(ConditionType.CONDITION_REGENPERCENTMANA, 5, 8, 3, 0, 0, 0);
+    public Condition basicPoison = new Condition(ConditionType.CONDITION_POISON, -15, 3, 0, 0, 0);
     public Condition basicBleeding = new Condition(ConditionType.CONDITION_BLEEDING, -15, 3, 0, 1, 0);
-    public Condition basicEnergy = new Condition(ConditionType.CONDITION_ENERGY, -15, 3, 0, 1, 0);
-    public Condition basicFire = new Condition(ConditionType.CONDITION_FIRE, -15, 3, 0, 1, 0);
-
+    public Condition basicEnergy = new Condition(ConditionType.CONDITION_ENERGY, -15, 3, 0, 0,0);
+    public Condition basicFire = new Condition(ConditionType.CONDITION_FIRE, -15, 3, 0, 0, 0);
     // No plans for usage of cursed condition at the moment.
 
     public Condition basicIncreaseMaxHealth = new Condition(ConditionType.CONDITION_INCREASEMAXHEALTH, 150, -1, 0, 0, 0);
     public Condition basicIncreaseMaxMana = new Condition(ConditionType.CONDITION_INCREASEMAXMANA, 150, -1, 0, 0, 0);
+
+    public Condition basicNoMove = new Condition(ConditionType.CONDITION_NOMOVE, -1, 0, 0, 0);
 // ===============================================s
 // Methods now
 
@@ -249,7 +251,7 @@ public class ConditionsHandler {
                     entity.increaseMaxMana(condition.value);
                     break;
                 default:
-                    // Do nothing
+                    System.out.println("Unhandled condition in conditionOnAdd: " + convertTypeToString(condition.type));
             }
         }
     }
@@ -270,7 +272,7 @@ public class ConditionsHandler {
                 entity.increaseMaxMana(-condition.value);
                 break;
             default:
-                System.out.println("Unhandled condition in conditionOnRemove: " + convertTypeToString(condition.type));
+                // Do nothing
         }
     }
 
