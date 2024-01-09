@@ -47,6 +47,7 @@ public class ConditionsHandler {
     public Condition basicIncreaseMaxMana = new Condition(ConditionType.CONDITION_INCREASEMAXMANA, 150, -1, 0, 0, 0);
 
     public Condition basicNoMove = new Condition(ConditionType.CONDITION_NOMOVE, -1, 0, 0, 0);
+    public Condition basicStun = new Condition(ConditionType.CONDITION_STUN, -1, 0, 0, 0);
 // ===============================================s
 // Methods now
 
@@ -250,6 +251,12 @@ public class ConditionsHandler {
                 case CONDITION_INCREASEMAXMANA:
                     entity.increaseMaxMana(condition.value);
                     break;
+                case CONDITION_NOMOVE:
+                    entity.noMoveConditions += 1;
+                    break;
+                case CONDITION_STUN:
+                    entity.noMoveConditions += 1;
+                    break;
                 default:
                     System.out.println("Unhandled condition in conditionOnAdd: " + convertTypeToString(condition.type));
             }
@@ -270,6 +277,12 @@ public class ConditionsHandler {
                 break;
             case CONDITION_INCREASEMAXMANA:
                 entity.increaseMaxMana(-condition.value);
+                break;
+            case CONDITION_NOMOVE:
+                entity.noMoveConditions -= 1;
+                break;
+            case CONDITION_STUN:
+                entity.noMoveConditions -= 1;
                 break;
             default:
                 // Do nothing

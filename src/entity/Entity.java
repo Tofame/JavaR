@@ -39,6 +39,8 @@ public class Entity {
     public Condition[] conditions = new Condition[10]; // Player has more
     public int amountOfConditions = 0;
 
+    public int noMoveConditions = 0;
+
     public enum CreatureType {
         MONSTER,
         PLAYER,
@@ -157,9 +159,19 @@ public class Entity {
         speed += value;
     }
 
+    public boolean isAbleToMove() {
+        if(noMoveConditions > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void setAction() {}
 
     public void speak() {}
+
+    // BELOW ARE METHODS THAT ARE USED LESS OFTEN THROUGHOUT THE PROJECT (like update() is used once)
 
     public void update() { // Player has his own update method. This one is for monsters and entities
         setAction();
@@ -172,7 +184,7 @@ public class Entity {
         gp.cChecker.checkPlayer(this);
 
         // IF CONDITION IS FALSE THEN CAN MOVE
-        if(collisionOn == false) {
+        if(collisionOn == false && isAbleToMove() == true) {
             switch(direction) {
                 case "up":
                     worldY -= speed;
