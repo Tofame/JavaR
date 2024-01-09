@@ -105,8 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
             }
 
-            if (timer >= 1000000000) {
-                //System.out.println(ui.playTime); // runs every second
+            if (timer >= 1000000000) { // runs every second
                 timer = 0;
             }
         }

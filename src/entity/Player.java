@@ -143,7 +143,7 @@ public class Player extends Entity {
 
     public void contactMonster(int i) {
         if(i != 999) {
-            this.changeHealth(-1);
+            gp.monster[i].doAttack(this);
         }
     }
 

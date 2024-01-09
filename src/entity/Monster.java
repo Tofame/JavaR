@@ -5,6 +5,9 @@ import java.util.Random;
 import main.GamePanel;
 
 public class Monster extends Entity {
+    public long lastAttack = 0;
+    public int attackSpeed = 1500; // in miliseconds
+    public int attackValue = 1;
 
     public Monster(GamePanel gp, String name, String spritesheetPath) {
         super(gp);
@@ -35,5 +38,20 @@ public class Monster extends Entity {
 
             actionLockCounter = 0;
         }
+    }
+
+    public void doAttack(Entity target) {
+        if(isAbleToAttack()) {
+            target.changeHealth(-this.attackValue);
+            this.lastAttack = System.currentTimeMillis() + this.attackSpeed;
+        }
+    }
+
+    public boolean isAbleToAttack() {
+        if(this.lastAttack > System.currentTimeMillis()) {
+            return false;
+        }
+
+        return true;
     }
 }

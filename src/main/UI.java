@@ -100,6 +100,8 @@ public class UI {
             g2.drawString("ScrX: " + gp.player.screenX, gp.screenWidth - 190, 150);
             g2.drawString("ScrY: " + gp.player.screenY, gp.screenWidth - 190, 200);
         }
+        // Draw statistics
+        g2.drawString("Player Health: " + gp.player.health, 15, gp.screenHeight - 180);
     }
 
     public void drawPauseScreen() {

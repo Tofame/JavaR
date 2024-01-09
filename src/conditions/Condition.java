@@ -3,7 +3,7 @@ package conditions;
 import conditions.ConditionsHandler.ConditionType;
 
 public class Condition {
-    public double timeOfEnd = 0; // os.time would be used IF it was multiplayer. For singleplayer we will use playtime.
+    public double timeOfEnd = 0; // os.time would be used IF it was multiplayer. For singleplayer we will use playTime.
     // timeOfEnd == -1 means that condition is infinite
 
     public ConditionType type;

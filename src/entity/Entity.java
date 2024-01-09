@@ -171,6 +171,10 @@ public class Entity {
 
     public void speak() {}
 
+    public boolean isAbleToAttack() { return true; }
+
+    public void doAttack(Entity entity) {}
+
     // BELOW ARE METHODS THAT ARE USED LESS OFTEN THROUGHOUT THE PROJECT (like update() is used once)
 
     public void update() { // Player has his own update method. This one is for monsters and entities
