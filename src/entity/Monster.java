@@ -5,8 +5,8 @@ import java.util.Random;
 import main.GamePanel;
 
 public class Monster extends Entity {
-    public long lastAttack = 0;
-    public int attackSpeed = 1500; // in miliseconds
+    public double lastAttack = 0;
+    public double attackSpeed = 1.5; // 1.5 -> 1 attack each 1,5s
     public int attackValue = 1;
 
     public Monster(GamePanel gp, String name, String spritesheetPath) {
@@ -35,6 +35,7 @@ public class Monster extends Entity {
             } else { //(i > 75 && i <= 100)
                 direction = "right";
             }
+            direction = "down";
 
             actionLockCounter = 0;
         }
@@ -43,15 +44,14 @@ public class Monster extends Entity {
     public void doAttack(Entity target) {
         if(isAbleToAttack()) {
             target.changeHealth(-this.attackValue);
-            this.lastAttack = System.currentTimeMillis() + this.attackSpeed;
+            this.lastAttack = gp.ui.playTime + this.attackSpeed;
         }
     }
 
     public boolean isAbleToAttack() {
-        if(this.lastAttack > System.currentTimeMillis()) {
+        if(this.lastAttack > gp.ui.playTime) {
             return false;
         }
-
         return true;
     }
 }

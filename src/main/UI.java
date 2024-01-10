@@ -34,6 +34,8 @@ public class UI {
     public double playTime;
     public long playTimeMS = System.currentTimeMillis(); // initializes with System.currentTimeMillis(), but then behaves like playTime.
     // This is done like this in order to achieve e.g. cooldowns with better precision than with playTime (which allows only full seconds)
+    // Btw if you compared playTimeMS with System.currentTimeMillis at some point in the game/code, they would differ, because initialization above happens earlier
+    // than the playTime/playTimeMS begin to be increased.
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     UtilityTool uTool = new UtilityTool();
@@ -92,12 +94,10 @@ public class UI {
         // g2.fillRect(gp.screenWidth/2 - 10, gp.screenHeight/2 - 10, 20, 20);
         //Draw Play Time
         playTime += (double)1/60;
-        playTimeMS = 1; // to-do
+        playTimeMS += 1000 / 60;
 
         if(showPlayTime == true) {
             g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 130);
-            g2.drawString("PlaytimeMS: " + playTimeMS, 15, gp.screenHeight - 260);
-            g2.drawString("SlaytimeMS: " + System.currentTimeMillis(), 15, gp.screenHeight - 200);
         }
         // Draw Coordinates
         if(showCoordinates == true) {
@@ -107,7 +107,7 @@ public class UI {
             g2.drawString("ScrY: " + gp.player.screenY, gp.screenWidth - 190, 200);
         }
         // Draw statistics
-        g2.drawString("Player Health: " + gp.player.health, 15, gp.screenHeight - 180);
+        g2.drawString("Player Health: " + gp.player.health, 15, gp.screenHeight - 360);
     }
 
     public void drawPauseScreen() {
