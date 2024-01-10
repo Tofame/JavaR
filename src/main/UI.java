@@ -32,6 +32,8 @@ public class UI {
     boolean showPlayTime = true;
 
     public double playTime;
+    public long playTimeMS = System.currentTimeMillis(); // initializes with System.currentTimeMillis(), but then behaves like playTime.
+    // This is done like this in order to achieve e.g. cooldowns with better precision than with playTime (which allows only full seconds)
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     UtilityTool uTool = new UtilityTool();
@@ -89,9 +91,13 @@ public class UI {
         // Draw center of the screen
         // g2.fillRect(gp.screenWidth/2 - 10, gp.screenHeight/2 - 10, 20, 20);
         //Draw Play Time
+        playTime += (double)1/60;
+        playTimeMS = 1; // to-do
+
         if(showPlayTime == true) {
-            playTime += (double)1/60;
             g2.drawString("Playtime: " + dFormat.format(playTime), 15, gp.screenHeight - 130);
+            g2.drawString("PlaytimeMS: " + playTimeMS, 15, gp.screenHeight - 260);
+            g2.drawString("SlaytimeMS: " + System.currentTimeMillis(), 15, gp.screenHeight - 200);
         }
         // Draw Coordinates
         if(showCoordinates == true) {

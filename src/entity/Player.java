@@ -15,6 +15,10 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    // Spritesheet layers below
+    // From Entity.java: spriteSheet
+    public BufferedImage bodySpritesheet; // we save here "default body": without any paperdolls etc., just straight out of the character creator
+
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
 
@@ -58,7 +62,7 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if((keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) && isAbleToMove() == true) {
+        if(((keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) && isAbleToMove() == true) || keyH.enterPressed == true) {
             if(keyH.upPressed == true) {
                 direction = "up";
             } 
@@ -91,10 +95,8 @@ public class Player extends Entity {
             // CHECK EVENT COLLISION
             gp.eHandler.checkEvent();
 
-            gp.keyH.enterPressed = false;
-
             // IF CONDITION IS FALSE, PLAYER CAN MOVE
-            if(collisionOn == false) {
+            if(collisionOn == false && keyH.enterPressed == false) {
                 switch(direction) {
                     case "up":
                         worldY -= speed;
@@ -110,6 +112,8 @@ public class Player extends Entity {
                         break;  
                 }
             }
+
+            gp.keyH.enterPressed = false;
 
             spriteCounter++;
             if(spriteCounter > 7) {

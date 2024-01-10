@@ -51,6 +51,7 @@ public class CharacterCreation {
             this.legsImage = emptyBodyPart;
 
             gp.player.spriteSheet = this.bodyImage;
+            gp.player.bodySpritesheet = this.bodyImage;
             playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", this.bodyImage, 5);
 
             singleFrameHair = emptyBodyPart;
@@ -146,6 +147,7 @@ public class CharacterCreation {
 
         playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", combinedImage, 5);
         gp.player.spriteSheet = combinedImage;
+        gp.player.bodySpritesheet = combinedImage;
     }
 
     public void drawCurrentOutfitElements(Graphics2D g2, int offsetY) {

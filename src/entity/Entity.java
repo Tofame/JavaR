@@ -39,7 +39,8 @@ public class Entity {
     public Condition[] conditions = new Condition[10]; // Player has more
     public int amountOfConditions = 0;
 
-    public int noMoveConditions = 0;
+    public int noMoveConditions = 0; // This  was made in order to optimize.
+    // Instead of checking hasCondition(stun) for example, we just check noMoveCondition > 0 and this means that an entity cant move.
 
     public enum CreatureType {
         MONSTER,
