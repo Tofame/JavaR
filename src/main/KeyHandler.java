@@ -161,20 +161,11 @@ public class KeyHandler implements KeyListener {
                 }
                 if (code == KeyEvent.VK_ENTER) {
                     if(gp.ui.commandNum == 0) {
-                        System.out.println("Warrior");
-                        gp.player.setDefaultImages("", "characters", true);
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
+                        gp.enterTheGame("Warrior");
                     } else if(gp.ui.commandNum == 1) {
-                        System.out.println("Rogue");
-                        gp.player.setDefaultImages("", "characters", true);
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
+                        gp.enterTheGame("Rogue");
                     } else if(gp.ui.commandNum == 2) {
-                        System.out.println("Sorcerer");
-                        gp.player.setDefaultImages("", "characters", true);
-                        gp.gameState = gp.playState;
-                        gp.playMusic(0);
+                        gp.enterTheGame("Sorcerer");
                     } else if(gp.ui.commandNum == 3) {
                         gp.ui.titleScreenState = 1;
                         gp.ui.commandNum = 0;

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import conditions.Condition;
 import main.GamePanel;
@@ -16,8 +17,29 @@ public class Player extends Entity {
     public final int screenY;
 
     // Spritesheet layers below
-    // From Entity.java: spriteSheet
-    public BufferedImage bodySpritesheet; // we save here "default body": without any paperdolls etc., just straight out of the character creator
+    // From Entity.java: 
+    //     BufferedImage spriteSheet
+    public BufferedImage characterSpriteSheet; // we save here character created: without any paperdolls etc., just straight out of the character creator
+    public BufferedImage armorPaperdoll, necklacePaperdoll, leftHandPaperdoll, rightHandPaperdoll, backPaperdoll = null;
+
+    /* Test functions temporarily here to test knife paperdoll */
+    public void updatePaperdolls() {
+        try {
+            this.leftHandPaperdoll = uTool.loadImage("res/paperDolls/knife01LH.png");
+            this.leftHandPaperdoll = uTool.scaleImage(this.leftHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.setSpriteSheet(uTool.combineImages(spriteSheet, leftHandPaperdoll));
+    }
+    public void updatePaperdolls2() {
+        this.setSpriteSheet(characterSpriteSheet);
+    }
+
+    public void setSpriteSheet(BufferedImage newSpritesheet) {
+        this.spriteSheet = newSpritesheet;
+        this.setFrameImages();
+    }
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -37,6 +59,7 @@ public class Player extends Entity {
 
         setDefaultImages("playerSprite.png", "characters", false);
         setDefaultValues();
+        this.characterSpriteSheet = this.spriteSheet;
 
         // Dont change, its like a camera position
         screenX = gp.screenWidth/2;
@@ -95,7 +118,7 @@ public class Player extends Entity {
             // CHECK EVENT COLLISION
             gp.eHandler.checkEvent();
 
-            // IF CONDITION IS FALSE, PLAYER CAN MOVE
+            // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
                 switch(direction) {
                     case "up":

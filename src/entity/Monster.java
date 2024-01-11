@@ -35,7 +35,6 @@ public class Monster extends Entity {
             } else { //(i > 75 && i <= 100)
                 direction = "right";
             }
-            direction = "down";
 
             actionLockCounter = 0;
         }

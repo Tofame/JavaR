@@ -85,6 +85,7 @@ public class EventHandler {
         gp.player.changeHealth(-2);
         gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicPoison, 9);
         canTouchEvent = false;
+        gp.player.updatePaperdolls();
     }
 
     public void healingPool(int col, int row, int gameState) {
@@ -94,6 +95,7 @@ public class EventHandler {
             gp.player.changeHealth(20);
             eventRect[col][row].eventDone = true; // will make it 1 time event
             gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicIncreaseMaxHealth, 9);
+            gp.player.updatePaperdolls2();
         }
     }
 }
