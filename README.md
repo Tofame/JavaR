@@ -14,3 +14,8 @@ For premium support and to contribute financially to the project, consider [beco
 Report issues and contribute to the development on our [GitHub Issue Tracker](https://github.com/Tofame/JavaR/issues). 
 Be mindful that notifications are sent to all watchers, so keep comments meaningful. 
 If you want to expedite a fix, either submit a pull request or consider placing a bounty on the issue.
+
+### In case the bin file is empty, so you can't run the project due to missing .class files you gotta open cmd then cd to the src folder and
+use the following comand:
+for /r %x in (*.java) do javac -d . "%x"
+It will generate .class file for each .java file. Then you need to move them to the correct folders in bin.
