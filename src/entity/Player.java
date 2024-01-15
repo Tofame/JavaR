@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 
 import conditions.Condition;
 import main.GamePanel;
@@ -30,15 +31,32 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.setSpriteSheet(uTool.combineImages(spriteSheet, leftHandPaperdoll));
+        this.setSpriteSheet(mergeHandPaperdoll(leftHandPaperdoll));
     }
     public void updatePaperdolls2() {
         this.setSpriteSheet(characterSpriteSheet);
     }
+    // End of test functions
 
     public void setSpriteSheet(BufferedImage newSpritesheet) {
         this.spriteSheet = newSpritesheet;
         this.setFrameImages();
+    }
+
+    // the 1st column of spritesheet (going up/north) ... has to be drawn below spritesheet and other directions above spritesheet
+    public BufferedImage mergeHandPaperdoll(BufferedImage paperdoll) {
+        BufferedImage newSpritesheet = new BufferedImage(spriteSheet.getWidth(), spriteSheet.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        int width = paperdoll.getWidth();
+
+        Graphics2D g2 = newSpritesheet.createGraphics();
+
+        g2.drawImage(paperdoll.getSubimage(0, 0, width/4, paperdoll.getHeight()), 0, 0, null);
+        g2.drawImage(this.spriteSheet, 0, 0, null);
+        g2.drawImage(paperdoll.getSubimage(width/4, 0, width * 3/4, paperdoll.getHeight()), width/4, 0, null);
+
+        g2.dispose();
+        return newSpritesheet;
     }
 
     public Player(GamePanel gp, KeyHandler keyH) {
