@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 
 import conditions.Condition;
 import main.GamePanel;
@@ -26,34 +25,58 @@ public class Player extends Entity {
     /* Test functions temporarily here to test knife paperdoll */
     public void updatePaperdolls() {
         try {
-            this.leftHandPaperdoll = uTool.loadImage("res/paperDolls/knife01LH.png");
+            this.armorPaperdoll = uTool.loadImage("res/paperDolls/Armor/armor01.png");
+            this.armorPaperdoll = uTool.scaleImage(this.armorPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+
+            this.leftHandPaperdoll = uTool.loadImage("res/paperDolls/LH/knife01.png");
             this.leftHandPaperdoll = uTool.scaleImage(this.leftHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+
+            this.rightHandPaperdoll = uTool.loadImage("res/paperDolls/RH/knife01.png");
+            this.rightHandPaperdoll = uTool.scaleImage(this.rightHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.setSpriteSheet(mergeHandPaperdoll(leftHandPaperdoll));
+        this.setSpriteSheet(uTool.combineImages(spriteSheet, armorPaperdoll), false);
+        this.setSpriteSheet(mergeHandPaperdoll(leftHandPaperdoll, true), false);
+        this.setSpriteSheet(mergeHandPaperdoll(rightHandPaperdoll, false), true);
     }
     public void updatePaperdolls2() {
-        this.setSpriteSheet(characterSpriteSheet);
+        this.setSpriteSheet(characterSpriteSheet, true);
     }
     // End of test functions
 
-    public void setSpriteSheet(BufferedImage newSpritesheet) {
+    public void setSpriteSheet(BufferedImage newSpritesheet, boolean setFrameImages) {
         this.spriteSheet = newSpritesheet;
-        this.setFrameImages();
+        if(setFrameImages)
+            this.setFrameImages();
     }
 
-    // the 1st column of spritesheet (going up/north) ... has to be drawn below spritesheet and other directions above spritesheet
-    public BufferedImage mergeHandPaperdoll(BufferedImage paperdoll) {
+    // the 1st column of paperdoll's frames (going up/north) ... have to be drawn below spritesheet and the other frames above it
+    // This is for hand paperdolls - e.g. so sword while going north wouldn't appear on your hair
+    public BufferedImage mergeHandPaperdoll(BufferedImage paperdoll, boolean leftHand /* false = rightHand */) {
         BufferedImage newSpritesheet = new BufferedImage(spriteSheet.getWidth(), spriteSheet.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
         int width = paperdoll.getWidth();
 
         Graphics2D g2 = newSpritesheet.createGraphics();
 
-        g2.drawImage(paperdoll.getSubimage(0, 0, width/4, paperdoll.getHeight()), 0, 0, null);
-        g2.drawImage(this.spriteSheet, 0, 0, null);
-        g2.drawImage(paperdoll.getSubimage(width/4, 0, width * 3/4, paperdoll.getHeight()), width/4, 0, null);
+        if(leftHand) {
+            // 1st and 2nd row BELOW player (going north, going east)
+            g2.drawImage(paperdoll.getSubimage(0, 0, width * 2/4, paperdoll.getHeight()), 0, 0, null);
+            // BODY -----
+            g2.drawImage(this.spriteSheet, 0, 0, null);
+            // 3rd, 4th row draw ON body
+            g2.drawImage(paperdoll.getSubimage(width * 2/4, 0, width * 2/4, paperdoll.getHeight()), width * 2/4, 0, null);
+        } else {
+            // 1st row BELOW player (going north)
+            g2.drawImage(paperdoll.getSubimage(0, 0, width/4, paperdoll.getHeight()), 0, 0, null);
+            // 4th row BELOW player (going west)
+            g2.drawImage(paperdoll.getSubimage(width * 3/4, 0, width/4, paperdoll.getHeight()), width * 3/4, 0, null);
+            // BODY -----
+            g2.drawImage(this.spriteSheet, 0, 0, null);
+            // 2nd, 3rd row draw ON body
+            g2.drawImage(paperdoll.getSubimage(width/4, 0, width/2, paperdoll.getHeight()), width/4, 0, null);
+        }
 
         g2.dispose();
         return newSpritesheet;
