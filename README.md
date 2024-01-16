@@ -20,3 +20,7 @@ In case the bin file is empty, so you can't run the project due to missing .clas
 then cd to the src folder and use the following comand: </br>
 ```for /r %x in (*.java) do javac -d . "%x"``` </br>
 It will generate .class file for each .java file. Then you need to move them to the correct folders in bin.
+
+### Images
+As of 16.01.2024 (character creator & paperdolls (e.g. sword in hand) so appearance can be VERY customized)
+![image](https://github.com/Tofame/JavaR/assets/80583148/1abafd86-ba03-4a85-8956-e7c84ef9cf84)
