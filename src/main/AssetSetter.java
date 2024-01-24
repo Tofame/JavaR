@@ -101,8 +101,8 @@ public class AssetSetter {
 
         try {
             gp.obj[index].downIdle = uTool.loadImage("res/objects/" + spriteName + ".png");
-            int downIdleWidth = gp.obj[index].downIdle.getWidth() * gp.scale;
-            int downIdleHeight = gp.obj[index].downIdle.getHeight() * gp.scale;
+            int downIdleWidth = gp.obj[index].downIdle.getWidth() * GamePanel.scale;
+            int downIdleHeight = gp.obj[index].downIdle.getHeight() * GamePanel.scale;
             if(forceTileSize) {
                 gp.obj[index].downIdle = uTool.scaleImage(gp.obj[index].downIdle, gp.tileSize, gp.tileSize);
             } else {

@@ -1,4 +1,4 @@
-package main;
+package effects;
 
 public class Position {
     public int x;

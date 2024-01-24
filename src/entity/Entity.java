@@ -310,8 +310,8 @@ public class Entity {
                 spriteSheet = uTool.loadImage("res/" + folderType + "/" + fileName);
                 int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
-                singleFrameWidth = tempSingleFrameWidth * gp.scale;
-                singleFrameHeight = tempSingleFrameHeight * gp.scale;
+                singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
+                singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
                 spriteOffsetX = -singleFrameWidth/2;
                 spriteOffsetY = -singleFrameHeight + 18;
                 spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
@@ -321,8 +321,8 @@ public class Entity {
         } else {
             int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
-            singleFrameWidth = tempSingleFrameWidth * gp.scale;
-            singleFrameHeight = tempSingleFrameHeight * gp.scale;
+            singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
+            singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
             spriteOffsetX = -singleFrameWidth/2;
             spriteOffsetY = -singleFrameHeight + 18;
             spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);

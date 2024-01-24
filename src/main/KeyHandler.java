@@ -192,6 +192,10 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_ENTER) {
                 enterPressed = true;
             }
+            // TEST SPELL
+            if (code == KeyEvent.VK_R) {
+                
+            }
 
             // DEBUG
             if (code == KeyEvent.VK_T) {

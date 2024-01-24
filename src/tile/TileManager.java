@@ -19,7 +19,7 @@ public class TileManager {
         this.gp = gp;
 
         tile = new Tile[100];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[GamePanel.maxWorldCol][GamePanel.maxWorldRow];
 
         getTileImage();
         loadMap("res/maps/worldV2.txt");
@@ -80,8 +80,8 @@ public class TileManager {
         try {
             tile[index] = new Tile();
             tile[index].image = uTool.loadImage("res/tiles/" + imagePath + ".png");
-            int TileWidth = tile[index].image.getWidth() * gp.scale;
-            int TileHeight = tile[index].image.getHeight() * gp.scale;
+            int TileWidth = tile[index].image.getWidth() * GamePanel.scale;
+            int TileHeight = tile[index].image.getHeight() * GamePanel.scale;
 
             int combineTileOffsetX = 0;
             int combineTileOffsetY = 0;
@@ -117,16 +117,16 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
-            while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
+            while(col < GamePanel.maxWorldCol && row < GamePanel.maxWorldRow) {
                 String line = br.readLine();
-                while(col < gp.maxWorldCol) {
+                while(col < GamePanel.maxWorldCol) {
                     String numbers[] = line.split(" ");
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNum[col][row] = num;
 
                     col++;
                 }
-                if(col == gp.maxWorldCol) {
+                if(col == GamePanel.maxWorldCol) {
                     col = 0;
                     row++;
                 }
@@ -141,7 +141,7 @@ public class TileManager {
         int worldCol = 0;
         int worldRow = 0;
 
-        while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
+        while(worldCol < GamePanel.maxWorldCol && worldRow < GamePanel.maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
 
             int worldX = worldCol * gp.tileSize;
@@ -164,7 +164,7 @@ public class TileManager {
             }
             worldCol++;
 
-            if(worldCol == gp.maxWorldCol) {
+            if(worldCol == GamePanel.maxWorldCol) {
                 worldCol = 0;
                 worldRow++;
             }

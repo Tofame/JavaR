@@ -10,11 +10,11 @@ public class EventHandler {
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
+        eventRect = new EventRect[GamePanel.maxWorldCol][GamePanel.maxWorldRow];
 
         int col = 0;
         int row = 0;
-        while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
+        while(col < GamePanel.maxWorldCol && row < GamePanel.maxWorldRow) {
             eventRect[col][row] = new EventRect();
             eventRect[col][row].width = 2;
             eventRect[col][row].height = 2;
@@ -24,7 +24,7 @@ public class EventHandler {
             eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
 
             col++;
-            if(col == gp.maxWorldCol) {
+            if(col == GamePanel.maxWorldCol) {
                 col = 0;
                 row++;
             }
