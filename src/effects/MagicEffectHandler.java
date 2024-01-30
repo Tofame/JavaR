@@ -1,5 +1,6 @@
 package effects;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,7 +31,7 @@ public class MagicEffectHandler {
 
         for(int i = 0; i < this.effectsAmount; i++) {
             try {
-                effects[i] = defineEffect(Integer.toString(i), 8, 32);
+                effects[i] = defineEffect(Integer.toString(i));
             } catch(IOException e) {
                 System.out.println("[MagicEffectHandler] Issue loading an effect to default array: " + e.getMessage());
             }
@@ -81,7 +82,10 @@ public class MagicEffectHandler {
         this.effectsAmount = files.length;
     }
 
-    public MagicEffect defineEffect(String id, int frames, int frameSize) throws IOException {
-        return new MagicEffect(uTool.scaleImage(uTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png"), frameSize * GamePanel.scale, frameSize * frames * GamePanel.scale));
+    public MagicEffect defineEffect(String id) throws IOException {
+        BufferedImage effectSheet = uTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png");
+        int frameSize = effectSheet.getWidth();
+
+        return new MagicEffect(uTool.scaleImage(effectSheet, frameSize * GamePanel.scale, frameSize * GamePanel.scale * (effectSheet.getHeight()/frameSize)));
     }
 }
