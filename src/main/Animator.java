@@ -8,9 +8,9 @@ public class Animator {
     private double startTime;
     private double singleFrameInterval;
 
-    public Animator(BufferedImage sheet, int frameCount, double singleFrameInterval) {
+    public Animator(BufferedImage sheet, double singleFrameInterval) {
         this.sheet = sheet;
-        this.frameCount = frameCount;
+        this.frameCount = (int)(sheet.getHeight()/sheet.getWidth());
         this.frameIndex = 0;
         this.sheet = sheet;
         this.singleFrameInterval = singleFrameInterval;

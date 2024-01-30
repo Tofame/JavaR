@@ -16,7 +16,7 @@ public class MagicEffect {
     }
 
     public void loadAnimator(double singleFrameInterval) {
-        animator = new Animator(sheet, (int)(sheet.getHeight()/sheet.getWidth()), singleFrameInterval);
+        animator = new Animator(sheet, singleFrameInterval);
         animator.start();
     }
 }
