@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import conditions.ConditionsHandler;
+import effects.MagicEffectHandler;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -49,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     public ConditionsHandler conditionHandler = new ConditionsHandler(this);
+    public MagicEffectHandler magicEffectHandler = new MagicEffectHandler(this);
     Thread gameThread;
 
     // ENTITY AND OBJECT

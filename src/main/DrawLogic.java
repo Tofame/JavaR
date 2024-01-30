@@ -6,9 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import effects.MagicEffect;
 import entity.Entity;
 
 public class DrawLogic extends JPanel implements Runnable {
@@ -72,6 +74,22 @@ public class DrawLogic extends JPanel implements Runnable {
           // This includes drawing order
             // TILE
             gp.tileM.draw(g2);
+
+            // EFFECTS BELOW ENTITIES
+            Iterator<MagicEffect> iterator = gp.magicEffectHandler.gameEffectsBelow.iterator();
+            while (iterator.hasNext()) {
+                MagicEffect effect = iterator.next();
+                
+                if (effect.timeEnd < gp.ui.playTime) {
+                    iterator.remove();
+                    continue;
+                }
+
+                if(gp.player.isInSight(effect.position.x, effect.position.y)) {
+                    //.getSubimage(0 * width, 0 * height, width, height);
+                    g2.drawImage(effect.sheet.getSubimage(0, effect.currentFrame * effect.frameSize, effect.frameSize, effect.frameSize), effect.position.x - gp.player.worldX + gp.player.screenX, effect.position.y - gp.player.worldY + gp.player.screenY, null);
+                }
+            }
             
             // ADD ENTITIES TO THE LIST
             gp.entityList.add(gp.player);

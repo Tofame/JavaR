@@ -215,6 +215,13 @@ public class Player extends Entity {
         }
     }
 
+    public boolean isInSight(int worldX, int worldY) {
+        return worldX + this.singleFrameWidth > this.worldX - this.screenX &&
+               worldX - this.singleFrameWidth < this.worldX + this.screenX &&
+               worldY + this.singleFrameHeight > this.worldY - this.screenY &&
+               worldY - this.singleFrameHeight < this.worldY + this.screenY;
+    }
+
     @Override
     public void draw(Graphics2D g2) { // Draws player
         BufferedImage image = null;

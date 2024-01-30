@@ -146,14 +146,12 @@ public class TileManager {
 
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            if(worldX + gp.player.singleFrameWidth > gp.player.worldX - gp.player.screenX && 
-                worldX - gp.player.singleFrameWidth < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.player.singleFrameHeight > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
+            if(gp.player.isInSight(worldX, worldY))
             {
+                int screenX = worldX - gp.player.worldX + gp.player.screenX;
+                int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
                 g2.drawImage(tile[tileNum].image, screenX - tile[tileNum].offsetX, screenY - tile[tileNum].offsetY, null);
                 if(GamePanel.drawTileCollisions) {
                     if(tile[tileNum].collision) {

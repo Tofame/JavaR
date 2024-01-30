@@ -1,5 +1,7 @@
 package main;
 
+import effects.Position;
+
 public class EventHandler {
     GamePanel gp;
     EventRect eventRect[][];
@@ -86,6 +88,8 @@ public class EventHandler {
         gp.conditionHandler.addCondition(gp.player, gp.conditionHandler.basicPoison, 9);
         canTouchEvent = false;
         gp.player.updatePaperdolls();
+
+        gp.magicEffectHandler.sendMagicEffect(new Position(1520, 1040), 0, 0);
     }
 
     public void healingPool(int col, int row, int gameState) {
