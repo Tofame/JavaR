@@ -31,7 +31,7 @@ public class UI {
     boolean showCoordinates = true;
     boolean showPlayTime = true;
 
-    public double playTime;
+    public static double playTime;
     public long playTimeMS = System.currentTimeMillis(); // initializes with System.currentTimeMillis(), but then behaves like playTime.
     // This is done like this in order to achieve e.g. cooldowns with better precision than with playTime (which allows only full seconds)
     // Btw if you compared playTimeMS with System.currentTimeMillis at some point in the game/code, they would differ, because initialization above happens earlier

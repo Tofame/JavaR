@@ -4,6 +4,7 @@ import java.util.Random;
 
 import entity.Entity;
 import main.GamePanel;
+import main.UI;
 
 public class ConditionsHandler {
     GamePanel gp;
@@ -52,23 +53,23 @@ public class ConditionsHandler {
 // Methods now
 
     public void addCondition(Entity entity, Condition condition, double duration) {
-        condition.timeOfEnd = gp.ui.playTime + duration;
+        condition.timeOfEnd = UI.playTime + duration;
         addConditionLogic(entity, condition);
     }
 
     public void addCondition(Entity entity, ConditionType type, int value, int ticks, double duration, int subId, int effectId) {
-        Condition condition = new Condition(type, value, ticks, gp.ui.playTime + duration, subId, effectId); // Uses 1st constructor
+        Condition condition = new Condition(type, value, ticks, UI.playTime + duration, subId, effectId); // Uses 1st constructor
         addConditionLogic(entity, condition);
     }
 
     public void addCondition(Entity entity, ConditionType type, int valueA, int valueB, int ticks, double duration, int subId, int effectId) {
-        Condition condition = new Condition(type, valueA, valueB, ticks, gp.ui.playTime + duration, subId, effectId); // Uses 2nd constructor
+        Condition condition = new Condition(type, valueA, valueB, ticks, UI.playTime + duration, subId, effectId); // Uses 2nd constructor
         addConditionLogic(entity, condition);
     }
 
     private void addConditionLogic(Entity entity, Condition condition) {
         if(entity.amountOfConditions == 0) {
-            condition.lastTick = gp.ui.playTime;
+            condition.lastTick = UI.playTime;
             entity.conditions[entity.amountOfConditions] = condition;
             entity.amountOfConditions++;
             conditionOnAdd(entity, condition);
@@ -90,7 +91,7 @@ public class ConditionsHandler {
             try {
                 if(indexFoundCondition == entity.amountOfConditions) // check if it wasnt substitution <= true => we increase count var
                 {
-                    condition.lastTick = gp.ui.playTime;
+                    condition.lastTick = UI.playTime;
                     entity.amountOfConditions++;
                 }
                 entity.conditions[indexFoundCondition] = condition;
@@ -189,12 +190,12 @@ public class ConditionsHandler {
     public void conditionCheckup(Entity entity, int index) {
         Condition condition = entity.conditions[index];
 
-        if(condition.ticks != -1 && gp.ui.playTime - condition.lastTick > condition.ticks) {
+        if(condition.ticks != -1 && UI.playTime - condition.lastTick > condition.ticks) {
             // Handle the condition type&&value e.g. adding health
             conditionOnTick(entity, condition);
         }
 
-        if(condition.timeOfEnd != -1 && gp.ui.playTime > condition.timeOfEnd) {
+        if(condition.timeOfEnd != -1 && UI.playTime > condition.timeOfEnd) {
             // Remove condition that isnt infinite and ended
             removeConditionByIndex(entity, index);
         }
@@ -231,7 +232,7 @@ public class ConditionsHandler {
             default:
                 System.out.println("Unhandled condition in conditionOnTick: " + convertTypeToString(condition.type));
         }
-        condition.lastTick = gp.ui.playTime;
+        condition.lastTick = UI.playTime;
     }
 
     public void conditionOnAdd(Entity entity, Condition condition) {

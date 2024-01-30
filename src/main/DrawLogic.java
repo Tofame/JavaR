@@ -80,14 +80,13 @@ public class DrawLogic extends JPanel implements Runnable {
             while (iterator.hasNext()) {
                 MagicEffect effect = iterator.next();
                 
-                if (effect.timeEnd < gp.ui.playTime) {
+                if (effect.timeEnd < UI.playTime) {
                     iterator.remove();
                     continue;
                 }
 
                 if(gp.player.isInSight(effect.position.x, effect.position.y)) {
-                    //.getSubimage(0 * width, 0 * height, width, height);
-                    g2.drawImage(effect.sheet.getSubimage(0, effect.currentFrame * effect.frameSize, effect.frameSize, effect.frameSize), effect.position.x - gp.player.worldX + gp.player.screenX, effect.position.y - gp.player.worldY + gp.player.screenY, null);
+                    g2.drawImage(effect.animator.getCurrentFrame(), effect.position.x - gp.player.worldX + gp.player.screenX, effect.position.y - gp.player.worldY + gp.player.screenY, null);
                 }
             }
             

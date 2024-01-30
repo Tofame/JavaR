@@ -3,6 +3,7 @@ package entity;
 import java.util.Random;
 
 import main.GamePanel;
+import main.UI;
 
 public class Monster extends Entity {
     public double lastAttack = 0;
@@ -43,12 +44,12 @@ public class Monster extends Entity {
     public void doAttack(Entity target) {
         if(isAbleToAttack()) {
             target.changeHealth(-this.attackValue);
-            this.lastAttack = gp.ui.playTime + this.attackSpeed;
+            this.lastAttack = UI.playTime + this.attackSpeed;
         }
     }
 
     public boolean isAbleToAttack() {
-        if(this.lastAttack > gp.ui.playTime) {
+        if(this.lastAttack > UI.playTime) {
             return false;
         }
         return true;

@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import main.GamePanel;
+import main.UI;
 import main.UtilityTool;
 
 public class MagicEffectHandler {
@@ -16,7 +17,7 @@ public class MagicEffectHandler {
     UtilityTool uTool = new UtilityTool();
     public static String effectFolderPath = "res/effects";
     public int effectsAmount = 0;
-    public static double singleFrameInterval = 0.7;
+    public static double singleFrameInterval = 0.2;
     private static int maximumEffectsOnScreen = 200; // sets the initial size of ArrayList that holds the effects that will/are displayed
 
     public MagicEffect[] effects; // defined effects ready to use, e.g. fireball index 0
@@ -41,13 +42,15 @@ public class MagicEffectHandler {
 
     public void sendMagicEffect(Position position, int effectId, int layer) {
         MagicEffect effect = effects[effectId];
-        effect.timeEnd = gp.ui.playTime + (effect.frames * MagicEffectHandler.singleFrameInterval);
+        effect.timeEnd = UI.playTime + ((effect.sheet.getHeight()/effect.sheet.getWidth()) * MagicEffectHandler.singleFrameInterval);
+
         effect.position = position;
+        effect.loadAnimator(singleFrameInterval);
 
         if(layer == 0) {
-            gameEffectsBelow.add(effects[effectId]);
+            gameEffectsBelow.add(effect);
         } else {
-            gameEffectsAbove.add(effects[effectId]);
+            gameEffectsAbove.add(effect);
         }
     }
 
@@ -79,7 +82,6 @@ public class MagicEffectHandler {
     }
 
     public MagicEffect defineEffect(String id, int frames, int frameSize) throws IOException {
-        // .getSubimage(0 * width, 0 * height, width, height);
-        return new MagicEffect(uTool.scaleImage(uTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png"), frameSize * GamePanel.scale, frameSize * frames * GamePanel.scale), frames, frameSize * GamePanel.scale);
+        return new MagicEffect(uTool.scaleImage(uTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png"), frameSize * GamePanel.scale, frameSize * frames * GamePanel.scale));
     }
 }

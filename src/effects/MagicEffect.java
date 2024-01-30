@@ -1,20 +1,22 @@
 package effects;
 import java.awt.image.BufferedImage;
 
+import main.Animator;
+
 public class MagicEffect {
     public BufferedImage sheet;
 
-    public int frameSize = 32;
-    public int frames;
-
-    public double timeEnd;
-    public int currentFrame = 0;
+    public Animator animator;
     public Position position;
 
-    public MagicEffect(BufferedImage spritesheet, int frames, int frameSize) {
-        this.sheet = spritesheet;
+    public double timeEnd;
 
-        this.frameSize = frameSize;
-        this.frames = frames;
+    public MagicEffect(BufferedImage spritesheet) {
+        this.sheet = spritesheet;
+    }
+
+    public void loadAnimator(double singleFrameInterval) {
+        animator = new Animator(sheet, (int)(sheet.getHeight()/sheet.getWidth()), singleFrameInterval);
+        animator.start();
     }
 }
