@@ -98,9 +98,8 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
-        setDefaultImages("playerSprite.png", "characters", false);
+        // Starting position, name etc.
         setDefaultValues();
-        this.characterSpriteSheet = this.spriteSheet;
 
         // Dont change, its like a camera position
         screenX = gp.screenWidth/2;

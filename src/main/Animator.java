@@ -24,8 +24,7 @@ public class Animator {
         double currentTime = UI.playTime;
         double elapsedTime = currentTime - startTime;
 
-        // Oblicz indeks bieżącej klatki
-        frameIndex = (int) (elapsedTime / singleFrameInterval) % frameCount;
+        this.frameIndex = (int) (elapsedTime / singleFrameInterval) % frameCount;
 
         int frameWidth = sheet.getWidth();
         return sheet.getSubimage(0, frameIndex * frameWidth, frameWidth, frameWidth);
