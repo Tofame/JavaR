@@ -17,9 +17,10 @@ public class MagicEffectHandler {
     GamePanel gp;
     UtilityTool uTool = new UtilityTool();
     public static String effectFolderPath = "res/effects";
-    public int effectsAmount = 0;
-    public static double singleFrameInterval = 0.2;
     private static int maximumEffectsOnScreen = 200; // sets the initial size of ArrayList that holds the effects that will/are displayed
+    public int effectsAmount = 0; // amount of .png files in /effects
+
+    public static double singleFrameInterval = 0.07;
 
     public MagicEffect[] effects; // defined effects ready to use, e.g. fireball index 0
 
@@ -32,6 +33,7 @@ public class MagicEffectHandler {
         for(int i = 0; i < this.effectsAmount; i++) {
             try {
                 effects[i] = defineEffect(Integer.toString(i));
+                effects[i].loadAnimator(singleFrameInterval);
             } catch(IOException e) {
                 System.out.println("[MagicEffectHandler] Issue loading an effect to default array: " + e.getMessage());
             }
@@ -46,13 +48,17 @@ public class MagicEffectHandler {
         effect.timeEnd = UI.playTime + ((effect.sheet.getHeight()/effect.sheet.getWidth()) * MagicEffectHandler.singleFrameInterval);
 
         effect.position = position;
-        effect.loadAnimator(singleFrameInterval);
+        effect.animator.start();
 
         if(layer == 0) {
             gameEffectsBelow.add(effect);
         } else {
             gameEffectsAbove.add(effect);
         }
+    }
+
+    public void sendMagicEffect(int x, int y, int effectId, int layer) {
+        sendMagicEffect(new Position(x, y), effectId, layer);
     }
 
 // Magic Effects list

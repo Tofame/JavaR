@@ -16,7 +16,7 @@ public class Condition {
     // ticks == -1 means that its e.g. haste, meaning that we handle the values onAdd and its not e.g. increasing speed every 3s, but just on adding.
     public double lastTick;
 
-    public int effectId; // 0 = no effect
+    public int effectId = -1; // -1 no effect
 
     public Condition(ConditionType type, int value, int ticks, double timeOfEnd, int subId, int effectId) {
         this.type = type;

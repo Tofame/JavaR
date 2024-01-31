@@ -124,6 +124,21 @@ public class DrawLogic extends JPanel implements Runnable {
             // EMPTY ENTITY LIST
             gp.entityList.clear();
 
+            // EFFECTS ABOVE ENTITIES
+            iterator = gp.magicEffectHandler.gameEffectsAbove.iterator();
+            while (iterator.hasNext()) {
+                MagicEffect effect = iterator.next();
+                
+                if (effect.timeEnd < UI.playTime) {
+                    iterator.remove();
+                    continue;
+                }
+
+                if(gp.player.isInSight(effect.position.x, effect.position.y)) {
+                    g2.drawImage(effect.animator.getCurrentFrame(), effect.position.x - gp.player.worldX + gp.player.screenX, effect.position.y - gp.player.worldY + gp.player.screenY, null);
+                }
+            }
+
             //UI
             gp.ui.draw(g2);
         }

@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import conditions.Condition;
+import effects.Position;
 import main.GamePanel;
 import main.UtilityTool;
 import main.UI;
@@ -78,6 +79,10 @@ public class Entity {
 
 
     // Methods of Entity
+    public Position getPosition() {
+        return new Position(this.worldX + spriteOffsetX, this.worldY + spriteOffsetY);
+    }
+
     public void changeHealth(int value) {
         health = health + value;
         if(health > maxHealth)
