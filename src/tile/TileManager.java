@@ -138,12 +138,11 @@ public class TileManager {
     }
 
     public void draw(Graphics2D g2) {
+        // TO-DO: What if we started at the left corner of the player screen instead of while-loop from 0,0
         int worldCol = 0;
         int worldRow = 0;
 
         while(worldCol < GamePanel.maxWorldCol && worldRow < GamePanel.maxWorldRow) {
-            int tileNum = mapTileNum[worldCol][worldRow];
-
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
 
@@ -151,6 +150,8 @@ public class TileManager {
             {
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+                int tileNum = mapTileNum[worldCol][worldRow];
 
                 g2.drawImage(tile[tileNum].image, screenX - tile[tileNum].offsetX, screenY - tile[tileNum].offsetY, null);
                 if(GamePanel.drawTileCollisions) {

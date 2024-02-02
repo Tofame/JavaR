@@ -229,78 +229,75 @@ public class Entity {
     }
 
     public void draw(Graphics2D g2) {
+        // If entity is not in range of sight of player then we dont draw the entity
+        if(gp.player.isInSight(worldX, worldY) == false)
+            return;
+
+        BufferedImage image = null;
+        switch(direction) {
+            case "up":
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = upIdle;
+                    else if(spriteNum == 2)
+                        image = up1;
+                    else if(spriteNum == 3)
+                        image = up2;
+                } else {
+                    image = upIdle;
+                }
+                break;
+            case "down":
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = downIdle;
+                    else if(spriteNum == 2)
+                        image = down1;
+                    else if(spriteNum == 3)
+                        image = down2;
+                } else {
+                    image = downIdle;
+                }
+                break;
+            case "left":
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = leftIdle;
+                    else if(spriteNum == 2)
+                        image = left1;
+                    else if(spriteNum == 3)
+                        image = left2;
+                } else {
+                    image = leftIdle;
+                }
+                break;
+            case "right":
+                if(collisionOn == false) {
+                    // Here animation of walking
+                    if(spriteNum == 1)
+                        image = rightIdle;
+                    else if(spriteNum == 2)
+                        image = right1;
+                    else if(spriteNum == 3)
+                        image = right2;
+                } else {
+                    image = rightIdle;
+                }
+                break;
+        }
+
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if(worldX + gp.player.singleFrameWidth > gp.player.worldX - gp.player.screenX && 
-            worldX - gp.player.singleFrameWidth < gp.player.worldX + gp.player.screenX &&
-            worldY + gp.player.singleFrameHeight > gp.player.worldY - gp.player.screenY &&
-            worldY - gp.player.singleFrameHeight < gp.player.worldY + gp.player.screenY)
-        {
-            BufferedImage image = null;
+        g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
+        drawNameAndBars(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
 
-            switch(direction) {
-                case "up":
-                    if(collisionOn == false) {
-                        // Here animation of walking
-                        if(spriteNum == 1)
-                            image = upIdle;
-                        else if(spriteNum == 2)
-                            image = up1;
-                        else if(spriteNum == 3)
-                            image = up2;
-                    } else {
-                        image = upIdle;
-                    }
-                    break;
-                case "down":
-                    if(collisionOn == false) {
-                        // Here animation of walking
-                        if(spriteNum == 1)
-                            image = downIdle;
-                        else if(spriteNum == 2)
-                            image = down1;
-                        else if(spriteNum == 3)
-                            image = down2;
-                    } else {
-                        image = downIdle;
-                    }
-                    break;
-                case "left":
-                    if(collisionOn == false) {
-                        // Here animation of walking
-                        if(spriteNum == 1)
-                            image = leftIdle;
-                        else if(spriteNum == 2)
-                            image = left1;
-                        else if(spriteNum == 3)
-                            image = left2;
-                    } else {
-                        image = leftIdle;
-                    }
-                    break;
-                case "right":
-                    if(collisionOn == false) {
-                        // Here animation of walking
-                        if(spriteNum == 1)
-                            image = rightIdle;
-                        else if(spriteNum == 2)
-                            image = right1;
-                        else if(spriteNum == 3)
-                            image = right2;
-                    } else {
-                        image = rightIdle;
-                    }
-                    break;
-            }
-
-            g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-            drawNameAndBars(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
-
-            if(GamePanel.drawCollisions) {
-                g2.setColor(Color.RED);
-                g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
-            }
+        if(GamePanel.drawCollisions) {
+            g2.setColor(Color.RED);
+            g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
         }
     }
 
