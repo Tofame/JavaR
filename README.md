@@ -15,6 +15,10 @@ Report issues and contribute to the development on our [GitHub Issue Tracker](ht
 Be mindful that notifications are sent to all watchers, so keep comments meaningful. 
 If you want to expedite a fix, either submit a pull request or consider placing a bounty on the issue.
 
+### Credits
+
+Huge thanks to https://twitter.com/lovelytoaster (Cheshire on itch.io) for his amazing icon pack that welcomes a lot of equipment/items into the JavaR
+
 ### Bin folder empty, missing .class files
 In case the bin file is empty, so you can't run the project due to missing .class files you gotta open **cmd** 
 then cd to the src folder and use the following comand: </br>
