@@ -37,30 +37,30 @@ public class UtilityTool {
         return image;
     }
 
-    public BufferedImage getIdleFrameOfSpritesheet(String direction, BufferedImage spritesheet, int Scale) {
+    public BufferedImage getIdleFrameOfSpritesheet(int direction, BufferedImage spritesheet, int Scale) {
         int width = spritesheet.getWidth()/4;
         int height = spritesheet.getHeight()/3;
         BufferedImage resultImage;
         switch (direction) {
-            case "up":
+            case 1:
                 resultImage = spritesheet.getSubimage(0 * width, 0 * height, width, height);
                 if(Scale > 1) {
                     resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
-            case "down":
+            case 3:
                 resultImage = spritesheet.getSubimage(2 * width, 0 * height, width, height);
                 if(Scale > 1) {
                     resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
-            case "left":
+            case 4:
                 resultImage = spritesheet.getSubimage(3 * width, 0 * height, width, height);
                 if(Scale > 1) {
                     resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
-            case "right":
+            case 2:
                 resultImage = spritesheet.getSubimage(4 * width, 0 * height, width, height);
                 if(Scale > 1) {
                     resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);

@@ -194,7 +194,7 @@ public class KeyHandler implements KeyListener {
             }
             // TEST SPELL
             if (code == KeyEvent.VK_R) {
-                
+                gp.player.sendWeaponEffect();
             }
 
             // DEBUG

@@ -24,13 +24,13 @@ public class NPC extends Entity {
             int i = random.nextInt(100) + 1; // 1-100
 
             if(i <= 25) {
-                direction = "up";
+                direction = 1;
             } else if(i > 25 && i <= 50) {
-                direction = "down";
+                direction = 3;
             } else if(i > 50 && i <= 75) {
-                direction = "left";
+                direction = 4;
             } else { //(i > 75 && i <= 100)
-                direction = "right";
+                direction = 2;
             }
 
             actionLockCounter = 0;
@@ -45,17 +45,17 @@ public class NPC extends Entity {
         dialogueIndex++;
 
         switch(gp.player.direction) {
-            case "up":
-                direction = "down";
+            case 1:
+                direction = 3;
                 break;
-            case "down":
-                direction = "up";
+            case 3:
+                direction = 1;
                 break;
-            case "left":
-                direction = "right";
+            case 4:
+                direction = 2;
                 break;
-            case "right":
-                direction = "left";
+            case 2:
+                direction = 4;
                 break;
         }
     }

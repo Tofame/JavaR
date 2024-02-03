@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import conditions.Condition;
+import effects.Position;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -21,6 +22,32 @@ public class Player extends Entity {
     //     BufferedImage spriteSheet
     public BufferedImage characterSpriteSheet; // we save here character created: without any paperdolls etc., just straight out of the character creator
     public BufferedImage armorPaperdoll, necklacePaperdoll, leftHandPaperdoll, rightHandPaperdoll, backPaperdoll = null;
+
+    // Player methods
+    public void sendWeaponEffect() {
+        Position position = gp.player.getPosition();
+
+        switch(this.direction) {
+            case 1: // up
+                position.y -= gp.tileSize / 2;
+                gp.magicEffectHandler.sendMagicEffect(position, 1, 1);
+                break;
+            case 2: // right
+                position.x += gp.tileSize / 2;
+                gp.magicEffectHandler.sendMagicEffect(position, 2, 1);
+                break;  
+            case 3: // down
+                position.y += gp.tileSize / 2;
+                gp.magicEffectHandler.sendMagicEffect(position, 3, 1);  
+                break;
+            case 4: // left
+                position.x -= gp.tileSize / 2;
+                gp.magicEffectHandler.sendMagicEffect(position, 4, 1);   
+                break;
+            default:
+                break;
+        }
+    }
 
     /* Test functions temporarily here to test knife paperdoll */
     public void updatePaperdolls() {
@@ -110,7 +137,7 @@ public class Player extends Entity {
         worldY = gp.tileSize *21; //2400; // Starting Y position
         setName("Tofame");
         speed = 4;
-        direction = "down";
+        direction = 3;
 
         // PLAYER STATS
         maxHealth = 150;
@@ -127,16 +154,16 @@ public class Player extends Entity {
     public void update() {
         if(((keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) && isAbleToMove() == true) || keyH.enterPressed == true) {
             if(keyH.upPressed == true) {
-                direction = "up";
+                direction = 1;
             } 
             if(keyH.downPressed == true) {
-                direction = "down";
+                direction = 3;
             }
             if(keyH.leftPressed == true) {
-                direction = "left";
+                direction = 4;
             }
             if(keyH.rightPressed == true) {
-                direction = "right";
+                direction = 2;
             }
 
             // CHECK PLAYER COLLISION
@@ -161,16 +188,16 @@ public class Player extends Entity {
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(collisionOn == false && keyH.enterPressed == false) {
                 switch(direction) {
-                    case "up":
+                    case 1:
                         worldY -= speed;
                         break;
-                    case "down":
+                    case 3:
                         worldY += speed;
                         break;
-                    case "left":
+                    case 4:
                         worldX -= speed;
                         break;
-                    case "right":
+                    case 2:
                         worldX += speed;
                         break;  
                 }
@@ -226,7 +253,7 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         switch(direction) {
-            case "up":
+            case 1:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -239,7 +266,7 @@ public class Player extends Entity {
                     image = upIdle;
                 }
                 break;
-            case "down":
+            case 3:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -252,7 +279,7 @@ public class Player extends Entity {
                     image = downIdle;
                 }
                 break;
-            case "left":
+            case 4:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -265,7 +292,7 @@ public class Player extends Entity {
                     image = leftIdle;
                 }
                 break;
-            case "right":
+            case 2:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)

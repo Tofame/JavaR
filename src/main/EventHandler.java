@@ -41,12 +41,12 @@ public class EventHandler {
         }
 
         if(canTouchEvent) {
-            if(hit(27,16,"right") == true) {teleport(27, 16, gp.dialogueState);}
-            if(hit(23,16,"any") == true) {damagePit(23, 16, gp.dialogueState);}
-            if(hit(23,12,"up") == true) {healingPool(23, 12, gp.dialogueState);}
+            if(hit(27,16,2) == true) {teleport(27, 16, gp.dialogueState);}
+            if(hit(23,16,0) == true) {damagePit(23, 16, gp.dialogueState);}
+            if(hit(23,12,1) == true) {healingPool(23, 12, gp.dialogueState);}
         }
     }
-    public boolean hit(int col, int row, String reqDirection) {
+    public boolean hit(int col, int row, int reqDirection) {
         boolean hit = false;
         if(eventRect[col][row].eventDone == true)
             return hit;
@@ -57,7 +57,7 @@ public class EventHandler {
         eventRect[col][row].y = row*gp.tileSize + eventRect[col][row].y;
 
         if(gp.player.solidArea.intersects(eventRect[col][row])) {
-            if(gp.player.direction.contentEquals(reqDirection) || reqDirection.contentEquals("any")) {
+            if(reqDirection == 0 || gp.player.direction == reqDirection) {
                 hit = true;
 
                 previousEventX = gp.player.worldX;

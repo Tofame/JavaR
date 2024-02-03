@@ -51,7 +51,7 @@ public class CharacterCreation {
             this.legsImage = emptyBodyPart;
 
             gp.player.spriteSheet = this.bodyImage;
-            playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", this.bodyImage, 5);
+            playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet(3, this.bodyImage, 5);
 
             singleFrameHair = emptyBodyPart;
             singleFrameCloth = emptyBodyPart;
@@ -74,7 +74,7 @@ public class CharacterCreation {
                     this.bodyImage = uTool.loadImage("res/characterCreator/body0" + chosenBodyIndex + ".png");
                 }
                 combinedImage = bodyImage;
-                singleFrameBody = uTool.getIdleFrameOfSpritesheet("down", this.bodyImage, 3);
+                singleFrameBody = uTool.getIdleFrameOfSpritesheet(3, this.bodyImage, 3);
                 currentlyLoadedBodyIndex = chosenBodyIndex;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -89,7 +89,7 @@ public class CharacterCreation {
                         this.hairImage = uTool.loadImage("res/characterCreator/hair0" + chosenHairIndex + ".png");
                     }
                     combinedImage = uTool.combineImages(combinedImage, hairImage);
-                    singleFrameHair = uTool.getIdleFrameOfSpritesheet("down", this.hairImage, 3);
+                    singleFrameHair = uTool.getIdleFrameOfSpritesheet(3, this.hairImage, 3);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -109,13 +109,13 @@ public class CharacterCreation {
                         this.clothImage = uTool.loadImage("res/characterCreator/cloth0" + chosenClothIndex + ".png");
                     }
                     combinedImage = uTool.combineImages(combinedImage, clothImage);
-                    singleFrameCloth = uTool.getIdleFrameOfSpritesheet("down", this.clothImage, 3);
+                    singleFrameCloth = uTool.getIdleFrameOfSpritesheet(3, this.clothImage, 3);
                     currentlyLoadedClothIndex = chosenClothIndex;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 combinedImage = uTool.combineImages(combinedImage, clothImage);
-                singleFrameCloth = uTool.getIdleFrameOfSpritesheet("down", this.clothImage, 3);
+                singleFrameCloth = uTool.getIdleFrameOfSpritesheet(3, this.clothImage, 3);
             } else {
                 singleFrameCloth = emptyBodyPart;
             }
@@ -132,7 +132,7 @@ public class CharacterCreation {
                         this.legsImage = uTool.loadImage("res/characterCreator/legs0" + chosenLegsIndex + ".png");
                     }
                     combinedImage = uTool.combineImages(combinedImage, legsImage);
-                    singleFrameLegs = uTool.getIdleFrameOfSpritesheet("down", this.legsImage, 3);
+                    singleFrameLegs = uTool.getIdleFrameOfSpritesheet(3, this.legsImage, 3);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -144,7 +144,7 @@ public class CharacterCreation {
             combinedImage = uTool.combineImages(combinedImage, legsImage);
         }
 
-        playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet("down", combinedImage, 5);
+        playerSpritesheetSingleFrame = uTool.getIdleFrameOfSpritesheet(3, combinedImage, 5);
         gp.player.spriteSheet = combinedImage;
     }
 

@@ -20,7 +20,7 @@ public class Entity {
     public int worldX, worldY;
 
     public String name = "Entity";
-    public String direction = "down";
+    public int direction = 3; // 0 - any, 1 - up, 2 - right, 3 - down, 4 - left
     public int speed = 1;
     // CREATURE STATISTICS
     String healthBarColor = "#00b800";
@@ -196,16 +196,16 @@ public class Entity {
         // IF CONDITION IS FALSE THEN CAN MOVE
         if(collisionOn == false && isAbleToMove() == true) {
             switch(direction) {
-                case "up":
+                case 1:
                     worldY -= speed;
                     break;
-                case "down":
+                case 3:
                     worldY += speed;
                     break;
-                case "left":
+                case 4:
                     worldX -= speed;
                     break;
-                case "right":
+                case 2:
                     worldX += speed;
                     break;  
                 
@@ -235,7 +235,7 @@ public class Entity {
 
         BufferedImage image = null;
         switch(direction) {
-            case "up":
+            case 1:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -248,7 +248,7 @@ public class Entity {
                     image = upIdle;
                 }
                 break;
-            case "down":
+            case 3:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -261,7 +261,7 @@ public class Entity {
                     image = downIdle;
                 }
                 break;
-            case "left":
+            case 4:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)
@@ -274,7 +274,7 @@ public class Entity {
                     image = leftIdle;
                 }
                 break;
-            case "right":
+            case 2:
                 if(collisionOn == false) {
                     // Here animation of walking
                     if(spriteNum == 1)

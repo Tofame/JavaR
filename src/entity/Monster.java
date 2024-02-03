@@ -28,13 +28,13 @@ public class Monster extends Entity {
             int i = random.nextInt(100) + 1; // 1-100
 
             if(i <= 25) {
-                direction = "up";
+                direction = 1;
             } else if(i > 25 && i <= 50) {
-                direction = "down";
+                direction = 3;
             } else if(i > 50 && i <= 75) {
-                direction = "left";
+                direction = 4;
             } else { //(i > 75 && i <= 100)
-                direction = "right";
+                direction = 2;
             }
 
             actionLockCounter = 0;
