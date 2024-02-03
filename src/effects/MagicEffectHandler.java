@@ -94,4 +94,16 @@ public class MagicEffectHandler {
 
         return new MagicEffect(uTool.scaleImage(effectSheet, frameSize * GamePanel.scale, frameSize * GamePanel.scale * (effectSheet.getHeight()/frameSize)));
     }
+
+    public void setOffsets() {
+        // Example:
+        //setEffectOffset(0, 32, 32);
+    }
+
+    public void setEffectOffset(int id, int x, int y) {
+        if(effects[id] != null) {
+            effects[id].offsetX = x;
+            effects[id].offsetY = y;
+        }
+    }
 }

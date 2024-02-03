@@ -6,6 +6,9 @@ import main.Animator;
 public class MagicEffect {
     public BufferedImage sheet;
 
+    public int offsetX = 0;
+    public int offsetY = 0;
+
     public Animator animator;
     public Position position;
 
