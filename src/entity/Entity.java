@@ -63,6 +63,9 @@ public class Entity {
     public Rectangle solidArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
+
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
+
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
 
@@ -180,6 +183,10 @@ public class Entity {
     public boolean isAbleToAttack() { return true; }
 
     public void doAttack(Entity entity) {}
+
+    public void doCombat(Entity attacker, Entity target) {
+        target.changeHealth(-10);
+    }
 
     // BELOW ARE METHODS THAT ARE USED LESS OFTEN THROUGHOUT THE PROJECT (like update() is used once)
 

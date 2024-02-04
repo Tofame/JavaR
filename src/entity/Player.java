@@ -24,6 +24,15 @@ public class Player extends Entity {
     public BufferedImage armorPaperdoll, necklacePaperdoll, leftHandPaperdoll, rightHandPaperdoll, backPaperdoll = null;
 
     // Player methods
+    public void doAttack() {
+        int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+        if(monsterIndex != -1) {
+            doCombat(this, gp.monster[monsterIndex]);
+        }
+
+        sendWeaponEffect();
+    }
+
     public void sendWeaponEffect() {
         Position position = gp.player.getPosition();
 
@@ -125,6 +134,9 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
+        attackArea.width = 36;
+        attackArea.height = 36;
+
         // Starting position, name etc.
         setDefaultValues();
 
@@ -221,13 +233,13 @@ public class Player extends Entity {
     }
 
     public void interactObject(int i) {
-        if(i != 999) {
+        if(i != -1) {
 
         }
     }
 
     public void interactNPC(int i) {
-        if(i != 999) {
+        if(i != -1) {
             if(gp.keyH.enterPressed) {
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
@@ -236,7 +248,7 @@ public class Player extends Entity {
     }
 
     public void contactMonster(int i) {
-        if(i != 999) {
+        if(i != -1) {
             gp.monster[i].doAttack(this);
         }
     }
@@ -314,5 +326,18 @@ public class Player extends Entity {
             g2.setColor(Color.ORANGE);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
         }
+
+        // DEBUG
+		// AttackArea
+		int tempScreenX = screenX + solidArea.x;
+		int tempScreenY = screenY + solidArea.y;		
+		switch(direction) {
+		case 1: tempScreenY = screenY - attackArea.height; break;
+		case 3: tempScreenY = screenY + attackArea.height; break; 
+		case 4: tempScreenX = screenX - attackArea.width; break;
+		case 2: tempScreenX = screenX + attackArea.width; break;
+		}				
+		g2.setColor(Color.red);
+		g2.drawRect(tempScreenX, tempScreenY, attackArea.width, attackArea.height);
     }
 }
