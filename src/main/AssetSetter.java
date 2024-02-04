@@ -29,63 +29,151 @@ public class AssetSetter {
     }
 
     public void setupNPCs() {
-        configureNPC("hugeBandit.png", 0, "Old man", 21, 21, 46, 30, 0, 0);
+        configureNPC("hugeBandit.png", 0, "Old man", 15, 21, 46, 30, -66);
         String[] tempDialogues = { "Hi, they call me a bike stealer, but call me an Old man.", "Im a tibia pro.", "Cwiras, cwiras, cwiras." };
         configureNPCDialogues(0, tempDialogues);
+        configureCollisionOffset(gp.npc[0], 1, -1, -30);
     }
 
     public void setupMonsters() {
-        configureMonster("slime.png", 0, "Slime", 26, 21, 12, 12, 0, 0);
+        configureMonster("slime.png", 0, "Slime", 20, 21, 12, 12);
+        configureCollisionOffset(gp.monster[0], 0, -1, -1);
     }
 // ==========================================================
 // ========================================================== 
     // Methods for simplyfying the processs
-    public void configureMonster(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int collisionOffsetX, int collisionOffsetY) {
-        gp.monster[index] = new Monster(gp, name, spritesheetPath);
-        gp.monster[index].worldX = gp.tileSize * x;
-        gp.monster[index].worldY = gp.tileSize * y;
-        if(collisionWidth == 0) {
-            collisionWidth = 16;
+
+    // mode:
+    // 0 <-> is centered, then collisionOffsetX, collisionOffsetY can be -1 in order to center by axis
+    // 1 <-> centering mode that also moves by singleFrame, supports offsets > \/ (value other than -1 to disable)
+    // Example: mode 1 but offsetX == -1 will mean that we use mode 0.
+    public void configureCollisionOffset(Entity entity, int mode, int collisionOffsetX, int collisionOffsetY) {
+        // Decide whether to center X
+        if(mode == 1 && collisionOffsetX != -1) {
+            entity.solidAreaDefaultX = entity.singleFrameWidth + entity.spriteOffsetX + collisionOffsetX;
+            entity.solidArea.x = entity.solidAreaDefaultX;  
+        } else if((mode == 0 || mode == 1) && collisionOffsetX == -1) {
+            entity.solidAreaDefaultX = entity.singleFrameWidth/2 - entity.solidArea.width/2 + entity.spriteOffsetX;
+            entity.solidArea.x = entity.solidAreaDefaultX;
+        } else {
+            entity.solidAreaDefaultX = collisionOffsetX + entity.spriteOffsetX;
+            entity.solidArea.x = entity.solidAreaDefaultX;
         }
-        gp.monster[index].solidArea.width = collisionWidth;
-        gp.monster[index].spriteOffsetX = gp.monster[index].spriteOffsetX + collisionWidth/2;
-        if(collisionHeight == 0) {
-            collisionHeight = 16;
-        }
-        gp.monster[index].solidArea.height = collisionHeight;
-        if(collisionOffsetX != 0) {
-            gp.monster[index].solidArea.x = collisionOffsetX;
-            gp.monster[index].solidAreaDefaultX = collisionOffsetX;
-        }
-        if(collisionOffsetY != 0) {
-            gp.monster[index].solidArea.y = collisionOffsetY;
-            gp.monster[index].solidAreaDefaultY = collisionOffsetY;
+    
+        // Decide whether to center Y        
+        if(mode == 1 && collisionOffsetY != -1) {
+            entity.solidAreaDefaultY = entity.singleFrameHeight + entity.spriteOffsetY + collisionOffsetY;
+            entity.solidArea.y = entity.solidAreaDefaultY;
+        } else if((mode == 0 || mode == 1) && collisionOffsetY == -1) {
+            entity.solidAreaDefaultY = entity.singleFrameHeight/2 - entity.solidArea.height/2 + entity.spriteOffsetY;
+            entity.solidArea.y = entity.solidAreaDefaultY;
+        } else {
+            entity.solidAreaDefaultY = collisionOffsetY + entity.spriteOffsetY;
+            entity.solidArea.y = entity.solidAreaDefaultY;
         }
     }
 
-    public void configureNPC(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int collisionOffsetX, int collisionOffsetY) {
+    public void setSpriteOffset(Entity entity, boolean isCentered, int offsetX, int offsetY) {
+        if(isCentered && offsetX == -1) {
+            // NEEDS TESTING
+            if(entity.singleFrameWidth == gp.tileSize * 2 /* 128 */) {
+                entity.spriteOffsetX = entity.singleFrameWidth/4;
+            } else {
+                //entity.spriteOffsetX = entity.singleFrameWidth/2;
+            }
+        } else {
+            entity.spriteOffsetX = offsetX;
+        }
+    
+        // Decide whether to center Y
+        if(isCentered && offsetY == -1) {
+            //entity.spriteOffsetY = -entity.singleFrameHeight/2;
+        } else {
+            entity.spriteOffsetY = offsetY;
+        }      
+    }
+
+    public void setMonsterSpriteOffset(Entity entity, boolean isCentered, int offsetX, int offsetY) {
+        setSpriteOffset(entity, isCentered, offsetX, offsetY);
+    }
+    public void setNPCSpriteOffset(Entity entity, boolean isCentered, int offsetX, int offsetY) {
+        setSpriteOffset(entity, isCentered, offsetX, offsetY);
+    }
+
+    public void configureMonster(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int spriteOffsetX, int spriteOffsetY) {
+        gp.monster[index] = new Monster(gp, name, spritesheetPath);
+        gp.monster[index].worldX = gp.tileSize * x;
+        gp.monster[index].worldY = gp.tileSize * y;
+
+        gp.monster[index].solidArea.width = collisionWidth;
+        gp.monster[index].solidArea.height = collisionHeight;
+
+        setSpriteOffset(gp.monster[index], false, spriteOffsetX, spriteOffsetY);
+    }
+
+    public void configureMonster(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight) {
+        gp.monster[index] = new Monster(gp, name, spritesheetPath);
+        gp.monster[index].worldX = gp.tileSize * x;
+        gp.monster[index].worldY = gp.tileSize * y;
+
+        gp.monster[index].solidArea.width = collisionWidth;
+        gp.monster[index].solidArea.height = collisionHeight;
+
+        setSpriteOffset(gp.monster[index], true, -1, -1);
+    }
+
+    public void configureMonster(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int spriteOffsetY) { // sprite centered by X
+        gp.monster[index] = new Monster(gp, name, spritesheetPath);
+        gp.monster[index].worldX = gp.tileSize * x;
+        gp.monster[index].worldY = gp.tileSize * y;
+
+        gp.monster[index].solidArea.width = collisionWidth;
+        gp.monster[index].solidArea.height = collisionHeight;
+
+        setSpriteOffset(gp.monster[index], true, -1, spriteOffsetY);
+    }
+
+    public void configureNPC(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int spriteOffsetX, int spriteOffsetY) {
         gp.npc[index] = new NPC(gp, name, spritesheetPath);
         gp.npc[index].worldX = gp.tileSize * x;
         gp.npc[index].worldY = gp.tileSize * y;
+
         if(collisionWidth == 0) {
             collisionWidth = 16;
         }
-        gp.npc[index].solidArea.width = collisionWidth;
-        gp.npc[index].spriteOffsetX = gp.npc[index].spriteOffsetX + collisionWidth/2;
+
         if(collisionHeight == 0) {
             collisionHeight = 16;
         }
+
+        gp.npc[index].solidArea.width = collisionWidth;
         gp.npc[index].solidArea.height = collisionHeight;
-        //gp.npc[index].spriteOffsetY = gp.npc[index].spriteOffsetY + collisionHeight/2;
-        if(collisionOffsetX != 0) {
-            gp.npc[index].solidArea.x = collisionOffsetX;
-            gp.npc[index].solidAreaDefaultX = collisionOffsetX;
-        }
-        if(collisionOffsetY != 0) {
-            gp.npc[index].solidArea.y = collisionOffsetY;
-            gp.npc[index].solidAreaDefaultY = collisionOffsetY;
-        }
+
+        setSpriteOffset(gp.monster[index], false, spriteOffsetX, spriteOffsetY);
     }
+
+    public void configureNPC(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight) {
+        gp.npc[index] = new NPC(gp, name, spritesheetPath);
+        gp.npc[index].worldX = gp.tileSize * x;
+        gp.npc[index].worldY = gp.tileSize * y;
+
+        gp.npc[index].solidArea.width = collisionWidth;
+        gp.npc[index].solidArea.height = collisionHeight;
+
+        setSpriteOffset(gp.npc[index], true, -1, -1);
+    }
+
+    public void configureNPC(String spritesheetPath, int index, String name, int x, int y, int collisionWidth, int collisionHeight, int spriteOffsetY) {
+        gp.npc[index] = new NPC(gp, name, spritesheetPath);
+        gp.npc[index].worldX = gp.tileSize * x;
+        gp.npc[index].worldY = gp.tileSize * y;
+
+        gp.npc[index].solidArea.width = collisionWidth;
+        gp.npc[index].solidArea.height = collisionHeight;
+
+        setSpriteOffset(gp.npc[index], true, -1, spriteOffsetY);
+    }
+
 
     public void configureNPCDialogues(int npcIndex, String[] dialogues) {
         for(int i = 0; i < dialogues.length; i++) {

@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final boolean skipTitleScreen = true; // new game = going right into the game
     public static final boolean drawCollisions = true; // entities, objects
     public static final boolean drawTileCollisions = false; // tiles
+    public static final boolean drawNonSolidTileCollision = false; // non-solid tiles
 
     // SYSTEM
     TileManager  tileM = new TileManager(this);

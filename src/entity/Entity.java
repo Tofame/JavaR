@@ -302,7 +302,7 @@ public class Entity {
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-        drawNameAndBars(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY - singleFrameHeight, 1);
+        drawNameAndBars(g2, name, screenX + singleFrameWidth/2 + spriteOffsetX, screenY + spriteOffsetY, 1);
 
         if(GamePanel.drawCollisions) {
             g2.setColor(Color.RED);
@@ -323,8 +323,6 @@ public class Entity {
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
                 singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
                 singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
-                spriteOffsetX = -singleFrameWidth/2;
-                spriteOffsetY = -singleFrameHeight + 18;
                 spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -334,8 +332,6 @@ public class Entity {
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
             singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
             singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
-            spriteOffsetX = -singleFrameWidth/2;
-            spriteOffsetY = -singleFrameHeight + 18;
             spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
         }
     }
@@ -386,24 +382,25 @@ public class Entity {
             }
             // Outline
             g2.setColor(Color.BLACK);
-            g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 8 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
+            g2.fillRect(x - gp.healthBarWidth/2 - 1, y - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
 
             g2.setColor(UI.hexToColor(healthBarColor, 255));
-            g2.fillRect(x - gp.healthBarWidth/2, y + 8, (int)(healthPercent * gp.healthBarWidth), gp.healthBarHeight);
+            g2.fillRect(x - gp.healthBarWidth/2, y, (int)(healthPercent * gp.healthBarWidth), gp.healthBarHeight);
         }
     
         if(!hideMana) {
             // Outline
             g2.setColor(Color.BLACK);
-            g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 12 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
+            g2.fillRect(x - gp.healthBarWidth/2 - 1, y + 4 - 1, gp.healthBarWidth + 2, gp.healthBarHeight + 2); // border/2,border/2,bordersize,bordersize
 
             g2.setColor(UI.hexToColor(manaBarColor, 255));
-            g2.fillRect(x - gp.healthBarWidth/2, y + 12, (int)(manaPercent * gp.healthBarWidth), gp.healthBarHeight);
+            g2.fillRect(x - gp.healthBarWidth/2, y + 4, (int)(manaPercent * gp.healthBarWidth), gp.healthBarHeight);
         }
 
         if(!hideName) {
             g2.setFont(UI.verdana_bold_15);
             x = x - (int)(g2.getFontMetrics().getStringBounds(text, g2).getWidth()/2);
+            y -= 6;
 
             String nameColorHex;
             switch(creatureType) {

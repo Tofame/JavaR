@@ -128,16 +128,16 @@ public class Player extends Entity {
         solidArea = new Rectangle();
         solidArea.width = 26;
         solidArea.height = 32;
-        solidArea.x = -solidArea.width/2; // X offset of collision
-        solidArea.y = -18; // Y offset of collision
+        solidArea.x = solidArea.width/2 + 3; // X offset of collision
+        solidArea.y = 24; // Y offset of collision
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
         attackArea.width = 38;
         attackArea.height = 38;
-        attackArea.x = -attackArea.width/2; // X offset of attack collision
-        attackArea.y = -attackArea.height/2; // Y offset of attack collision
+        attackArea.x = attackArea.width/2 - 8; // X offset of attack collision
+        attackArea.y = attackArea.height/2; // Y offset of attack collision
         attackAreaDefaultX = attackArea.x;
         attackAreaDefaultY = attackArea.y;
 
@@ -149,8 +149,8 @@ public class Player extends Entity {
         screenY = gp.screenHeight/2;
     }
     public void setDefaultValues() {
-        worldX = gp.tileSize * 23; //2240; // Starting X position, gp.tileSize * 23
-        worldY = gp.tileSize *21; //2400; // Starting Y position
+        worldX = gp.tileSize * 21; //2240; // Starting X position, gp.tileSize * 23
+        worldY = gp.tileSize * 21; //2400; // Starting Y position
         setName("Tofame");
         speed = 4;
         direction = 3;
@@ -324,7 +324,7 @@ public class Player extends Entity {
         }
 
         g2.drawImage(image, screenX + spriteOffsetX, screenY + spriteOffsetY, null);
-        drawNameAndBars(g2, gp.player.name, gp.player.screenX, gp.player.screenY - gp.player.singleFrameHeight, 1);
+        drawNameAndBars(g2, gp.player.name, gp.player.screenX + spriteOffsetX + singleFrameWidth/2, gp.player.screenY + spriteOffsetY - 6, 1);
 
         if(GamePanel.drawCollisions) {
             g2.setColor(Color.ORANGE);

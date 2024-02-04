@@ -159,7 +159,6 @@ public class CollisionChecker {
                     if(target[i] != entity) {
                         entity.collisionOn = true;
                         index = i;
-                        System.out.println("hit");
                     }
                 }
 

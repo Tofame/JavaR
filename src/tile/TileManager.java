@@ -155,7 +155,7 @@ public class TileManager {
 
                 g2.drawImage(tile[tileNum].image, screenX - tile[tileNum].offsetX, screenY - tile[tileNum].offsetY, null);
                 if(GamePanel.drawTileCollisions) {
-                    if(tile[tileNum].collision) {
+                    if(tile[tileNum].collision || GamePanel.drawNonSolidTileCollision) {
                         g2.setColor(Color.RED);
                         g2.drawRect(screenX - tile[tileNum].offsetX - 1, screenY - tile[tileNum].offsetY - 1, gp.tileSize, gp.tileSize);
                     }
