@@ -65,6 +65,8 @@ public class Entity {
     public int solidAreaDefaultY = 0;
 
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
+    public int attackAreaDefaultX = 0;
+    public int attackAreaDefaultY = 0;
 
     public boolean collisionOn = false;
     public int actionLockCounter = 0;

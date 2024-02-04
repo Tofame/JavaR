@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // OTHER SETTINGS
     public static final boolean skipTitleScreen = true; // new game = going right into the game
-    public static final boolean drawCollisions = false; // entities, objects
+    public static final boolean drawCollisions = true; // entities, objects
     public static final boolean drawTileCollisions = false; // tiles
 
     // SYSTEM
@@ -156,5 +156,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.characterSpriteSheet = player.spriteSheet;
         gameState = playState;
         // playMusic(0);
+
+        //player.setDefaultImages("squares.png", "characters", false);
     }
 }

@@ -135,27 +135,12 @@ public class CollisionChecker {
     public int checkIfEntityAttacked(Entity entity, Entity[] target) {
         int index = -1;
 
-        Rectangle solidAreaToAttack = new Rectangle(entity.solidArea.x, entity.solidArea.y, entity.attackArea.width, entity.attackArea.height);
+        Rectangle solidAreaToAttack = new Rectangle(entity.attackArea.x, entity.attackArea.y, entity.attackArea.width, entity.attackArea.height);
         int attackWorldX = entity.worldX;
         int attackWorldY = entity.worldY;
 
-        switch(entity.direction) {
-            case 1:
-                attackWorldY -= entity.attackArea.height;
-                break;
-            case 3:
-                attackWorldY += entity.attackArea.height;
-                break;
-            case 4:
-                attackWorldX -= entity.attackArea.width;
-                break;
-            case 2:
-                attackWorldX += entity.attackArea.width;
-                break;
-        }
-
         for(int i = 0; i < target.length; i++) {
-            if(target[i] != null) {
+            if(target[i] != null) {                
                 // Get entity's solid area position
                 solidAreaToAttack.x = attackWorldX + solidAreaToAttack.x;
                 solidAreaToAttack.y = attackWorldY + solidAreaToAttack.y;
@@ -163,22 +148,25 @@ public class CollisionChecker {
                 target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
                 target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 
-                // switch(entity.direction) {
-                //     case 1: solidAreaToAttack.y -= entity.speed; break;
-                //     case 3: solidAreaToAttack.y += entity.speed; break;
-                //     case 4: solidAreaToAttack.x -= entity.speed; break;
-                //     case 2: solidAreaToAttack.x += entity.speed; break;
-                // }
+                switch(entity.direction) {
+                    case 1: solidAreaToAttack.y -= solidAreaToAttack.height ; break;
+                    case 3: solidAreaToAttack.y += solidAreaToAttack.height ; break;
+                    case 4: solidAreaToAttack.x -= solidAreaToAttack.width ; break;
+                    case 2: solidAreaToAttack.x += solidAreaToAttack.width ; break;
+                }
 
                 if(solidAreaToAttack.intersects(target[i].solidArea)) {
                     if(target[i] != entity) {
                         entity.collisionOn = true;
                         index = i;
+                        System.out.println("hit");
                     }
                 }
+
+                gp.player.setrEct(solidAreaToAttack);
                 // Reset values
-                solidAreaToAttack.x = entity.solidAreaDefaultX;
-                solidAreaToAttack.y = entity.solidAreaDefaultY;
+                solidAreaToAttack.x = entity.attackAreaDefaultX;
+                solidAreaToAttack.y = entity.attackAreaDefaultY;
                 target[i].solidArea.x = target[i].solidAreaDefaultX;
                 target[i].solidArea.y = target[i].solidAreaDefaultY;
             }

@@ -25,7 +25,7 @@ public class Player extends Entity {
 
     // Player methods
     public void doAttack() {
-        int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+        int monsterIndex = gp.cChecker.checkIfEntityAttacked(this, gp.monster);
         if(monsterIndex != -1) {
             doCombat(this, gp.monster[monsterIndex]);
         }
@@ -134,8 +134,12 @@ public class Player extends Entity {
         solidAreaDefaultY = solidArea.y;
         // The above solidArea MUST be initialized before setDefaultImages (loadSpritesheet uses this for offset creation)
 
-        attackArea.width = 36;
-        attackArea.height = 36;
+        attackArea.width = 38;
+        attackArea.height = 38;
+        attackArea.x = -attackArea.width/2; // X offset of attack collision
+        attackArea.y = -attackArea.height/2; // Y offset of attack collision
+        attackAreaDefaultX = attackArea.x;
+        attackAreaDefaultY = attackArea.y;
 
         // Starting position, name etc.
         setDefaultValues();
@@ -325,19 +329,31 @@ public class Player extends Entity {
         if(GamePanel.drawCollisions) {
             g2.setColor(Color.ORANGE);
             g2.drawRect(screenX + solidArea.x, screenY + solidArea.y, (int) solidArea.getWidth(), (int) solidArea.getHeight());
-        }
 
-        // DEBUG
-		// AttackArea
-		int tempScreenX = screenX + solidArea.x;
-		int tempScreenY = screenY + solidArea.y;		
-		switch(direction) {
-		case 1: tempScreenY = screenY - attackArea.height; break;
-		case 3: tempScreenY = screenY + attackArea.height; break; 
-		case 4: tempScreenX = screenX - attackArea.width; break;
-		case 2: tempScreenX = screenX + attackArea.width; break;
-		}				
-		g2.setColor(Color.red);
-		g2.drawRect(tempScreenX, tempScreenY, attackArea.width, attackArea.height);
+            // AttackArea
+            switch(direction) {
+            case 1: attackArea.y -= attackArea.height ; break;
+            case 3: attackArea.y += attackArea.height ; break;
+            case 4: attackArea.x -= attackArea.width ; break;
+            case 2: attackArea.x += attackArea.width ; break;
+            }				
+            g2.setColor(Color.white);
+            g2.drawRect(screenX + attackArea.x, screenY + attackArea.y, attackArea.width, attackArea.height);
+            attackArea.x = attackAreaDefaultX;
+            attackArea.y = attackAreaDefaultY;
+
+            debug(g2);
+        }
+    }
+
+    public Rectangle rectangle = new Rectangle(0, 0, 0, 0);
+
+    public void setrEct(Rectangle rect) {
+        rectangle = rect;
+    }
+
+    public void debug(Graphics2D g2) {
+        g2.setColor(Color.BLACK);
+        g2.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 }
