@@ -33,7 +33,9 @@ public class UtilityTool {
     }
 
     public BufferedImage loadImage(String path) throws IOException {
-        BufferedImage image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
+        BufferedImage image;
+        image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
+
         return image;
     }
 

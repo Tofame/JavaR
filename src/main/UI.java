@@ -198,7 +198,7 @@ public class UI {
 
         // TITLE NAME
         g2.setFont(martel_60);
-        String text = "Tibia TMS JAVA";
+        String text = "JavaR";
         int x = getXforCenteredText(text);
         // SHADOW
         g2.setColor(Color.black);

@@ -7,7 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("TMS_Java");
+        window.setTitle("JavaR");
 
         GamePanel gp = new GamePanel();
         window.add(gp);

@@ -8,7 +8,6 @@ import conditions.ConditionsHandler;
 import effects.MagicEffectHandler;
 import entity.Entity;
 import entity.Player;
-import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     
@@ -70,6 +69,24 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+
+    public static int itemsCount = 0; // serves as id, tells how many items there is in the game
+
+    public static enum slots {
+        SLOT_ANY,
+        SLOT_NONE,
+        SLOT_HEAD,
+        SLOT_BODY,
+        SLOT_LEGS,
+        SLOT_FEET,
+        SLOT_NECKLACE,
+        SLOT_LEFTHAND,
+        SLOT_RIGHTHAND,
+        SLOT_RING1,
+        SLOT_RING2,
+        SLOT_AMMO,
+        SLOT_BACKPACK
+    }
 
     public GamePanel() {
         this.setDoubleBuffered(true);
