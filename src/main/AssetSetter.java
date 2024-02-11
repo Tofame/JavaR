@@ -17,7 +17,8 @@ public class AssetSetter {
     public void setupObjects() {
         loadObject(0, 26, 18, "door", "Door", true, true);
 
-        loadObject(1, 24, 21, "hugeGatePortal", "Portal", true, false);
+        loadObject(1, 13, 17, "hugeGatePortal", "Portal", true, false);
+        setObjectOffset(1,false, true, -4, -4);
 
         loadObject(2, 24, 18, "door", "Door", true, false);
         setObjectOffset(2, true, false, 16, 16);

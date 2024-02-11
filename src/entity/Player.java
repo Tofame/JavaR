@@ -342,8 +342,6 @@ public class Player extends Entity {
             g2.drawRect(screenX + attackArea.x, screenY + attackArea.y, attackArea.width, attackArea.height);
             attackArea.x = attackAreaDefaultX;
             attackArea.y = attackAreaDefaultY;
-
-            debug(g2);
         }
     }
 
@@ -351,10 +349,5 @@ public class Player extends Entity {
 
     public void setrEct(Rectangle rect) {
         rectangle = rect;
-    }
-
-    public void debug(Graphics2D g2) {
-        g2.setColor(Color.BLACK);
-        g2.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     }
 }
