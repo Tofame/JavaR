@@ -38,8 +38,6 @@ public class UI {
     // than the playTime/playTimeMS begin to be increased.
     DecimalFormat dFormat = new DecimalFormat("#0.00");
 
-    UtilityTool uTool = new UtilityTool();
-
     public UI(GamePanel gp) {
         this.gp = gp;
 
@@ -50,11 +48,11 @@ public class UI {
         martel_60 = FontLoader.loadFont("martel.ttf", 60);
 
         try {
-            titleScreenImage = uTool.loadImage("res/title/titleScreen.png");
+            titleScreenImage = UtilityTool.loadImage("res/title/titleScreen.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        titleScreenImage = uTool.scaleImage(titleScreenImage, gp.screenWidth, gp.screenHeight);
+        titleScreenImage = UtilityTool.scaleImage(titleScreenImage, gp.screenWidth, gp.screenHeight);
     }
 
     public void showMessage(String text) {

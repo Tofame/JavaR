@@ -15,7 +15,6 @@ import main.UtilityTool;
 
 public class MagicEffectHandler {
     GamePanel gp;
-    UtilityTool uTool = new UtilityTool();
     public static String effectFolderPath = "res/effects";
     private static int maximumEffectsOnScreen = 200; // sets the initial size of ArrayList that holds the effects that will/are displayed
     public int effectsAmount = 0; // amount of .png files in /effects
@@ -89,10 +88,10 @@ public class MagicEffectHandler {
     }
 
     public MagicEffect defineEffect(String id) throws IOException {
-        BufferedImage effectSheet = uTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png");
+        BufferedImage effectSheet = UtilityTool.loadImage(MagicEffectHandler.effectFolderPath + "/" + id + ".png");
         int frameSize = effectSheet.getWidth();
 
-        return new MagicEffect(uTool.scaleImage(effectSheet, frameSize * GamePanel.scale, frameSize * GamePanel.scale * (effectSheet.getHeight()/frameSize)));
+        return new MagicEffect(UtilityTool.scaleImage(effectSheet, frameSize * GamePanel.scale, frameSize * GamePanel.scale * (effectSheet.getHeight()/frameSize)));
     }
 
     public void setOffsets() {

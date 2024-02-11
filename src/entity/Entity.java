@@ -15,7 +15,6 @@ import main.UI;
 
 public class Entity {
     GamePanel gp;
-    UtilityTool uTool = new UtilityTool();
 
     public int worldX, worldY;
 
@@ -318,12 +317,12 @@ public class Entity {
     public void loadSpriteSheet(String fileName, String folderType, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
         if(!spriteSheetExists) {
             try {
-                spriteSheet = uTool.loadImage("res/" + folderType + "/" + fileName);
+                spriteSheet = UtilityTool.loadImage("res/" + folderType + "/" + fileName);
                 int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
                 singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
                 singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
-                spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
+                spriteSheet = UtilityTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -332,7 +331,7 @@ public class Entity {
             int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
             singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;
             singleFrameHeight = tempSingleFrameHeight * GamePanel.scale;
-            spriteSheet = uTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
+            spriteSheet = UtilityTool.scaleImage(spriteSheet, singleFrameWidth * 4, singleFrameHeight * 3);
         }
     }
 

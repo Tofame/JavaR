@@ -9,7 +9,6 @@ import object.SuperObject;
 
 public class AssetSetter {
     GamePanel gp;
-    UtilityTool uTool = new UtilityTool();
 
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
@@ -188,13 +187,13 @@ public class AssetSetter {
         gp.obj[index].hasCollision = hasCollision;
 
         try {
-            gp.obj[index].downIdle = uTool.loadImage("res/objects/" + spriteName + ".png");
+            gp.obj[index].downIdle = UtilityTool.loadImage("res/objects/" + spriteName + ".png");
             int downIdleWidth = gp.obj[index].downIdle.getWidth() * GamePanel.scale;
             int downIdleHeight = gp.obj[index].downIdle.getHeight() * GamePanel.scale;
             if(forceTileSize) {
-                gp.obj[index].downIdle = uTool.scaleImage(gp.obj[index].downIdle, gp.tileSize, gp.tileSize);
+                gp.obj[index].downIdle = UtilityTool.scaleImage(gp.obj[index].downIdle, gp.tileSize, gp.tileSize);
             } else {
-                gp.obj[index].downIdle = uTool.scaleImage(gp.obj[index].downIdle, downIdleWidth, downIdleHeight);
+                gp.obj[index].downIdle = UtilityTool.scaleImage(gp.obj[index].downIdle, downIdleWidth, downIdleHeight);
             }
         }catch(IOException e) {
             e.printStackTrace();

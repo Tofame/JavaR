@@ -10,6 +10,7 @@ import conditions.Condition;
 import effects.Position;
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Player extends Entity {
     KeyHandler keyH;
@@ -61,18 +62,18 @@ public class Player extends Entity {
     /* Test functions temporarily here to test knife paperdoll */
     public void updatePaperdolls() {
         try {
-            this.armorPaperdoll = uTool.loadImage("res/paperDolls/Armor/armor01.png");
-            this.armorPaperdoll = uTool.scaleImage(this.armorPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+            this.armorPaperdoll = UtilityTool.loadImage("res/paperDolls/Armor/armor01.png");
+            this.armorPaperdoll = UtilityTool.scaleImage(this.armorPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
 
-            this.leftHandPaperdoll = uTool.loadImage("res/paperDolls/LH/knife01.png");
-            this.leftHandPaperdoll = uTool.scaleImage(this.leftHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+            this.leftHandPaperdoll = UtilityTool.loadImage("res/paperDolls/LH/knife01.png");
+            this.leftHandPaperdoll = UtilityTool.scaleImage(this.leftHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
 
-            this.rightHandPaperdoll = uTool.loadImage("res/paperDolls/RH/knife01.png");
-            this.rightHandPaperdoll = uTool.scaleImage(this.rightHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
+            this.rightHandPaperdoll = UtilityTool.loadImage("res/paperDolls/RH/knife01.png");
+            this.rightHandPaperdoll = UtilityTool.scaleImage(this.rightHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.setSpriteSheet(uTool.combineImages(spriteSheet, armorPaperdoll), false);
+        this.setSpriteSheet(UtilityTool.combineImages(spriteSheet, armorPaperdoll), false);
         this.setSpriteSheet(mergeHandPaperdoll(leftHandPaperdoll, true), false);
         this.setSpriteSheet(mergeHandPaperdoll(rightHandPaperdoll, false), true);
     }

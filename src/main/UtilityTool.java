@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class UtilityTool {
-    public BufferedImage scaleImage(BufferedImage original, int width, int height) {
+    public static BufferedImage scaleImage(BufferedImage original, int width, int height) {
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
         Graphics2D g2 = scaledImage.createGraphics();
         g2.drawImage(original, 0, 0, width, height, null);
@@ -16,7 +16,7 @@ public class UtilityTool {
         return scaledImage;
     }
 
-    public BufferedImage combineImages(BufferedImage BiggerImage, BufferedImage SmallerImage) {
+    public static BufferedImage combineImages(BufferedImage BiggerImage, BufferedImage SmallerImage) {
         // Determine the dimensions of the combined image
         int combinedWidth = Math.max(BiggerImage.getWidth(), SmallerImage.getWidth());
         int combinedHeight = Math.max(BiggerImage.getHeight(), SmallerImage.getHeight());
@@ -32,14 +32,14 @@ public class UtilityTool {
         return combinedImage;
     }
 
-    public BufferedImage loadImage(String path) throws IOException {
+    public static BufferedImage loadImage(String path) throws IOException {
         BufferedImage image;
-        image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
+        image = ImageIO.read(UtilityTool.class.getClassLoader().getResourceAsStream(path));
 
         return image;
     }
 
-    public BufferedImage getIdleFrameOfSpritesheet(int direction, BufferedImage spritesheet, int Scale) {
+    public static BufferedImage getIdleFrameOfSpritesheet(int direction, BufferedImage spritesheet, int Scale) {
         int width = spritesheet.getWidth()/4;
         int height = spritesheet.getHeight()/3;
         BufferedImage resultImage;
@@ -47,38 +47,38 @@ public class UtilityTool {
             case 1:
                 resultImage = spritesheet.getSubimage(0 * width, 0 * height, width, height);
                 if(Scale > 1) {
-                    resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
+                    resultImage = UtilityTool.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
             case 3:
                 resultImage = spritesheet.getSubimage(2 * width, 0 * height, width, height);
                 if(Scale > 1) {
-                    resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
+                    resultImage = UtilityTool.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
             case 4:
                 resultImage = spritesheet.getSubimage(3 * width, 0 * height, width, height);
                 if(Scale > 1) {
-                    resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
+                    resultImage = UtilityTool.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
             case 2:
                 resultImage = spritesheet.getSubimage(4 * width, 0 * height, width, height);
                 if(Scale > 1) {
-                    resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
+                    resultImage = UtilityTool.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
             default:
                 resultImage = spritesheet.getSubimage(0 * width, 0 * height, width, height);
                 if(Scale > 1) {
-                    resultImage = this.scaleImage(resultImage, Scale*width, Scale*height);
+                    resultImage = UtilityTool.scaleImage(resultImage, Scale*width, Scale*height);
                 }
                 break;
         }
         return resultImage;
     }
 
-    public BufferedImage combineTileImages(BufferedImage groundImage, BufferedImage wallImage, int combineOffsetX, int combineOffsetY) {
+    public static BufferedImage combineTileImages(BufferedImage groundImage, BufferedImage wallImage, int combineOffsetX, int combineOffsetY) {
         // Determine the dimensions of the combined image
         int combinedWidth = Math.max(groundImage.getWidth(), wallImage.getWidth());
         int combinedHeight = Math.max(groundImage.getHeight(), wallImage.getHeight());

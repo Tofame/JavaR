@@ -32,11 +32,9 @@ public class TileManager {
     }
 
     public void setupTile(boolean collision) {
-        UtilityTool uTool = new UtilityTool();
-
         try {
             Tile tile = new Tile();
-            tile.image = uTool.loadImage("res/tiles/" + tile.id + ".png");
+            tile.image = UtilityTool.loadImage("res/tiles/" + tile.id + ".png");
 
             int TileWidth = tile.image.getWidth() * GamePanel.scale;
             int TileHeight = tile.image.getHeight() * GamePanel.scale;
@@ -51,7 +49,7 @@ public class TileManager {
             } else if (TileHeight < gp.tileSize) {
                 //tile[index].offsetY = -TileHeight/2;
             }
-            tile.image = uTool.scaleImage(tile.image, TileWidth, TileHeight);
+            tile.image = UtilityTool.scaleImage(tile.image, TileWidth, TileHeight);
             tile.collision = collision;
 
             tiles[tile.id] = tile;
