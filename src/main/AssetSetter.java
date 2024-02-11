@@ -10,6 +10,8 @@ import object.SuperObject;
 public class AssetSetter {
     GamePanel gp;
 
+    static final String AssetsPath = "objects/";
+
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
     }
@@ -188,7 +190,7 @@ public class AssetSetter {
         gp.obj[index].hasCollision = hasCollision;
 
         try {
-            gp.obj[index].downIdle = UtilityTool.loadImage("res/objects/" + spriteName + ".png");
+            gp.obj[index].downIdle = UtilityTool.loadImage(AssetSetter.AssetsPath + spriteName + ".png");
             int downIdleWidth = gp.obj[index].downIdle.getWidth() * GamePanel.scale;
             int downIdleHeight = gp.obj[index].downIdle.getHeight() * GamePanel.scale;
             if(forceTileSize) {

@@ -317,7 +317,7 @@ public class Entity {
     public void loadSpriteSheet(String fileName, String folderType, boolean spriteSheetExists /* it means that there is an image that we can use e.g. from character creator */) {
         if(!spriteSheetExists) {
             try {
-                spriteSheet = UtilityTool.loadImage("res/" + folderType + "/" + fileName);
+                spriteSheet = UtilityTool.loadImage("" + folderType + "/" + fileName);
                 int tempSingleFrameWidth = spriteSheet.getWidth() / 4;
                 int tempSingleFrameHeight = spriteSheet.getHeight() / 3;
                 singleFrameWidth = tempSingleFrameWidth * GamePanel.scale;

@@ -7,16 +7,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 public class Sound {
-    String folderPath = "res/sound";
+    static final String soundPath = "/sound/";
 
     Clip clip;
     URL soundURL[] = new URL[30];
 
     public Sound() {
-        loadSound(0, "res/sound/BlueBoyAdventure.wav");
-        loadSound(1, "res/sound/coin.wav");
-        loadSound(2, "res/sound/powerup.wav");
-        loadSound(3, "res/sound/unlock.wav");
+        loadSound(0, soundPath + "BlueBoyAdventure.wav");
+        loadSound(1, soundPath + "coin.wav");
+        loadSound(2, soundPath + "powerup.wav");
+        loadSound(3, soundPath + "unlock.wav");
     }
 
     public void loadSound(int index, String path) {

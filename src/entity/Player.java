@@ -62,13 +62,13 @@ public class Player extends Entity {
     /* Test functions temporarily here to test knife paperdoll */
     public void updatePaperdolls() {
         try {
-            this.armorPaperdoll = UtilityTool.loadImage("res/paperDolls/Armor/armor01.png");
+            this.armorPaperdoll = UtilityTool.loadImage("paperDolls/Armor/armor01.png");
             this.armorPaperdoll = UtilityTool.scaleImage(this.armorPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
 
-            this.leftHandPaperdoll = UtilityTool.loadImage("res/paperDolls/LH/knife01.png");
+            this.leftHandPaperdoll = UtilityTool.loadImage("paperDolls/LH/knife01.png");
             this.leftHandPaperdoll = UtilityTool.scaleImage(this.leftHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
 
-            this.rightHandPaperdoll = UtilityTool.loadImage("res/paperDolls/RH/knife01.png");
+            this.rightHandPaperdoll = UtilityTool.loadImage("paperDolls/RH/knife01.png");
             this.rightHandPaperdoll = UtilityTool.scaleImage(this.rightHandPaperdoll, singleFrameWidth * 4, singleFrameHeight * 3);
         } catch (IOException e) {
             e.printStackTrace();

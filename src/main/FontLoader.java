@@ -10,7 +10,7 @@ import java.io.InputStream;
 public class FontLoader {
     public static Font loadFont(String fontFileName, int fontSize) {
         try {
-            InputStream fontFileStream = FontLoader.class.getClassLoader().getResourceAsStream("res/fonts/" + fontFileName);
+            InputStream fontFileStream = FontLoader.class.getClassLoader().getResourceAsStream("fonts/" + fontFileName);
             Font tempFont = Font.createFont(Font.TRUETYPE_FONT, fontFileStream);
 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

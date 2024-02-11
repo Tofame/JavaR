@@ -8,6 +8,8 @@ import java.io.IOException;
 public class CharacterCreation {
     GamePanel gp;
 
+    static final String CCPath = "characterCreator/";
+
     public final int amountOfBodyParts = 3; // 3: 0-body, 1-hair, 2-cloth, 3-legs
     // Count amount of each body part files, so we can see the max in e.g. keyHandler
     String[] bodyKeywords = {"body", "legs", "cloth", "hair"};
@@ -38,11 +40,11 @@ public class CharacterCreation {
     public CharacterCreation(GamePanel gp) {
         this.gp = gp;
 
-        countBodyParts("src/res/characterCreator", bodyKeywords);
+        countBodyParts("characterCreator", bodyKeywords);
 
         try {
-            this.bodyImage = UtilityTool.loadImage("res/characterCreator/body00.png");
-            emptyBodyPart = UtilityTool.loadImage("res/characterCreator/A_empty.png");
+            this.bodyImage = UtilityTool.loadImage(CCPath + "body00.png");
+            emptyBodyPart = UtilityTool.loadImage(CCPath + "A_empty.png");
             emptyBodyPart = UtilityTool.scaleImage(emptyBodyPart, gp.player.singleFrameWidth, gp.player.singleFrameHeight);
 
             this.hairImage = emptyBodyPart;
@@ -68,9 +70,9 @@ public class CharacterCreation {
         if(chosenBodyIndex != currentlyLoadedBodyIndex || initialization) {
             try {
                 if(chosenBodyIndex > 9) {
-                    this.bodyImage = UtilityTool.loadImage("res/characterCreator/body" + chosenBodyIndex + ".png");
+                    this.bodyImage = UtilityTool.loadImage(CCPath + "body" + chosenBodyIndex + ".png");
                 } else {
-                    this.bodyImage = UtilityTool.loadImage("res/characterCreator/body0" + chosenBodyIndex + ".png");
+                    this.bodyImage = UtilityTool.loadImage(CCPath + "body0" + chosenBodyIndex + ".png");
                 }
                 combinedImage = bodyImage;
                 singleFrameBody = UtilityTool.getIdleFrameOfSpritesheet(3, this.bodyImage, 3);
@@ -83,9 +85,9 @@ public class CharacterCreation {
             if(chosenHairIndex != 0) {
                 try {
                     if(chosenHairIndex > 9) {
-                        this.hairImage = UtilityTool.loadImage("res/characterCreator/hair" + chosenHairIndex + ".png");
+                        this.hairImage = UtilityTool.loadImage(CCPath + "hair" + chosenHairIndex + ".png");
                     } else {
-                        this.hairImage = UtilityTool.loadImage("res/characterCreator/hair0" + chosenHairIndex + ".png");
+                        this.hairImage = UtilityTool.loadImage(CCPath+ "hair0" + chosenHairIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, hairImage);
                     singleFrameHair = UtilityTool.getIdleFrameOfSpritesheet(3, this.hairImage, 3);
@@ -103,9 +105,9 @@ public class CharacterCreation {
             if(chosenClothIndex != 0) {
                 try {
                     if(chosenClothIndex > 9) {
-                        this.clothImage = UtilityTool.loadImage("res/characterCreator/cloth" + chosenClothIndex + ".png");
+                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth" + chosenClothIndex + ".png");
                     } else {
-                        this.clothImage = UtilityTool.loadImage("res/characterCreator/cloth0" + chosenClothIndex + ".png");
+                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth0" + chosenClothIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, clothImage);
                     singleFrameCloth = UtilityTool.getIdleFrameOfSpritesheet(3, this.clothImage, 3);
@@ -126,9 +128,9 @@ public class CharacterCreation {
             if(chosenLegsIndex != 0) {
                 try {
                     if(chosenClothIndex > 9) {
-                        this.legsImage = UtilityTool.loadImage("res/characterCreator/legs" + chosenLegsIndex + ".png");
+                        this.legsImage = UtilityTool.loadImage(CCPath + "legs" + chosenLegsIndex + ".png");
                     } else {
-                        this.legsImage = UtilityTool.loadImage("res/characterCreator/legs0" + chosenLegsIndex + ".png");
+                        this.legsImage = UtilityTool.loadImage(CCPath + "legs0" + chosenLegsIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, legsImage);
                     singleFrameLegs = UtilityTool.getIdleFrameOfSpritesheet(3, this.legsImage, 3);

@@ -48,7 +48,7 @@ public class UI {
         martel_60 = FontLoader.loadFont("martel.ttf", 60);
 
         try {
-            titleScreenImage = UtilityTool.loadImage("res/title/titleScreen.png");
+            titleScreenImage = UtilityTool.loadImage("title/titleScreen.png");
         } catch (IOException e) {
             e.printStackTrace();
         }

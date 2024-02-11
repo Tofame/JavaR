@@ -19,7 +19,7 @@ public class TileManager {
         mapTileNum = new int[GamePanel.maxWorldCol][GamePanel.maxWorldRow];
 
         setupTiles();
-        loadMap("res/maps/worldV3.txt");
+        loadMap("maps/worldV3.txt");
     }
 
     public void setupTiles() {
@@ -34,7 +34,7 @@ public class TileManager {
     public void setupTile(boolean collision) {
         try {
             Tile tile = new Tile();
-            tile.image = UtilityTool.loadImage("res/tiles/" + tile.id + ".png");
+            tile.image = UtilityTool.loadImage("tiles/" + tile.id + ".png");
 
             int TileWidth = tile.image.getWidth() * GamePanel.scale;
             int TileHeight = tile.image.getHeight() * GamePanel.scale;

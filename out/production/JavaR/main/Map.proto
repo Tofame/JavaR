@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+package main;
+
+option java_multiple_files = false;
+option java_package = "main";
+option java_outer_classname = "MapLoader";
+
+message Tile {
+    optional int32 groundId = 1;
+    optional bool isWalkable = 2;
+    repeated int32 items = 3;
+}
+
+message MapFloor {
+    optional int32 floor = 4;
+  repeated Tile tiles = 5;
+}
