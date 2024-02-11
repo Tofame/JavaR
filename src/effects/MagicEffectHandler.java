@@ -15,7 +15,7 @@ import main.UtilityTool;
 
 public class MagicEffectHandler {
     GamePanel gp;
-    public static String effectFolderPath = "/effects";
+    public static String effectFolderPath = "effectsSheets";
     private static int maximumEffectsOnScreen = 200; // sets the initial size of ArrayList that holds the effects that will/are displayed
     public int effectsAmount = 0; // amount of .png files in /effects
 
