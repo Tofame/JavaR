@@ -3,5 +3,12 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
-    ]
+    ],
+    "java.classpath": [
+        "bin",
+        "res"
+    ],
+    "files.exclude": {
+        "**/res/": false
+    }
 }
