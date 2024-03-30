@@ -31,7 +31,7 @@ public class AssetSetter {
     }
 
     public void setupNPCs() {
-        configureNPC("hugeBandit.png", 0, "Old man", 15, 21, 46, 30, -66);
+        configureNPC("HugeBandit.png", 0, "Old man", 15, 21, 46, 30, -66);
         String[] tempDialogues = { "Hi, they call me a bike stealer, but call me an Old man.", "Im a tibia pro.", "Cwiras, cwiras, cwiras." };
         configureNPCDialogues(0, tempDialogues);
         configureCollisionOffset(gp.npc[0], 1, -1, -30);

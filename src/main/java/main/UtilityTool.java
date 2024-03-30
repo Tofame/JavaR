@@ -3,8 +3,28 @@ package main;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
+
+class PathVisitor extends SimpleFileVisitor<Path> {
+    private int fileCount = 0;
+
+    @Override
+    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+            throws IOException {
+        fileCount++;
+        return FileVisitResult.CONTINUE;
+    }
+
+    public int getFileCount() {
+        return fileCount;
+    }
+}
 
 public class UtilityTool {
     public static BufferedImage scaleImage(BufferedImage original, int width, int height) {
@@ -34,7 +54,8 @@ public class UtilityTool {
 
     public static BufferedImage loadImage(String path) throws IOException {
         BufferedImage image;
-        image = ImageIO.read(UtilityTool.class.getClassLoader().getResourceAsStream(path));
+        //image = ImageIO.read(UtilityTool.class.getClassLoader().getResourceAsStream(path));
+        image = ImageIO.read(UtilityTool.class.getResource("/" + path));
 
         return image;
     }
@@ -92,5 +113,24 @@ public class UtilityTool {
 
         g2.dispose();
         return combinedImage;
+    }
+
+    public static int countFilesInAFolder(String folderPath) throws URISyntaxException, IOException {
+        ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
+        URI uri = sysClassLoader.getResource(folderPath).toURI();
+
+        Path createdPath = null;
+        if (uri.getScheme().equals("jar")) {
+            FileSystem fileSystem = FileSystems.newFileSystem(uri,
+                    Collections.<String, Object> emptyMap());
+            createdPath = fileSystem.getPath("/" + folderPath);
+        } else {
+            createdPath = Paths.get(uri);
+        }
+
+        PathVisitor pathVistor = new PathVisitor();
+        Files.walkFileTree(createdPath, pathVistor);
+
+        return pathVistor.getFileCount();
     }
 }

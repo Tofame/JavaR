@@ -1,13 +1,9 @@
 package effects;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.io.IOException;
 
 import main.GamePanel;
 import main.UI;
@@ -26,7 +22,14 @@ public class MagicEffectHandler {
     public MagicEffectHandler(GamePanel gp) {
         this.gp = gp;
 
-        this.countEffects();
+        try {
+            this.countEffects();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         effects = new MagicEffect[effectsAmount + 1];
 
         for(int i = 0; i < this.effectsAmount; i++) {
@@ -60,31 +63,8 @@ public class MagicEffectHandler {
         sendMagicEffect(new Position(x, y), effectId, layer);
     }
 
-// Magic Effects list
-    public void countEffects() {
-        URL folderUrl = MagicEffectHandler.class.getClassLoader().getResource(MagicEffectHandler.effectFolderPath);
-        if (folderUrl == null) {
-            System.out.println("[MagicEffectHandler] The specified directory does not exist or is not a directory.");
-            return;
-        }
-
-        Path folderPath;
-        try {
-            folderPath = Paths.get(folderUrl.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            return;
-        }
-        File folder = folderPath.toFile();
-        // Get the list of files in the directory
-        File[] files = folder.listFiles();
-
-        if (files == null) {
-            System.out.println("[MagicEffectHandler] Couldnt get the length of effects folder.");
-            return;
-        }
-
-        this.effectsAmount = files.length;
+    public void countEffects() throws URISyntaxException, IOException {
+        this.effectsAmount = UtilityTool.countFilesInAFolder(MagicEffectHandler.effectFolderPath);
     }
 
     public MagicEffect defineEffect(String id) throws IOException {
