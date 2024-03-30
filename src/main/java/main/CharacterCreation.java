@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class CharacterCreation {
     GamePanel gp;
@@ -40,10 +41,14 @@ public class CharacterCreation {
     public CharacterCreation(GamePanel gp) {
         this.gp = gp;
 
-        countBodyParts("characterCreator", bodyKeywords);
+        try {
+            countBodyParts(CCPath, bodyKeywords);
+        } catch (URISyntaxException | IOException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
-            this.bodyImage = UtilityTool.loadImage(CCPath + "body00.png");
+            this.bodyImage = UtilityTool.loadImage(CCPath + "body/body00.png");
             emptyBodyPart = UtilityTool.loadImage(CCPath + "A_empty.png");
             emptyBodyPart = UtilityTool.scaleImage(emptyBodyPart, gp.player.singleFrameWidth, gp.player.singleFrameHeight);
 
@@ -70,9 +75,9 @@ public class CharacterCreation {
         if(chosenBodyIndex != currentlyLoadedBodyIndex || initialization) {
             try {
                 if(chosenBodyIndex > 9) {
-                    this.bodyImage = UtilityTool.loadImage(CCPath + "body" + chosenBodyIndex + ".png");
+                    this.bodyImage = UtilityTool.loadImage(CCPath + "body/body" + chosenBodyIndex + ".png");
                 } else {
-                    this.bodyImage = UtilityTool.loadImage(CCPath + "body0" + chosenBodyIndex + ".png");
+                    this.bodyImage = UtilityTool.loadImage(CCPath + "body/body0" + chosenBodyIndex + ".png");
                 }
                 combinedImage = bodyImage;
                 singleFrameBody = UtilityTool.getIdleFrameOfSpritesheet(3, this.bodyImage, 3);
@@ -85,9 +90,9 @@ public class CharacterCreation {
             if(chosenHairIndex != 0) {
                 try {
                     if(chosenHairIndex > 9) {
-                        this.hairImage = UtilityTool.loadImage(CCPath + "hair" + chosenHairIndex + ".png");
+                        this.hairImage = UtilityTool.loadImage(CCPath + "hair/hair" + chosenHairIndex + ".png");
                     } else {
-                        this.hairImage = UtilityTool.loadImage(CCPath+ "hair0" + chosenHairIndex + ".png");
+                        this.hairImage = UtilityTool.loadImage(CCPath+ "hair/hair0" + chosenHairIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, hairImage);
                     singleFrameHair = UtilityTool.getIdleFrameOfSpritesheet(3, this.hairImage, 3);
@@ -105,9 +110,9 @@ public class CharacterCreation {
             if(chosenClothIndex != 0) {
                 try {
                     if(chosenClothIndex > 9) {
-                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth" + chosenClothIndex + ".png");
+                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth/cloth" + chosenClothIndex + ".png");
                     } else {
-                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth0" + chosenClothIndex + ".png");
+                        this.clothImage = UtilityTool.loadImage(CCPath + "cloth/cloth0" + chosenClothIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, clothImage);
                     singleFrameCloth = UtilityTool.getIdleFrameOfSpritesheet(3, this.clothImage, 3);
@@ -128,9 +133,9 @@ public class CharacterCreation {
             if(chosenLegsIndex != 0) {
                 try {
                     if(chosenClothIndex > 9) {
-                        this.legsImage = UtilityTool.loadImage(CCPath + "legs" + chosenLegsIndex + ".png");
+                        this.legsImage = UtilityTool.loadImage(CCPath + "legs/legs" + chosenLegsIndex + ".png");
                     } else {
-                        this.legsImage = UtilityTool.loadImage(CCPath + "legs0" + chosenLegsIndex + ".png");
+                        this.legsImage = UtilityTool.loadImage(CCPath + "legs/legs0" + chosenLegsIndex + ".png");
                     }
                     combinedImage = UtilityTool.combineImages(combinedImage, legsImage);
                     singleFrameLegs = UtilityTool.getIdleFrameOfSpritesheet(3, this.legsImage, 3);
@@ -156,36 +161,10 @@ public class CharacterCreation {
         g2.drawImage(singleFrameLegs, gp.ui.getXforCenteredImage(singleFrameLegs), gp.tileSize*10 + offsetY, null);
     }
 
-    public void countBodyParts(String folderPath, String[] keywords) {
-        File folder = new File(folderPath);
-        // Get the list of files in the directory
-        File[] files = folder.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) { // if is a file - not a folder
-                    // Check if the file name contains any of the specified keywords
-                    for (String keyword : keywords) {
-                        if (file.getName().startsWith(keyword)) {
-                            switch (keyword) {
-                                case "body":
-                                    bodyParts++;
-                                    break;
-                                case "legs":
-                                    legsParts++;
-                                    break;
-                                case "cloth":
-                                    clothParts++;
-                                    break;
-                                case "hair":
-                                    hairParts++;
-                                    break;
-                            }
-                            break; // optimization
-                        }
-                    }
-                }
-            }
-        }
+    public void countBodyParts(String folderPath, String[] keywords) throws URISyntaxException, IOException {
+        bodyParts = UtilityTool.countFilesInAFolder(CCPath + "body");
+        clothParts = UtilityTool.countFilesInAFolder(CCPath + "cloth");
+        legsParts = UtilityTool.countFilesInAFolder(CCPath + "legs");
+        hairParts = UtilityTool.countFilesInAFolder(CCPath + "hair");
     }
 }

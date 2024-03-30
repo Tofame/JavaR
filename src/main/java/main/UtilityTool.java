@@ -27,6 +27,7 @@ class PathVisitor extends SimpleFileVisitor<Path> {
 }
 
 public class UtilityTool {
+    public static FileSystem uToolFileSystem = null;
     public static BufferedImage scaleImage(BufferedImage original, int width, int height) {
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());
         Graphics2D g2 = scaledImage.createGraphics();
@@ -121,9 +122,13 @@ public class UtilityTool {
 
         Path createdPath = null;
         if (uri.getScheme().equals("jar")) {
-            FileSystem fileSystem = FileSystems.newFileSystem(uri,
-                    Collections.<String, Object> emptyMap());
-            createdPath = fileSystem.getPath("/" + folderPath);
+            if(UtilityTool.uToolFileSystem == null) {
+                UtilityTool.uToolFileSystem = FileSystems.newFileSystem(uri,
+                        Collections.<String, Object>emptyMap());
+                createdPath = UtilityTool.uToolFileSystem.getPath("/" + folderPath);
+            } else {
+                createdPath = UtilityTool.uToolFileSystem.getPath("/" + folderPath);
+            }
         } else {
             createdPath = Paths.get(uri);
         }
